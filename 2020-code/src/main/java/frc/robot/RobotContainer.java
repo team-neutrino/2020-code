@@ -14,7 +14,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 
 
@@ -31,7 +31,7 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  public final Drive m_Drive = new Drive();
+  public final DriveSubsystem m_Drive = new DriveSubsystem();
    public Joystick m_leftJoystick = new Joystick(0);
    public Joystick m_rightJoystick = new Joystick(1);
   /**
