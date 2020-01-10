@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 public final class Constants {
 
     //TODO get actual constants
+    
     public static final double ksVolts = 0 ;
     public static final double kvVoltSecondsPerMeter = 0;
     public static final double kaVoltSecondsSquaredPerMeter = 0;
@@ -32,8 +33,8 @@ public final class Constants {
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7; 
    
-    private static final double gearRatio = 9.0/84.0;
-    private static final double ticksPerRevolution = 1.0/42.0;
-    private static final double wheelCircumference = Math.PI*0.127;
-    public static final double kDriveEncoderConversion = gearRatio*(ticksPerRevolution*wheelCircumference);
+    private static final double kGearRatio = 9.0/84.0;
+    private static final double kWheelCircumference = Math.PI*0.127;
+    public static final double kDriveEncoderConversion = kGearRatio*kWheelCircumference;
+
 }
