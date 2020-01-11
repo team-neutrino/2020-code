@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -17,10 +17,10 @@ import edu.wpi.first.wpilibj.SPI;
 
 public class DriveSubsystem extends SubsystemBase{
 
-   private CANSparkMax leftMotor1 = new CANSparkMax(0, MotorType.kBrushless);
-   private CANSparkMax leftMotor2 = new CANSparkMax(1, MotorType.kBrushless);
-   private CANSparkMax rightMotor1 = new CANSparkMax(2, MotorType.kBrushless);
-   private CANSparkMax rightMotor2 = new CANSparkMax(3, MotorType.kBrushless);
+   private CANSparkMax leftMotor1 = new CANSparkMax(DriveConstants.motorControllerDriveLeft1, MotorType.kBrushless);
+   private CANSparkMax leftMotor2 = new CANSparkMax(DriveConstants.motorControllerDriveLeft2, MotorType.kBrushless);
+   private CANSparkMax rightMotor1 = new CANSparkMax(DriveConstants.motorControllerDriveRight1, MotorType.kBrushless);
+   private CANSparkMax rightMotor2 = new CANSparkMax(DriveConstants.motorControllerDriveRight2, MotorType.kBrushless);
 
    private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(leftMotor1, leftMotor2);
    private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(rightMotor1, rightMotor2);
@@ -31,10 +31,11 @@ public class DriveSubsystem extends SubsystemBase{
 
 
 
+
     public DriveSubsystem()
     {
-        lEncoder.setPositionConversionFactor(Constants.kDriveEncoderConversion);
-        rEncoder.setPositionConversionFactor(Constants.kDriveEncoderConversion); 
+        lEncoder.setPositionConversionFactor(DriveConstants.kDriveEncoderConversion);
+        rEncoder.setPositionConversionFactor(DriveConstants.kDriveEncoderConversion); 
         lEncoder.setPosition(0);
         rEncoder.setPosition(0);
 
