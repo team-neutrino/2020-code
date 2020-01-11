@@ -79,12 +79,13 @@ public class RobotContainer {
     
     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                        DriveConstants.kvVoltSecondsPerMeter,
-                                        DriveConstants.kaVoltSecondsSquaredPerMeter),
-                                        DriveConstants.kDriveKinematics,
+            new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
+                                        DriveConstants.KV_VOLT_SECONDS_PER_METER,
+                                        DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
+                                        DriveConstants.K_DRIVE_KINEMATICS,
                                         10);
 
+<<<<<<< Updated upstream
     TrajectoryConfig config =
     new TrajectoryConfig(DriveConstants.kMaxSpeedMetersPerSecond,
                         DriveConstants.kMaxAccelerationMetersPerSecondSquared)
@@ -107,6 +108,46 @@ public class RobotContainer {
         // Pass config
         config
     );
+=======
+            TrajectoryConfig config =
+            new TrajectoryConfig(DriveConstants.K_MAX_SPEED_METERS_PER_SECOND,
+                                DriveConstants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+                // Add kinematics to ensure max speed is actually obeyed
+                .setKinematics(DriveConstants.K_DRIVE_KINEMATICS)
+                // Apply the voltage constraint
+                .addConstraint(autoVoltageConstraint);
+    
+        // An example trajectory to follow.  All units in meters.
+        Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+            // Start at the origin facing the +X direction
+            new Pose2d(0, 0, new Rotation2d(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(
+                new Translation2d(1, 1),
+                new Translation2d(2, -1)
+            ),
+            // End 3 meters straight ahead of where we started, facing forward
+            new Pose2d(3, 0, new Rotation2d(0)),
+            // Pass config
+            config
+        );
+    
+        RamseteCommand ramseteCommand = new RamseteCommand(
+            exampleTrajectory,
+            m_Drive::getPose,
+            new RamseteController(DriveConstants.K_RAMSETE_B, DriveConstants.K_RAMSETE_ZETA),
+            new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
+                                       DriveConstants.KV_VOLT_SECONDS_PER_METER,
+                                       DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
+            DriveConstants.K_DRIVE_KINEMATICS,
+            m_Drive::getWheelSpeeds,
+            new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0),
+            new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0),
+            // RamseteCommand passes volts to the callback
+            m_Drive::tankDriveVolts,
+            m_Drive
+        );
+>>>>>>> Stashed changes
     
     RamseteCommand ramseteCommand = new RamseteCommand(
         exampleTrajectory,
