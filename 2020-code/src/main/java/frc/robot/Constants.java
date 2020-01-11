@@ -43,4 +43,9 @@ public final class Constants {
         public static final int motorControllerDriveRight1 = 3;
         public static final int motorControllerDriveRight2 = 4;
     }
+
+    public static final class ShooterConstants
+    {
+        public static final int WheelMotorPort = 0;
+    }
 }
