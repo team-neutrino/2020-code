@@ -43,4 +43,12 @@ public final class Constants {
         public static final int motorControllerDriveRight1 = 3;
         public static final int motorControllerDriveRight2 = 4;
     }
+
+    public static final class IntakeConstants {
+        public static final int intakeMotorPower = 1;
+    }
+
+    public static final class ControllerPorts {
+        public static final int XBoxControllerPort = 0;
+    }
 }

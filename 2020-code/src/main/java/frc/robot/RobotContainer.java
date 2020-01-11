@@ -14,22 +14,38 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
+import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
+
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeGetBallCommand;
+import frc.robot.commands.IntakeRetractCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.*;
+
+import static edu.wpi.first.wpilibj.XboxController.Button;
+
+import frc.robot.subsystems.DriveSubsystem;
 
 
 /**
@@ -44,17 +60,26 @@ public class RobotContainer {
     private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
     public final DriveSubsystem m_Drive = new DriveSubsystem();
+    public final IntakeSubsystem m_Intake = new IntakeSubsystem();
     public Joystick m_leftJoystick = new Joystick(0);
     public Joystick m_rightJoystick = new Joystick(1);
+
+    XboxController m_OperatorController = new XboxController(2);
+    XboxController m_xboxController = new XboxController(0);
+
+    JoystickButton m_A = new JoystickButton(m_xboxController, Button.kA.value);
+
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
 
     public RobotContainer() {
 
-      Command tankDriveCommand = new RunCommand(
+      final Command tankDriveCommand = new RunCommand(
         () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
       m_Drive.setDefaultCommand(tankDriveCommand);
+
+       
 
       configureButtonBindings();
     }
@@ -66,7 +91,9 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-    
+       m_A.whenPressed(new IntakeGetBallCommand(m_Intake))
+          .whenReleased(new IntakeRetractCommand(m_Intake));
+                    
     }
 
 
@@ -77,7 +104,7 @@ public class RobotContainer {
      */
   public Command getAutonomousCommand() {
     
-    var autoVoltageConstraint =
+    final var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(DriveConstants.ksVolts,
                                         DriveConstants.kvVoltSecondsPerMeter,
@@ -85,7 +112,7 @@ public class RobotContainer {
                                         DriveConstants.kDriveKinematics,
                                         10);
 
-    TrajectoryConfig config =
+    final TrajectoryConfig config =
     new TrajectoryConfig(DriveConstants.kMaxSpeedMetersPerSecond,
                         DriveConstants.kMaxAccelerationMetersPerSecondSquared)
         // Add kinematics to ensure max speed is actually obeyed
@@ -94,7 +121,7 @@ public class RobotContainer {
         .addConstraint(autoVoltageConstraint);
     
     // An example trajectory to follow.  All units in meters.
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+    final Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
@@ -108,7 +135,7 @@ public class RobotContainer {
         config
     );
     
-    RamseteCommand ramseteCommand = new RamseteCommand(
+    final RamseteCommand ramseteCommand = new RamseteCommand(
         exampleTrajectory,
         m_Drive::getPose,
         new RamseteController(DriveConstants.kRamseteB, DriveConstants.kRamseteZeta),
