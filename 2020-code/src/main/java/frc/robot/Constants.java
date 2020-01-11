@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -16,4 +17,30 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public static final class DriveConstants
+    {
+        //TODO get actual constants 
+        public static final double ksVolts = 0 ;
+        public static final double kvVoltSecondsPerMeter = 0;
+        public static final double kaVoltSecondsSquaredPerMeter = 0;
+        public static final double kPDriveVel = 0;
+        public static final double kTrackwidthMeters = 0;
+        public static final DifferentialDriveKinematics kDriveKinematics =
+            new DifferentialDriveKinematics(kTrackwidthMeters);
+
+        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7; 
+    
+        private static final double kGearRatio = 9.0/84.0;
+        private static final double kWheelCircumference = Math.PI*0.127;
+        public static final double kDriveEncoderConversion = kGearRatio*kWheelCircumference;
+
+        public static final int motorControllerDriveLeft1 = 1;
+        public static final int motorControllerDriveLeft2 = 2;
+        public static final int motorControllerDriveRight1 = 3;
+        public static final int motorControllerDriveRight2 = 4;
+    }
 }
