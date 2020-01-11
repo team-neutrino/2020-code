@@ -17,21 +17,17 @@ import edu.wpi.first.wpilibj.SPI;
 
 public class DriveSubsystem extends SubsystemBase{
 
-   private CANSparkMax leftMotor1 = new CANSparkMax(DriveConstants.motorControllerDriveLeft1, MotorType.kBrushless);
-   private CANSparkMax leftMotor2 = new CANSparkMax(DriveConstants.motorControllerDriveLeft2, MotorType.kBrushless);
-   private CANSparkMax rightMotor1 = new CANSparkMax(DriveConstants.motorControllerDriveRight1, MotorType.kBrushless);
-   private CANSparkMax rightMotor2 = new CANSparkMax(DriveConstants.motorControllerDriveRight2, MotorType.kBrushless);
+    private CANSparkMax leftMotor1 = new CANSparkMax(DriveConstants.motorControllerDriveLeft1, MotorType.kBrushless);
+    private CANSparkMax leftMotor2 = new CANSparkMax(DriveConstants.motorControllerDriveLeft2, MotorType.kBrushless);
+    private CANSparkMax rightMotor1 = new CANSparkMax(DriveConstants.motorControllerDriveRight1, MotorType.kBrushless);
+    private CANSparkMax rightMotor2 = new CANSparkMax(DriveConstants.motorControllerDriveRight2, MotorType.kBrushless);
 
-   private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(leftMotor1, leftMotor2);
-   private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(rightMotor1, rightMotor2);
-   private CANEncoder lEncoder = new CANEncoder(leftMotor1);
-   private CANEncoder rEncoder = new CANEncoder(rightMotor1);
-   private AHRS navX = new AHRS(SPI.Port.kMXP);
-   private final DifferentialDriveOdometry m_odometry;
-
-
-
-
+    private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(leftMotor1, leftMotor2);
+    private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(rightMotor1, rightMotor2);
+    private CANEncoder lEncoder = new CANEncoder(leftMotor1);
+    private CANEncoder rEncoder = new CANEncoder(rightMotor1);
+    private AHRS navX = new AHRS(SPI.Port.kMXP);
+    private final DifferentialDriveOdometry m_odometry;
     public DriveSubsystem()
     {
         lEncoder.setPositionConversionFactor(DriveConstants.kDriveEncoderConversion);
@@ -51,16 +47,14 @@ public class DriveSubsystem extends SubsystemBase{
 
     public void tankDrive(double leftPower, double rightPower)
     {
-        leftMotor1.set(leftPower);
-        leftMotor2.set(leftPower);
-        rightMotor1.set(-rightPower);
-        rightMotor2.set(-rightPower);
+        m_leftMotors.set(leftPower);
+        m_rightMotors.set(-rightPower);
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts)
     {
         m_leftMotors.setVoltage(leftVolts);
-        m_rightMotors.setVoltage(rightVolts);
+        m_rightMotors.setVoltage(-rightVolts);
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
