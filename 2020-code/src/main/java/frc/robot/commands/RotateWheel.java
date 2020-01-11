@@ -18,6 +18,8 @@ import frc.robot.subsystems.Shooter;
 public class RotateWheel extends CommandBase {
 
   private final Shooter m_shooter;
+  private PIDController wheelPid;
+
   /**
    * Creates a new RotateWheel.
    */
@@ -25,6 +27,8 @@ public class RotateWheel extends CommandBase {
     m_shooter = shooter;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
+    wheelPid = new PIDController(Constants.ShooterConstants.WheelP, Constants.ShooterConstants.WheelI,
+    Constants.ShooterConstants.WheelD);
   }
 
   // Called when the command is initially scheduled.
@@ -35,7 +39,9 @@ public class RotateWheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
   }
+
 
   // Called once the command ends or is interrupted.
   @Override

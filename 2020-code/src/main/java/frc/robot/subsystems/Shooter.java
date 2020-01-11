@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -16,17 +18,37 @@ import frc.robot.Constants;
 @SuppressWarnings({"all"})
 public class Shooter extends SubsystemBase {
 
-  private TalonSRX motor;
-  private PIDController wheelPid;
+  private TalonSRX wheelMotor;
+  //TODO find out what kind of encoder we are using
+  private Encoder wheelEncoder;
   /**
    * Creates a new Shooter.
    */
   public Shooter() {
-    motor = new TalonSRX(Constants.ShooterConstants.WheelMotorPort);
+    wheelMotor = new TalonSRX(Constants.ShooterConstants.WheelMotorPort);
+    wheelEncoder = new Encoder(Constants.ShooterConstants.WheelEncoderPort1,
+    Constants.ShooterConstants.WheelEncoderPort2);
+    wheelEncoder.setPIDSourceType(PIDSourceType.kRate);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  public Encoder getWheelEncoder()
+  {
+    return wheelEncoder;
+  }
+
+  public TalonSRX getWheelMotor()
+  {
+    return wheelMotor;
+  }
+
+  public void setWheelMotor()
+  {
+    
+  }
+
 }
