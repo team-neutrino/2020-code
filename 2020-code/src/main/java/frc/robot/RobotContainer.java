@@ -11,30 +11,15 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
-
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
-import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
-
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeGetBallCommand;
 import frc.robot.commands.IntakeRetractCommand;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import frc.robot.commands.NeutrinoRamseteCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -42,10 +27,9 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.*;
-
 import static edu.wpi.first.wpilibj.XboxController.Button;
-
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.Trajectories.ExampleTrajectory;
 
 
 /**
@@ -54,33 +38,28 @@ import frc.robot.subsystems.DriveSubsystem;
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer 
+{
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-    private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
     public final DriveSubsystem m_Drive = new DriveSubsystem();
     public final IntakeSubsystem m_Intake = new IntakeSubsystem();
     public Joystick m_leftJoystick = new Joystick(0);
     public Joystick m_rightJoystick = new Joystick(1);
-
     XboxController m_OperatorController = new XboxController(2);
     XboxController m_xboxController = new XboxController(0);
-
     JoystickButton m_A = new JoystickButton(m_xboxController, Button.kA.value);
+    private final Trajectory m_Trajectory = ExampleTrajectory.exampleTraj;
+    private final NeutrinoRamseteCommand m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
-
-    public RobotContainer() {
-
+    public RobotContainer()
+    {
       final Command tankDriveCommand = new RunCommand(
         () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
       m_Drive.setDefaultCommand(tankDriveCommand);
-
-       
-
       configureButtonBindings();
     }
 
@@ -90,71 +69,19 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
-    private void configureButtonBindings() {
+    private void configureButtonBindings() 
+    {
        m_A.whenPressed(new IntakeGetBallCommand(m_Intake))
           .whenReleased(new IntakeRetractCommand(m_Intake));
-                    
     }
-
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
      */
-  public Command getAutonomousCommand() {
-    
-    final var autoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                        DriveConstants.kvVoltSecondsPerMeter,
-                                        DriveConstants.kaVoltSecondsSquaredPerMeter),
-                                        DriveConstants.kDriveKinematics,
-                                        10);
-
-    final TrajectoryConfig config =
-    new TrajectoryConfig(DriveConstants.kMaxSpeedMetersPerSecond,
-                        DriveConstants.kMaxAccelerationMetersPerSecondSquared)
-        // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(DriveConstants.kDriveKinematics)
-        // Apply the voltage constraint
-        .addConstraint(autoVoltageConstraint);
-    
-    // An example trajectory to follow.  All units in meters.
-    final Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(
-            new Translation2d(1, 1),
-            new Translation2d(2, -1)
-        ),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(3, 0, new Rotation2d(0)),
-        // Pass config
-        config
-    );
-    
-    final RamseteCommand ramseteCommand = new RamseteCommand(
-        exampleTrajectory,
-        m_Drive::getPose,
-        new RamseteController(DriveConstants.kRamseteB, DriveConstants.kRamseteZeta),
-        new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                    DriveConstants.kvVoltSecondsPerMeter,
-                                    DriveConstants.kaVoltSecondsSquaredPerMeter),
-        DriveConstants.kDriveKinematics,
-        m_Drive::getWheelSpeeds,
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        // RamseteCommand passes volts to the callback
-        m_Drive::tankDriveVolts,
-        m_Drive
-    );
-
-    // Run path following command, then stop at the end.
-    return ramseteCommand.andThen(() -> m_Drive.tankDriveVolts(0, 0));
-
-
-
-  }
+  public Command getAutonomousCommand()
+    {
+       return m_autoCommand;
+     }
 }

@@ -6,7 +6,10 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -21,27 +24,34 @@ public final class Constants {
     public static final class DriveConstants
     {
         //TODO get actual constants 
-        public static final double ksVolts = 0 ;
-        public static final double kvVoltSecondsPerMeter = 0;
-        public static final double kaVoltSecondsSquaredPerMeter = 0;
-        public static final double kPDriveVel = 0;
-        public static final double kTrackwidthMeters = 0;
-        public static final DifferentialDriveKinematics kDriveKinematics =
-            new DifferentialDriveKinematics(kTrackwidthMeters);
+        public static final double KS_VOLTS = 0 ;
+        public static final double KV_VOLT_SECONDS_PER_METER = 0;
+        public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0;
+        public static final double KP_DRIVE_VEL = 0;
+        public static final double K_TRACK_WIDTH_METERS = 0;
+        public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
+            new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
 
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-        public static final double kRamseteB = 2;
-        public static final double kRamseteZeta = 0.7; 
+        public static final double K_MAX_SPEED_METERS_PER_SECOND = 3;
+        public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3;
+        public static final double K_RAMSETE_B = 2;
+        public static final double K_RAMSETE_ZETA = 0.7; 
     
-        private static final double kGearRatio = 9.0/84.0;
-        private static final double kWheelCircumference = Math.PI*0.127;
-        public static final double kDriveEncoderConversion = kGearRatio*kWheelCircumference;
+        private static final double K_GEAR_RATIO = 9.0/84.0;
+        private static final double K_WHEEL_CIRCUMFERENCE = Math.PI*0.127;
+        public static final double K_DRIVE_ENCODER_CONVERSION = K_GEAR_RATIO*K_WHEEL_CIRCUMFERENCE;
 
-        public static final int motorControllerDriveLeft1 = 1;
-        public static final int motorControllerDriveLeft2 = 2;
-        public static final int motorControllerDriveRight1 = 3;
-        public static final int motorControllerDriveRight2 = 4;
+        public static final int MOTOR_CONTROLLER_DRIVER_LEFT1= 1;
+        public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
+        public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
+        public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
+        static DifferentialDriveVoltageConstraint autoVoltageConstraint = //this used to be type var, why?
+            new DifferentialDriveVoltageConstraint(
+                new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
+                                        DriveConstants.KV_VOLT_SECONDS_PER_METER,
+                                        DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
+                                        DriveConstants.K_DRIVE_KINEMATICS,
+                                        10);
     }
 
     public static final class IntakeConstants {
