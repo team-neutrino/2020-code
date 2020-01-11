@@ -16,15 +16,15 @@ import frc.robot.Constants.DriveConstants;
 public class NeutrinoTrajectoryConfigs {
 
     public static final TrajectoryConfig m_DefaultConfig =
-    new TrajectoryConfig(DriveConstants.kMaxSpeedMetersPerSecond,
-                        DriveConstants.kMaxAccelerationMetersPerSecondSquared)
-        .setKinematics(DriveConstants.kDriveKinematics)
+    new TrajectoryConfig(DriveConstants.K_MAX_SPEED_METERS_PER_SECOND,
+                        DriveConstants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+        .setKinematics(DriveConstants.K_DRIVE_KINEMATICS)
         .addConstraint(DriveConstants.autoVoltageConstraint);
 
      public static final TrajectoryConfig m_ReverseConfig =
-    new TrajectoryConfig(DriveConstants.kMaxSpeedMetersPerSecond,
-                        DriveConstants.kMaxAccelerationMetersPerSecondSquared)
-        .setKinematics(DriveConstants.kDriveKinematics)
+    new TrajectoryConfig(DriveConstants.K_MAX_SPEED_METERS_PER_SECOND,
+                        DriveConstants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+        .setKinematics(DriveConstants.K_DRIVE_KINEMATICS)
         .addConstraint(DriveConstants.autoVoltageConstraint).setReversed(true);
 }
 

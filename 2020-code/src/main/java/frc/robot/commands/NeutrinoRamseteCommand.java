@@ -28,14 +28,14 @@ public class NeutrinoRamseteCommand extends RamseteCommand {
     super(
         p_Trajectory,
         p_Drive::getPose,
-        new RamseteController(DriveConstants.kRamseteB, DriveConstants.kRamseteZeta),
-        new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                    DriveConstants.kvVoltSecondsPerMeter,
-                                    DriveConstants.kaVoltSecondsSquaredPerMeter),
-        DriveConstants.kDriveKinematics,
+        new RamseteController(DriveConstants.K_RAMSETE_B, DriveConstants.K_RAMSETE_ZETA),
+        new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
+                                    DriveConstants.KV_VOLT_SECONDS_PER_METER,
+                                    DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
+        DriveConstants.K_DRIVE_KINEMATICS,
         p_Drive::getWheelSpeeds,
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
+        new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0),
+        new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0),
         // RamseteCommand passes volts to the callback
        p_Drive::tankDriveVolts,
        p_Drive
