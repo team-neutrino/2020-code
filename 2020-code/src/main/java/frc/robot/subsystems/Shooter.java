@@ -7,14 +7,22 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
+@SuppressWarnings({"all"})
 public class Shooter extends SubsystemBase {
+
+  private TalonSRX motor;
+  private PIDController wheelPid;
   /**
    * Creates a new Shooter.
    */
   public Shooter() {
-
+    motor = new TalonSRX(Constants.ShooterConstants.WheelMotorPort);
   }
 
   @Override

@@ -9,14 +9,15 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
+@SuppressWarnings({"all"})
 public class RotateWheel extends CommandBase {
-  @SuppressWarnings({"all"})
+
   private final Shooter m_shooter;
-  private TalonSRX motor;
   /**
    * Creates a new RotateWheel.
    */
@@ -24,7 +25,6 @@ public class RotateWheel extends CommandBase {
     m_shooter = shooter;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
-    motor = new TalonSRX(Constants.ShooterConstants.WheelMotorPort);
   }
 
   // Called when the command is initially scheduled.
