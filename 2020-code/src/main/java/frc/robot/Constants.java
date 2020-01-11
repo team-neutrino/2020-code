@@ -53,4 +53,12 @@ public final class Constants {
                                         DriveConstants.K_DRIVE_KINEMATICS,
                                         10);
     }
+
+    public static final class IntakeConstants {
+        public static final int intakeMotorPower = 1;
+    }
+
+    public static final class ControllerPorts {
+        public static final int XBoxControllerPort = 0;
+    }
 }

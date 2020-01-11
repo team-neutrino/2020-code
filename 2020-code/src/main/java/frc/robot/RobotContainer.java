@@ -11,14 +11,26 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.IntakeGetBallCommand;
+import frc.robot.commands.IntakeRetractCommand;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.commands.NeutrinoRamseteCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.Constants.*;
+import static edu.wpi.first.wpilibj.XboxController.Button;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -31,17 +43,21 @@ public class RobotContainer
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
     public final DriveSubsystem m_Drive = new DriveSubsystem();
+    public final IntakeSubsystem m_Intake = new IntakeSubsystem();
     public Joystick m_leftJoystick = new Joystick(0);
     public Joystick m_rightJoystick = new Joystick(1);
+    XboxController m_OperatorController = new XboxController(2);
+    XboxController m_xboxController = new XboxController(0);
+    JoystickButton m_A = new JoystickButton(m_xboxController, Button.kA.value);
     private final Trajectory m_Trajectory = ExampleTrajectory.exampleTraj;
     private final NeutrinoRamseteCommand m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer() 
+    public RobotContainer()
     {
-      Command tankDriveCommand = new RunCommand(
+      final Command tankDriveCommand = new RunCommand(
         () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
       m_Drive.setDefaultCommand(tankDriveCommand);
       configureButtonBindings();
@@ -55,7 +71,8 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-    
+       m_A.whenPressed(new IntakeGetBallCommand(m_Intake))
+          .whenReleased(new IntakeRetractCommand(m_Intake));
     }
 
     /**
@@ -63,8 +80,8 @@ public class RobotContainer
      *
      * @return the command to run in autonomous
      */
-     public Command getAutonomousCommand() 
-     {
+  public Command getAutonomousCommand()
+    {
        return m_autoCommand;
      }
 }
