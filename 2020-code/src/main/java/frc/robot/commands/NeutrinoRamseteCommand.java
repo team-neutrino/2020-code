@@ -11,63 +11,42 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
 
-public class NeutrinoRamseteCommand extends CommandBase {
+public class NeutrinoRamseteCommand extends RamseteCommand {
   /**
    * Creates a new NeutrinoRamseteCommand.
    */
 
-   private final DriveSubsystem m_Drive;
-   private Trajectory m_Trajectory;
-   private RamseteCommand m_RamseteCommand;
+   private DriveSubsystem m_Drive; 
 
-  public NeutrinoRamseteCommand(DriveSubsystem pDrive, Trajectory pTrajectory) {
-    m_Drive = pDrive;
-    addRequirements(m_Drive);
+  public NeutrinoRamseteCommand(DriveSubsystem p_Drive, Trajectory p_Trajectory) {
 
-    m_Trajectory = pTrajectory;
-
-    m_RamseteCommand = new RamseteCommand(
-        m_Trajectory,
-        m_Drive::getPose,
+    super(
+        p_Trajectory,
+        p_Drive::getPose,
         new RamseteController(DriveConstants.kRamseteB, DriveConstants.kRamseteZeta),
         new SimpleMotorFeedforward(DriveConstants.ksVolts,
                                     DriveConstants.kvVoltSecondsPerMeter,
                                     DriveConstants.kaVoltSecondsSquaredPerMeter),
         DriveConstants.kDriveKinematics,
-        m_Drive::getWheelSpeeds,
+        p_Drive::getWheelSpeeds,
         new PIDController(DriveConstants.kPDriveVel, 0, 0),
         new PIDController(DriveConstants.kPDriveVel, 0, 0),
         // RamseteCommand passes volts to the callback
-        m_Drive::tankDriveVolts,
-        m_Drive
+       p_Drive::tankDriveVolts,
+       p_Drive
     );
+    m_Drive = p_Drive;
+
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    m_RamseteCommand.initialize();
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
-
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
+    super.end(interrupted);
+    m_Drive.tankDriveVolts(0,0);
   }
 }
