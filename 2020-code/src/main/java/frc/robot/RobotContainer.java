@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.Constants.*;
 
 
 /**
@@ -80,17 +81,17 @@ public class RobotContainer {
     
     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(Constants.ksVolts,
-                                       Constants.kvVoltSecondsPerMeter,
-                                       Constants.kaVoltSecondsSquaredPerMeter),
-            Constants.kDriveKinematics,
-            10);
+            new SimpleMotorFeedforward(DriveConstants.ksVolts,
+                                        DriveConstants.kvVoltSecondsPerMeter,
+                                        DriveConstants.kaVoltSecondsSquaredPerMeter),
+                                        DriveConstants.kDriveKinematics,
+                                        10);
 
             TrajectoryConfig config =
-            new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,
-                                 Constants.kMaxAccelerationMetersPerSecondSquared)
+            new TrajectoryConfig(DriveConstants.kMaxSpeedMetersPerSecond,
+                                DriveConstants.kMaxAccelerationMetersPerSecondSquared)
                 // Add kinematics to ensure max speed is actually obeyed
-                .setKinematics(Constants.kDriveKinematics)
+                .setKinematics(DriveConstants.kDriveKinematics)
                 // Apply the voltage constraint
                 .addConstraint(autoVoltageConstraint);
     
@@ -112,14 +113,14 @@ public class RobotContainer {
         RamseteCommand ramseteCommand = new RamseteCommand(
             exampleTrajectory,
             m_Drive::getPose,
-            new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
-            new SimpleMotorFeedforward(Constants.ksVolts,
-                                       Constants.kvVoltSecondsPerMeter,
-                                       Constants.kaVoltSecondsSquaredPerMeter),
-            Constants.kDriveKinematics,
+            new RamseteController(DriveConstants.kRamseteB, DriveConstants.kRamseteZeta),
+            new SimpleMotorFeedforward(DriveConstants.ksVolts,
+                                        DriveConstants.kvVoltSecondsPerMeter,
+                                       DriveConstants.kaVoltSecondsSquaredPerMeter),
+            DriveConstants.kDriveKinematics,
             m_Drive::getWheelSpeeds,
-            new PIDController(Constants.kPDriveVel, 0, 0),
-            new PIDController(Constants.kPDriveVel, 0, 0),
+            new PIDController(DriveConstants.kPDriveVel, 0, 0),
+            new PIDController(DriveConstants.kPDriveVel, 0, 0),
             // RamseteCommand passes volts to the callback
             m_Drive::tankDriveVolts,
             m_Drive
