@@ -6,30 +6,15 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
-
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.Encoder;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
 
 public class DriveSubsystem extends SubsystemBase{
 
-<<<<<<< Updated upstream
-    private CANSparkMax leftMotor1 = new CANSparkMax(DriveConstants.motorControllerDriveLeft1, MotorType.kBrushless);
-    private CANSparkMax leftMotor2 = new CANSparkMax(DriveConstants.motorControllerDriveLeft2, MotorType.kBrushless);
-    private CANSparkMax rightMotor1 = new CANSparkMax(DriveConstants.motorControllerDriveRight1, MotorType.kBrushless);
-    private CANSparkMax rightMotor2 = new CANSparkMax(DriveConstants.motorControllerDriveRight2, MotorType.kBrushless);
-
-    private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(leftMotor1, leftMotor2);
-    private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(rightMotor1, rightMotor2);
-    private CANEncoder lEncoder = new CANEncoder(leftMotor1);
-    private CANEncoder rEncoder = new CANEncoder(rightMotor1);
-    private AHRS navX = new AHRS(SPI.Port.kMXP);
-    private final DifferentialDriveOdometry m_odometry;
-=======
    private CANSparkMax leftMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1, MotorType.kBrushless);
    private CANSparkMax leftMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT2, MotorType.kBrushless);
    private CANSparkMax rightMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT1, MotorType.kBrushless);
@@ -42,19 +27,13 @@ public class DriveSubsystem extends SubsystemBase{
    private AHRS navX = new AHRS(SPI.Port.kMXP);
    private final DifferentialDriveOdometry m_odometry;
 
-
-
-
->>>>>>> Stashed changes
     public DriveSubsystem()
     {
         lEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
         rEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION); 
         lEncoder.setPosition(0);
         rEncoder.setPosition(0);
-
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-        
     }
 
     @Override
@@ -95,7 +74,6 @@ public class DriveSubsystem extends SubsystemBase{
     {
         lEncoder.setPosition(0);
         rEncoder.setPosition(0);
-
         m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
     }
 }

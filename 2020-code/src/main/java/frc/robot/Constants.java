@@ -6,7 +6,10 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -42,5 +45,20 @@ public final class Constants {
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
+        static DifferentialDriveVoltageConstraint autoVoltageConstraint = //this used to be type var, why?
+            new DifferentialDriveVoltageConstraint(
+                new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
+                                        DriveConstants.KV_VOLT_SECONDS_PER_METER,
+                                        DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
+                                        DriveConstants.K_DRIVE_KINEMATICS,
+                                        10);
+    }
+
+    public static final class IntakeConstants {
+        public static final int intakeMotorPower = 1;
+    }
+
+    public static final class ControllerPorts {
+        public static final int XBoxControllerPort = 0;
     }
 }
