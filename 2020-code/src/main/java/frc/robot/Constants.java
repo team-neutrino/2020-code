@@ -55,7 +55,8 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int intakeMotorPower = 1;
+        public static final int INTAKE_MOTOR_POWER = 1;
+        public static final int MOTOR_CONTROLLER_INTAKE = 1;
     }
 
     public static final class ControllerPorts {

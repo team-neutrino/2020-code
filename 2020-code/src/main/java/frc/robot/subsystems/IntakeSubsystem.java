@@ -25,12 +25,12 @@ import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
  * Add your docs here.
  */
 public class IntakeSubsystem {
-    private CANSparkMax intakeMotor = new CANSparkMax(DriveConstants.motorControllerDriveLeft1, MotorType.kBrushless);
+    private CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.MOTOR_CONTROLLER_INTAKE, MotorType.kBrushless);
     private DoubleSolenoid pusher = new DoubleSolenoid(0, 1);
 
     public void setIntake(boolean on) {
         if (on == true) 
-            intakeMotor.set(IntakeConstants.intakeMotorPower);
+            intakeMotor.set(IntakeConstants.INTAKE_MOTOR_POWER);
         else 
             intakeMotor.set(0);
 
@@ -44,5 +44,4 @@ public class IntakeSubsystem {
     {
         pusher.set(DoubleSolenoid.Value.kForward);
     }
-   
 }
