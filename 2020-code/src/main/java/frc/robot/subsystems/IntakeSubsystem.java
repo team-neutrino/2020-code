@@ -39,6 +39,7 @@ public class IntakeSubsystem {
     {
         pusher.set(DoubleSolenoid.Value.kForward);
     }
+  
     public void getPDPCurrent() {
         double currentIntakeMotor = PDP.getCurrent(IntakeConstants.MOTOR_CONTROLLER_INTAKE);
         System.out.println("MOTOR_CONTROLLER_INTAKE: " + currentIntakeMotor);
