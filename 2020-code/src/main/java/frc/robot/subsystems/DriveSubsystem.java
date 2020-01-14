@@ -15,31 +15,31 @@ import edu.wpi.first.wpilibj.SPI;
 
 public class DriveSubsystem extends SubsystemBase{
 
-   private CANSparkMax leftMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1, MotorType.kBrushless);
-   private CANSparkMax leftMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT2, MotorType.kBrushless);
-   private CANSparkMax rightMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT1, MotorType.kBrushless);
-   private CANSparkMax rightMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT2, MotorType.kBrushless);
+   private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1, MotorType.kBrushless);
+   private CANSparkMax m_leftMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT2, MotorType.kBrushless);
+   private CANSparkMax m_rightMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT1, MotorType.kBrushless);
+   private CANSparkMax m_rightMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT2, MotorType.kBrushless);
 
-   private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(leftMotor1, leftMotor2);
-   private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(rightMotor1, rightMotor2);
-   private CANEncoder lEncoder = new CANEncoder(leftMotor1);
-   private CANEncoder rEncoder = new CANEncoder(rightMotor1);
-   private AHRS navX = new AHRS(SPI.Port.kMXP);
+   private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
+   private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
+   private CANEncoder m_lEncoder = new CANEncoder(m_leftMotor1);
+   private CANEncoder m_rEncoder = new CANEncoder(m_rightMotor1);
+   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
    private final DifferentialDriveOdometry m_odometry;
 
     public DriveSubsystem()
     {
-        lEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
-        rEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION); 
-        lEncoder.setPosition(0);
-        rEncoder.setPosition(0);
+        m_lEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
+        m_rEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION); 
+        m_lEncoder.setPosition(0);
+        m_rEncoder.setPosition(0);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     }
 
     @Override
     public void periodic()
     {
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()),lEncoder.getPosition(), rEncoder.getPosition()); 
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()),m_lEncoder.getPosition(), m_rEncoder.getPosition()); 
     }
 
     public void tankDrive(double leftPower, double rightPower)
@@ -56,13 +56,13 @@ public class DriveSubsystem extends SubsystemBase{
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
     {
-        return new DifferentialDriveWheelSpeeds(lEncoder.getVelocity(), rEncoder.getVelocity());
+        return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), m_rEncoder.getVelocity());
     }
 
     //Returns robot angle in degrees from 180 to 180
     public double getHeading()
     {
-        return 0; //TODO implement this method
+        return m_navX.getFusedHeading() * -1;
     }
 
     public Pose2d getPose()
@@ -72,8 +72,8 @@ public class DriveSubsystem extends SubsystemBase{
 
     public void resetOdometry(Pose2d pose)
     {
-        lEncoder.setPosition(0);
-        rEncoder.setPosition(0);
+        m_lEncoder.setPosition(0);
+        m_rEncoder.setPosition(0);
         m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
     }
 }
