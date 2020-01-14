@@ -30,6 +30,8 @@ import frc.robot.Constants.*;
 import static edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
+import frc.robot.commands.DriveDataCommand;
+import frc.robot.commands.IntakeDataCommand;
 
 
 /**
@@ -42,14 +44,20 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+
     public final DriveSubsystem m_Drive = new DriveSubsystem();
     public final IntakeSubsystem m_Intake = new IntakeSubsystem();
+
     public Joystick m_leftJoystick = new Joystick(0);
     public Joystick m_rightJoystick = new Joystick(1);
     XboxController m_OperatorController = new XboxController(ControllerPorts.XBOX_CONTROLLER_PORT);
     JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
+    JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
+    JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
     private final Trajectory m_Trajectory = ExampleTrajectory.exampleTraj;
     private final NeutrinoRamseteCommand m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
+    private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
+
 
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -70,8 +78,10 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-       m_A.whenPressed(new IntakeGetBallCommand(m_Intake))
+      m_A.whenPressed(new IntakeGetBallCommand(m_Intake))
           .whenReleased(new IntakeRetractCommand(m_Intake));
+      m_B.whenPressed(new IntakeDataCommand(m_Intake));
+      m_X.whenPressed(new DriveDataCommand(m_Drive));
     }
 
     /**

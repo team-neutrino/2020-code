@@ -41,7 +41,7 @@ public final class Constants {
         private static final double K_WHEEL_CIRCUMFERENCE = Math.PI*0.127;
         public static final double K_DRIVE_ENCODER_CONVERSION = K_GEAR_RATIO*K_WHEEL_CIRCUMFERENCE;
 
-        public static final int MOTOR_CONTROLLER_DRIVER_LEFT1= 1;
+        public static final int MOTOR_CONTROLLER_DRIVER_LEFT1 = 1;
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;

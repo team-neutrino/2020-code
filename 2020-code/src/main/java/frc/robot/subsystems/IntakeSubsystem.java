@@ -7,25 +7,20 @@
 
 package frc.robot.subsystems;
 
-//import com.revrobotics.CANEncoder;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-/*import edu.wpi.first.wpilibj.Encoder;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;*/
-import frc.robot.Constants.DriveConstants;
+import java.util.ArrayList;
 import frc.robot.Constants.IntakeConstants;
-
-import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
-import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 
 /**
  * Add your docs here.
  */
 public class IntakeSubsystem {
     private CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.MOTOR_CONTROLLER_INTAKE, MotorType.kBrushless);
+    private PowerDistributionPanel PDP = new PowerDistributionPanel();
     private DoubleSolenoid pusher = new DoubleSolenoid(0, 1);
 
     public void setIntake(boolean on) {
@@ -43,5 +38,10 @@ public class IntakeSubsystem {
     public void setPusherOut()
     {
         pusher.set(DoubleSolenoid.Value.kForward);
+    }
+  
+    public void getPDPCurrent() {
+        double currentIntakeMotor = PDP.getCurrent(IntakeConstants.MOTOR_CONTROLLER_INTAKE);
+        System.out.println("MOTOR_CONTROLLER_INTAKE: " + currentIntakeMotor);
     }
 }
