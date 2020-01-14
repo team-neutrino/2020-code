@@ -46,9 +46,8 @@ public class RobotContainer
     public final IntakeSubsystem m_Intake = new IntakeSubsystem();
     public Joystick m_leftJoystick = new Joystick(0);
     public Joystick m_rightJoystick = new Joystick(1);
-    XboxController m_OperatorController = new XboxController(2);
-    XboxController m_xboxController = new XboxController(0);
-    JoystickButton m_A = new JoystickButton(m_xboxController, Button.kA.value);
+    XboxController m_OperatorController = new XboxController(ControllerPorts.XBOX_CONTROLLER_PORT);
+    JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
     private final Trajectory m_Trajectory = ExampleTrajectory.exampleTraj;
     private final NeutrinoRamseteCommand m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
 

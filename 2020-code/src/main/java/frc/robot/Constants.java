@@ -45,7 +45,7 @@ public final class Constants {
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
-        static DifferentialDriveVoltageConstraint autoVoltageConstraint = //this used to be type var, why?
+        public static final DifferentialDriveVoltageConstraint autoVoltageConstraint = //this used to be type var, why?
             new DifferentialDriveVoltageConstraint(
                 new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
                                         DriveConstants.KV_VOLT_SECONDS_PER_METER,
@@ -56,10 +56,10 @@ public final class Constants {
 
     public static final class IntakeConstants {
         public static final int INTAKE_MOTOR_POWER = 1;
-        public static final int MOTOR_CONTROLLER_INTAKE = 1;
+        public static final int MOTOR_CONTROLLER_INTAKE = 15;
     }
 
     public static final class ControllerPorts {
-        public static final int XBoxControllerPort = 0;
+        public static final int XBOX_CONTROLLER_PORT = 2;
     }
 }
