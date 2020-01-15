@@ -27,8 +27,6 @@ public class RotateWheel extends CommandBase {
     m_shooter = shooter;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
-    wheelPid = new PIDController(Constants.ShooterConstants.WheelP, Constants.ShooterConstants.WheelI,
-    Constants.ShooterConstants.WheelD);
   }
 
   // Called when the command is initially scheduled.

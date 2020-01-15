@@ -51,7 +51,6 @@ public final class Constants {
         public static final int WheelEncoderPort1 = 0;
         public static final int WheelEncoderPort2 = 0;
         public static final int WheelEncoderDistancePerPulse = 0;
-
         public static final int WheelP = 0;
         public static final int WheelI = 0;
         public static final int WheelD = 0;
