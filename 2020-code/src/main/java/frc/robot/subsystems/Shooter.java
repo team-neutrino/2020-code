@@ -41,6 +41,11 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  public double setpoint()
+  {
+    return 0;
+  }
+
   public double getWheelEncoderDistance()
   {
     return wheelEncoder.getDistance();

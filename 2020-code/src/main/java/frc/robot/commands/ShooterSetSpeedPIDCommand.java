@@ -26,7 +26,7 @@ public class ShooterSetSpeedPIDCommand extends PIDCommand {
         // This should return the measurement
         () -> m_shooter.getWheelEncoderDistance(),
         // This should return the setpoint (can also be a constant)
-        () -> 500,
+        () -> m_shooter.setpoint(),
         // This uses the output
         output -> m_shooter.setWheelMotor(output));
     // Use addRequirements() here to declare subsystem dependencies.
