@@ -17,16 +17,15 @@ import frc.robot.subsystems.IntakeSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class IntakeGetBallCommand extends ParallelCommandGroup {
-  /**
-   * Creates a new IntakeGetBallCommand.
-   */
-  public IntakeGetBallCommand(IntakeSubsystem m_Intake) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());super();
-    super(
-          new InstantCommand(m_Intake::setPusherOut),
-          new SequentialCommandGroup(
-              new WaitCommand(1),new InstantCommand (()-> m_Intake.setIntake(true)))
-        );
-  }
+    /**
+    * Creates a new IntakeGetBallCommand.
+    */
+    public IntakeGetBallCommand(IntakeSubsystem m_Intake)
+    {
+        super(
+                new InstantCommand(m_Intake::setPusherOut),
+                new SequentialCommandGroup(
+                    new WaitCommand(1), new InstantCommand (()-> m_Intake.setIntake(true)))
+            );
+    }
 }

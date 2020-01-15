@@ -18,18 +18,21 @@ import frc.robot.Constants.IntakeConstants;
 /**
  * Add your docs here.
  */
-public class IntakeSubsystem {
-    private CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.MOTOR_CONTROLLER_INTAKE, MotorType.kBrushless);
+public class IntakeSubsystem
+{
+    private CANSparkMax intakeMotor = 
+        new CANSparkMax(IntakeConstants.MOTOR_CONTROLLER_INTAKE, MotorType.kBrushless);
     private PowerDistributionPanel PDP = new PowerDistributionPanel();
     private DoubleSolenoid pusher = new DoubleSolenoid(0, 1);
 
-    public void setIntake(boolean on) {
+    public void setIntake(boolean on)
+    {
         if (on == true) 
             intakeMotor.set(IntakeConstants.INTAKE_MOTOR_POWER);
         else 
             intakeMotor.set(0);
-
     }
+
     public void setPusherIn()
     {
         pusher.set(DoubleSolenoid.Value.kReverse);
@@ -40,7 +43,8 @@ public class IntakeSubsystem {
         pusher.set(DoubleSolenoid.Value.kForward);
     }
   
-    public void getPDPCurrent() {
+    public void getPDPCurrent()
+    {
         double currentIntakeMotor = PDP.getCurrent(IntakeConstants.MOTOR_CONTROLLER_INTAKE);
         System.out.println("MOTOR_CONTROLLER_INTAKE: " + currentIntakeMotor);
     }

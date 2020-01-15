@@ -14,16 +14,16 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class IntakeRetractCommand extends ParallelCommandGroup {
-  /**
-   * Creates a new IntakeRetractCommand.
-   */
-  public IntakeRetractCommand(IntakeSubsystem m_Intake) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());super();
-    super(
-      new InstantCommand(() -> m_Intake.setIntake(false)),
-      new InstantCommand(() -> m_Intake.setPusherIn())
-    );
-  }
+public class IntakeRetractCommand extends ParallelCommandGroup
+{
+    /**
+    * Creates a new IntakeRetractCommand.
+    */
+    public IntakeRetractCommand(IntakeSubsystem m_Intake)
+    {
+        super(
+            new InstantCommand(() -> m_Intake.setIntake(false)),
+            new InstantCommand(() -> m_Intake.setPusherIn())
+        );
+    }
 }

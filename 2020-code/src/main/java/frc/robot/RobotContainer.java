@@ -33,7 +33,6 @@ import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeDataCommand;
 
-
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -64,10 +63,10 @@ public class RobotContainer
      */
     public RobotContainer()
     {
-      final Command tankDriveCommand = new RunCommand(
-        () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
-      m_Drive.setDefaultCommand(tankDriveCommand);
-      configureButtonBindings();
+        final Command tankDriveCommand = new RunCommand(
+            () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
+        m_Drive.setDefaultCommand(tankDriveCommand);
+        configureButtonBindings();
     }
 
     /**
@@ -78,10 +77,10 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-      m_A.whenPressed(new IntakeGetBallCommand(m_Intake))
-          .whenReleased(new IntakeRetractCommand(m_Intake));
-      m_B.whenPressed(new IntakeDataCommand(m_Intake));
-      m_X.whenPressed(new DriveDataCommand(m_Drive));
+        m_A.whenPressed(new IntakeGetBallCommand(m_Intake))
+            .whenReleased(new IntakeRetractCommand(m_Intake));
+        m_B.whenPressed(new IntakeDataCommand(m_Intake));
+        m_X.whenPressed(new DriveDataCommand(m_Drive));
     }
 
     /**
@@ -89,8 +88,8 @@ public class RobotContainer
      *
      * @return the command to run in autonomous
      */
-  public Command getAutonomousCommand()
+    public Command getAutonomousCommand()
     {
-       return m_autoCommand;
-     }
+        return m_autoCommand;
+    }
 }

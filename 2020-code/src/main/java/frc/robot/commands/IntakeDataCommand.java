@@ -15,16 +15,16 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class IntakeDataCommand extends ParallelCommandGroup {
-  /**
-   * Creates a new OutputDataCommand.
-   */
-  public IntakeDataCommand(IntakeSubsystem Intake) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());super();
-    super(
-          new InstantCommand(() -> Intake.setIntake(true)),
-          new InstantCommand(Intake::getPDPCurrent)
-    );
-  }
+public class IntakeDataCommand extends ParallelCommandGroup
+{
+    /**
+    * Creates a new OutputDataCommand.
+    */
+    public IntakeDataCommand(IntakeSubsystem Intake)
+    {
+        super(
+            new InstantCommand(() -> Intake.setIntake(true)),
+            new InstantCommand(Intake::getPDPCurrent)
+        );
+    }
 }
