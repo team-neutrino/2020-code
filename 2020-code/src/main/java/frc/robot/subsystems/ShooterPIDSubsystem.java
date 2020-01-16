@@ -5,28 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Shooter;
 
 @SuppressWarnings({"all"})
-public class RotateWheel extends CommandBase {
-
-  private final Shooter m_shooter;
-  private PIDController wheelPid;
-
+public class ShooterPIDSubsystem extends CommandBase {
+  private final SimpleMotorFeedforward m_shooterFeedforward = new SimpleMotorFeedforward(Constants.ShooterConstants.kSVolts,
+  Constants.ShooterConstants.kVVoltSecondsPerRotation);
+  private final Encoder wheelEncoder = new Encoder(Constants.ShooterConstants.WheelEncoderPort1,
+    Constants.ShooterConstants.WheelEncoderPort2);
   /**
-   * Creates a new RotateWheel.
+   * Creates a new ShooterPIDSubsystem.
    */
-  public RotateWheel(Shooter shooter) {
-    m_shooter = shooter;
+  public ShooterPIDSubsystem() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -37,9 +33,7 @@ public class RotateWheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
   }
-
 
   // Called once the command ends or is interrupted.
   @Override

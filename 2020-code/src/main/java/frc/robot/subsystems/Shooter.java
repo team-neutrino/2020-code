@@ -48,7 +48,7 @@ public class Shooter extends SubsystemBase {
 
   public double getWheelEncoderDistance()
   {
-    return wheelEncoder.getDistance();
+    return wheelEncoder.getRate();
   }
 
   public TalonSRX getWheelMotor()

@@ -54,5 +54,7 @@ public final class Constants {
         public static final int WheelP = 0;
         public static final int WheelI = 0;
         public static final int WheelD = 0;
+        public static final double kSVolts = 0;
+        public static final double kVVoltSecondsPerRotation = 0;
     }
 }
