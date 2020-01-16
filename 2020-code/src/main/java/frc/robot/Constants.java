@@ -58,6 +58,12 @@ public final class Constants {
         public static final int INTAKE_MOTOR_POWER = 1;
         public static final int MOTOR_CONTROLLER_INTAKE = 15;
     }
+    public static final class HopperConstants
+    {
+        public static final double HOPPER_MOTOR_POWER = 1;
+        public static final int MOTOR_CONTROLLER_HOPPER = 6;
+       
+    }
 
     public static final class ControllerPorts {
         public static final int XBOX_CONTROLLER_PORT = 2;
