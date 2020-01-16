@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -24,6 +25,8 @@ public class Shooter extends SubsystemBase {
   private TalonSRX wheelMotor;
   //TODO find out what kind of encoder we are using
   private Encoder wheelEncoder;
+  private final SimpleMotorFeedforward m_shooterFeedforward = new SimpleMotorFeedforward(Constants.ShooterConstants.kSVolts,
+  Constants.ShooterConstants.kVVoltSecondsPerRotation);
   /**
    * Creates a new Shooter.
    */
@@ -60,5 +63,4 @@ public class Shooter extends SubsystemBase {
   {
     wheelMotor.set(ControlMode.PercentOutput, demand);
   }
-
 }

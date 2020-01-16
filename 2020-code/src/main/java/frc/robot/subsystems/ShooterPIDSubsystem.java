@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,13 +18,16 @@ import frc.robot.Constants;
 public class ShooterPIDSubsystem extends CommandBase {
   private final SimpleMotorFeedforward m_shooterFeedforward = new SimpleMotorFeedforward(Constants.ShooterConstants.kSVolts,
   Constants.ShooterConstants.kVVoltSecondsPerRotation);
-  private final Encoder wheelEncoder = new Encoder(Constants.ShooterConstants.WheelEncoderPort1,
-    Constants.ShooterConstants.WheelEncoderPort2);
+  private final Encoder m_shooterWheelEncoder = new Encoder(Constants.ShooterConstants.WheelEncoderPort1,
+  Constants.ShooterConstants.WheelEncoderPort2);
+  private final TalonSRX m_shooterWheelMotor = new TalonSRX(Constants.ShooterConstants.WheelMotorPort);
+    
   /**
    * Creates a new ShooterPIDSubsystem.
    */
   public ShooterPIDSubsystem() {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_shooterWheelEncoder.setDistancePerPulse(Constants.ShooterConstants.WheelEncoderDistancePerPulse);
   }
 
   // Called when the command is initially scheduled.
