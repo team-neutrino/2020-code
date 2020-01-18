@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.commands.NeutrinoRamseteCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LED;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -47,6 +48,7 @@ public class RobotContainer
 
     public final DriveSubsystem m_Drive = new DriveSubsystem();
     public final IntakeSubsystem m_Intake = new IntakeSubsystem();
+    public final LED m_Led;
 
     public Joystick m_leftJoystick = new Joystick(0);
     public Joystick m_rightJoystick = new Joystick(1);
@@ -64,6 +66,8 @@ public class RobotContainer
      */
     public RobotContainer()
     {
+      
+      m_Led = new LED();
       final Command tankDriveCommand = new RunCommand(
         () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
       m_Drive.setDefaultCommand(tankDriveCommand);
