@@ -48,8 +48,8 @@ public class RobotContainer
     public final DriveSubsystem m_Drive = new DriveSubsystem();
     public final IntakeSubsystem m_Intake = new IntakeSubsystem();
 
-    public Joystick m_leftJoystick = new Joystick(0);
-    public Joystick m_rightJoystick = new Joystick(1);
+    public Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
+    public Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
     XboxController m_OperatorController = new XboxController(ControllerPorts.XBOX_CONTROLLER_PORT);
     JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
@@ -65,7 +65,7 @@ public class RobotContainer
     public RobotContainer()
     {
       final Command tankDriveCommand = new RunCommand(
-        () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
+        () -> m_Drive.tankDrive(joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
       m_Drive.setDefaultCommand(tankDriveCommand);
       configureButtonBindings();
     }
@@ -92,5 +92,18 @@ public class RobotContainer
   public Command getAutonomousCommand()
     {
        return m_autoCommand;
-     }
+    }
+
+  /**
+   * 
+   */
+  private double joystickProcessor(double input)
+  {
+    if(Math.abs(input) > Constants.JoystickConstants.DEADZONE_SIZE)
+    {
+      return Math.pow((((1/(1-Constants.JoystickConstants.DEADZONE_SIZE)) * (Math.abs(input) - 1.0) + 1.0) * (Math.abs(input)/input)), Constants.JoystickConstants.JOYSTICK_CURVE);
+    } else {
+      return 0.0;
+    }
+  }
 }
