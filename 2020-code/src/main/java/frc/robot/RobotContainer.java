@@ -101,7 +101,9 @@ public class RobotContainer
   {
     if(Math.abs(input) > Constants.JoystickConstants.DEADZONE_SIZE)
     {
-      return Math.pow((((1/(1-Constants.JoystickConstants.DEADZONE_SIZE)) * (Math.abs(input) - 1.0) + 1.0) * (Math.abs(input)/input)), Constants.JoystickConstants.JOYSTICK_CURVE);
+      double absoluteValue = Math.abs(input);
+      double deadzoneCorrectedAbsoluteValue = (1/(1-Constants.JoystickConstants.DEADZONE_SIZE)) * (absoluteValue - 1.0) + 1.0;
+      return Math.pow(deadzoneCorrectedAbsoluteValue,Constants.JoystickConstants.JOYSTICK_CURVE) * (absoluteValue/input);
     } else {
       return 0.0;
     }
