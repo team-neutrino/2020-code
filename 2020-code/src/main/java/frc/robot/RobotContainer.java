@@ -16,6 +16,7 @@ import frc.robot.commands.IntakeRetractCommand;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.commands.NeutrinoRamseteCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -47,6 +48,7 @@ public class RobotContainer
 
     public final DriveSubsystem m_Drive = new DriveSubsystem();
     public final IntakeSubsystem m_Intake = new IntakeSubsystem();
+    public final HopperSubsystem m_Hopper = new HopperSubsystem();
 
     public Joystick m_leftJoystick = new Joystick(0);
     public Joystick m_rightJoystick = new Joystick(1);
@@ -54,6 +56,7 @@ public class RobotContainer
     JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
+    JoystickButton m_Y = new JoystickButton(m_OperatorController, Button.kY.value);
     private final Trajectory m_Trajectory = ExampleTrajectory.exampleTraj;
     private final NeutrinoRamseteCommand m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
     private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
@@ -78,10 +81,13 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-      m_A.whenPressed(new IntakeGetBallCommand(m_Intake))
-          .whenReleased(new IntakeRetractCommand(m_Intake));
-      m_B.whenPressed(new IntakeDataCommand(m_Intake));
-      m_X.whenPressed(new DriveDataCommand(m_Drive));
+        m_A.whenPressed(new IntakeGetBallCommand(m_Intake))
+            .whenReleased(new IntakeRetractCommand(m_Intake));
+        m_B.whenPressed(new IntakeDataCommand(m_Intake));
+        m_X.whenPressed(new DriveDataCommand(m_Drive));
+        m_Y.whenPressed(new InstantCommand(()->m_Hopper.RunHopper(true)))
+          .whenReleased(new InstantCommand(()->m_Hopper.RunHopper(false)));
+        m_Y.whenHeld(new StartEndCommand(()->m_Hopper.RunHopper(true), ()->m_Hopper.RunHopper(false)));
     }
 
     /**
@@ -90,7 +96,7 @@ public class RobotContainer
      * @return the command to run in autonomous
      */
   public Command getAutonomousCommand()
-    {
-       return m_autoCommand;
-     }
+  {
+      return m_autoCommand;
+  }
 }

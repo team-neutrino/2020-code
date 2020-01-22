@@ -17,13 +17,13 @@ import frc.robot.subsystems.DriveSubsystem;
 
 
 public class NeutrinoRamseteCommand extends RamseteCommand {
-  /**
-   * Creates a new NeutrinoRamseteCommand.
-   */
+    /**
+     * Creates a new NeutrinoRamseteCommand.
+     */
 
-   private DriveSubsystem m_Drive; 
+    private DriveSubsystem m_Drive; 
 
-  public NeutrinoRamseteCommand(DriveSubsystem p_Drive, Trajectory p_Trajectory) {
+    public NeutrinoRamseteCommand(DriveSubsystem p_Drive, Trajectory p_Trajectory) {
 
     super(
         p_Trajectory,
@@ -37,16 +37,16 @@ public class NeutrinoRamseteCommand extends RamseteCommand {
         new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0),
         new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0),
         // RamseteCommand passes volts to the callback
-       p_Drive::tankDriveVolts,
-       p_Drive
-    );
-    m_Drive = p_Drive;
+        p_Drive::tankDriveVolts,
+        p_Drive
+        );
+        m_Drive = p_Drive;
 
   }
 
   @Override
-  public void end(boolean interrupted) {
-    super.end(interrupted);
-    m_Drive.tankDriveVolts(0,0);
-  }
+    public void end(boolean interrupted) {
+        super.end(interrupted);
+        m_Drive.tankDriveVolts(0,0);
+    }
 }

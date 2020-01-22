@@ -19,18 +19,18 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 public class DriveSubsystem extends SubsystemBase{
 
 
-   private PowerDistributionPanel PDP = new PowerDistributionPanel();
-   private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1, MotorType.kBrushless);
-   private CANSparkMax m_leftMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT2, MotorType.kBrushless);
-   private CANSparkMax m_rightMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT1, MotorType.kBrushless);
-   private CANSparkMax m_rightMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT2, MotorType.kBrushless);
+    private PowerDistributionPanel PDP = new PowerDistributionPanel();
+    private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1, MotorType.kBrushless);
+    private CANSparkMax m_leftMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT2, MotorType.kBrushless);
+    private CANSparkMax m_rightMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT1, MotorType.kBrushless);
+    private CANSparkMax m_rightMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT2, MotorType.kBrushless);
 
-   private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
-   private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
-   private CANEncoder m_lEncoder = new CANEncoder(m_leftMotor1);
-   private CANEncoder m_rEncoder = new CANEncoder(m_rightMotor1);
-   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
-   private final DifferentialDriveOdometry m_odometry;
+    private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
+    private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
+    private CANEncoder m_lEncoder = new CANEncoder(m_leftMotor1);
+    private CANEncoder m_rEncoder = new CANEncoder(m_rightMotor1);
+    private AHRS m_navX = new AHRS(SPI.Port.kMXP);
+    private final DifferentialDriveOdometry m_odometry;
 
     public DriveSubsystem()
     {

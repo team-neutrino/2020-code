@@ -14,7 +14,7 @@ public class HopperSubsystem extends SubsystemBase
     {
 
     }
-    public void RunHooper(boolean on)
+    public void RunHopper(boolean on)
     {
         if (on == true){
             hopperMotor.set(HopperConstants.HOPPER_MOTOR_POWER);
