@@ -11,13 +11,15 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class LED extends SubsystemBase {
-  AddressableLED led=new AddressableLED(0);
+public class LEDSubsystem extends SubsystemBase 
+{
+  AddressableLED led = new AddressableLED(0);
   AddressableLEDBuffer buffer = new AddressableLEDBuffer(17);
   /**
    * Creates a new LED.
    */
-  public LED() {
+  public LEDSubsystem() 
+  {
     led.setLength(17);
     for ( int i = 0; i < 17; i++ )
     {
@@ -25,10 +27,10 @@ public class LED extends SubsystemBase {
     }
     led.setData(buffer);
     led.start();
-
   }
 
   @Override
-  public void periodic() {
+  public void periodic() 
+  {
   }
 }
