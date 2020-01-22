@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.commands.NeutrinoRamseteCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -34,7 +33,6 @@ import frc.robot.commands.IntakeDataCommand;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   public final DriveSubsystem m_Drive = new DriveSubsystem();
   public final IntakeSubsystem m_Intake = new IntakeSubsystem();
