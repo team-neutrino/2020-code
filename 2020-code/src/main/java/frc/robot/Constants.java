@@ -73,14 +73,14 @@ public final class Constants {
     public static final class ShooterConstants
     {
         //TODO get actual constants
-        public static final int WheelMotorPort = 0;
-        public static final int WheelEncoderPort1 = 0;
-        public static final int WheelEncoderPort2 = 0;
-        public static final int WheelEncoderDistancePerPulse = 0;
-        public static final int WheelP = 0;
-        public static final int WheelI = 0;
-        public static final int WheelD = 0;
-        public static final double kSVolts = 0;
-        public static final double kVVoltSecondsPerRotation = 0;
+        public static final int WHEEL_MOTOR_PORT = 14;
+        public static final int WHEEL_ENCODER_PORT_1 = 0;
+        public static final int WHEEL_ENCODER_PORT_2 = 1;
+        public static final int WHEEL_ENCODER_DIST_PER_PULSE = 0;
+        public static final double WHEEL_P = 0;
+        public static final double WHEEL_I = 0;
+        public static final double WHEEL_D = 0;
+        public static final double KS_VOLTS = 0;
+        public static final double KV_VOLT_SEC_PER_ROTATION = 0;
     }
 }

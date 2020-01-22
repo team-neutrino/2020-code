@@ -22,11 +22,11 @@ import frc.robot.Constants;
 @SuppressWarnings({"all"})
 public class Shooter extends SubsystemBase {
 
-  private TalonSRX wheelMotor;
+  private TalonSRX m_wheelMotor;
   //TODO find out what kind of encoder we are using
-  private Encoder wheelEncoder;
-  private final SimpleMotorFeedforward m_shooterFeedforward = new SimpleMotorFeedforward(Constants.ShooterConstants.kSVolts,
-  Constants.ShooterConstants.kVVoltSecondsPerRotation);
+  private Encoder m_wheelEncoder;
+  private final SimpleMotorFeedforward m_shooterFeedforward = new SimpleMotorFeedforward(Constants.ShooterConstants.KS_VOLTS,
+  Constants.ShooterConstants.KV_VOLT_SEC_PER_ROTATION);
   /**
    * Creates a new Shooter.
    */
@@ -34,10 +34,10 @@ public class Shooter extends SubsystemBase {
 
   public Shooter() 
   {
-    wheelMotor = new TalonSRX(Constants.ShooterConstants.WheelMotorPort);
-    wheelEncoder = new Encoder(Constants.ShooterConstants.WheelEncoderPort1,
-    Constants.ShooterConstants.WheelEncoderPort2);
-    wheelEncoder.setDistancePerPulse(Constants.ShooterConstants.WheelEncoderDistancePerPulse);
+    m_wheelMotor = new TalonSRX(Constants.ShooterConstants.WHEEL_MOTOR_PORT);
+    m_wheelEncoder = new Encoder(Constants.ShooterConstants.WHEEL_ENCODER_PORT_1,
+    Constants.ShooterConstants.WHEEL_ENCODER_PORT_2);
+    m_wheelEncoder.setDistancePerPulse(Constants.ShooterConstants.WHEEL_ENCODER_DIST_PER_PULSE);
   }
 
   @Override
@@ -53,16 +53,16 @@ public class Shooter extends SubsystemBase {
 
   public double getWheelEncoderDistance()
   {
-    return wheelEncoder.getRate();
+    return m_wheelEncoder.getRate();
   }
 
   public TalonSRX getWheelMotor()
   {
-    return wheelMotor;
+    return m_wheelMotor;
   }
 
   public void setWheelMotor(double demand)
   {
-    wheelMotor.set(ControlMode.PercentOutput, demand);
+    m_wheelMotor.set(ControlMode.PercentOutput, demand);
   }
 }

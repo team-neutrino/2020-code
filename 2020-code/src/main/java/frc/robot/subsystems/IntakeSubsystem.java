@@ -7,13 +7,10 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import java.util.ArrayList;
 import frc.robot.Constants.IntakeConstants;
 
 /**

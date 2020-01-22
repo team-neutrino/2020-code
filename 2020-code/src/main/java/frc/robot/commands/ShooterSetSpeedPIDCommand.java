@@ -23,7 +23,7 @@ public class ShooterSetSpeedPIDCommand extends PIDCommand {
   {
     super(
         // The controller that the command will use
-        new PIDController(Constants.ShooterConstants.WheelP, Constants.ShooterConstants.WheelI, Constants.ShooterConstants.WheelD),
+        new PIDController(Constants.ShooterConstants.WHEEL_P, Constants.ShooterConstants.WHEEL_I, Constants.ShooterConstants.WHEEL_D),
         // This should return the measurement
         () -> m_shooter.getWheelEncoderDistance(),
         // This should return the setpoint (can also be a constant)
