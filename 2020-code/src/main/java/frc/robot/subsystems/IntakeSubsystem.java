@@ -35,13 +35,6 @@ public class IntakeSubsystem extends SubsystemBase {
         }
 
     }
-    public void setPusherIn()
-    {
-    }
-
-    public void setPusherOut()
-    {
-    }
   
     public void getPDPCurrent() 
     {
