@@ -10,7 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterSubsystem;;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -19,11 +19,11 @@ public class ShooterSetSpeedPIDCommand extends PIDCommand {
   /**
    * Creates a new ShooterSetSpeedPIDCommand.
    */
-  public ShooterSetSpeedPIDCommand(Shooter m_shooter)
+  public ShooterSetSpeedPIDCommand(ShooterSubsystem m_shooter)
   {
     super(
         // The controller that the command will use
-        new PIDController(Constants.ShooterConstants.WheelP, Constants.ShooterConstants.WheelI, Constants.ShooterConstants.WheelD),
+        new PIDController(Constants.ShooterConstants.WHEEL_P, Constants.ShooterConstants.WHEEL_I, Constants.ShooterConstants.WHEEL_D),
         // This should return the measurement
         () -> m_shooter.getWheelEncoderDistance(),
         // This should return the setpoint (can also be a constant)
