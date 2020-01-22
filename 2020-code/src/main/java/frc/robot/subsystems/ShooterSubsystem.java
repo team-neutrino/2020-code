@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 @SuppressWarnings({"all"})
-public class Shooter extends SubsystemBase {
+public class ShooterSubsystem extends SubsystemBase {
 
   private TalonSRX m_wheelMotor;
   //TODO find out what kind of encoder we are using
@@ -32,11 +32,11 @@ public class Shooter extends SubsystemBase {
    */
 
 
-  public Shooter() 
+  public ShooterSubsystem() 
   {
     m_wheelMotor = new TalonSRX(Constants.ShooterConstants.WHEEL_MOTOR_PORT);
     m_wheelEncoder = new Encoder(Constants.ShooterConstants.WHEEL_ENCODER_PORT_1,
-    Constants.ShooterConstants.WHEEL_ENCODER_PORT_2);
+      Constants.ShooterConstants.WHEEL_ENCODER_PORT_2);
     m_wheelEncoder.setDistancePerPulse(Constants.ShooterConstants.WHEEL_ENCODER_DIST_PER_PULSE);
   }
 
@@ -54,11 +54,6 @@ public class Shooter extends SubsystemBase {
   public double getWheelEncoderDistance()
   {
     return m_wheelEncoder.getRate();
-  }
-
-  public TalonSRX getWheelMotor()
-  {
-    return m_wheelMotor;
   }
 
   public void setWheelMotor(double demand)
