@@ -19,7 +19,8 @@ public class ShooterSetSpeedPIDCommand extends PIDCommand {
   /**
    * Creates a new ShooterSetSpeedPIDCommand.
    */
-  public ShooterSetSpeedPIDCommand(Shooter m_shooter) {
+  public ShooterSetSpeedPIDCommand(Shooter m_shooter)
+  {
     super(
         // The controller that the command will use
         new PIDController(Constants.ShooterConstants.WheelP, Constants.ShooterConstants.WheelI, Constants.ShooterConstants.WheelD),
@@ -35,7 +36,8 @@ public class ShooterSetSpeedPIDCommand extends PIDCommand {
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished()
+  {
     return false;
   }
 }

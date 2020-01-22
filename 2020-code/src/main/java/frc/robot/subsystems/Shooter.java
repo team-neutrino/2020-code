@@ -32,7 +32,8 @@ public class Shooter extends SubsystemBase {
    */
 
 
-  public Shooter() {
+  public Shooter() 
+  {
     wheelMotor = new TalonSRX(Constants.ShooterConstants.WheelMotorPort);
     wheelEncoder = new Encoder(Constants.ShooterConstants.WheelEncoderPort1,
     Constants.ShooterConstants.WheelEncoderPort2);
@@ -40,7 +41,8 @@ public class Shooter extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
+  public void periodic()
+  {
     // This method will be called once per scheduler run
   }
 
