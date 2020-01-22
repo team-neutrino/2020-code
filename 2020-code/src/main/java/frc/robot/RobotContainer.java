@@ -11,8 +11,6 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.IntakeGetBallCommand;
-import frc.robot.commands.IntakeRetractCommand;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.commands.NeutrinoRamseteCommand;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -75,7 +73,6 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_A.whenPressed(new IntakeGetBallCommand(m_Intake)).whenReleased(new IntakeRetractCommand(m_Intake));
     m_B.whenPressed(new IntakeDataCommand(m_Intake));
     m_X.whenPressed(new DriveDataCommand(m_Drive));
   }
