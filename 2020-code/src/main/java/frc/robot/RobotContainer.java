@@ -27,6 +27,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.*;
 import static edu.wpi.first.wpilibj.XboxController.Button;
+
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
@@ -46,6 +48,7 @@ public class RobotContainer {
   public final DriveSubsystem m_Drive = new DriveSubsystem();
   public final IntakeSubsystem m_Intake = new IntakeSubsystem();
   public final LEDSubsystem m_Led;
+  public final ClimberSubsystem m_climber;
 
   public Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
   public Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
@@ -62,6 +65,7 @@ public class RobotContainer {
    */
   public RobotContainer() 
   {
+    m_climber = new ClimberSubsystem();
     m_Led = new LEDSubsystem();
     final Command tankDriveCommand = new RunCommand(
         () -> m_Drive.tankDrive(joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())),
