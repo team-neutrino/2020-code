@@ -22,7 +22,6 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
-import frc.robot.commands.IntakeDataCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -46,7 +45,6 @@ public class RobotContainer {
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
     private final Trajectory m_Trajectory = ExampleTrajectory.exampleTraj;
     private final NeutrinoRamseteCommand m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
-    private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -69,7 +67,6 @@ public class RobotContainer {
      */
     private void configureButtonBindings() 
     {
-        m_B.whenPressed(new IntakeDataCommand(m_Intake));
         m_X.whenPressed(new DriveDataCommand(m_Drive));
     }
 
