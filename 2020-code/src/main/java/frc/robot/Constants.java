@@ -62,4 +62,25 @@ public final class Constants {
     public static final class ControllerPorts {
         public static final int XBOX_CONTROLLER_PORT = 2;
     }
+
+    public static final class JoystickConstants {
+        public static final int LEFT_JOYSTICK_PORT = 0;
+        public static final int RIGHT_JOYSTICK__PORT = 1;
+        public static final double DEADZONE_SIZE = 0.1;
+        public static final double JOYSTICK_CURVE = 1.0;
+    }
+
+    public static final class ShooterConstants
+    {
+        //TODO get actual constants
+        public static final int WHEEL_MOTOR_PORT = 14;
+        public static final int WHEEL_ENCODER_PORT_1 = 0;
+        public static final int WHEEL_ENCODER_PORT_2 = 1;
+        public static final int WHEEL_ENCODER_DIST_PER_PULSE = 0;
+        public static final double WHEEL_P = 0;
+        public static final double WHEEL_I = 0;
+        public static final double WHEEL_D = 0;
+        public static final double KS_VOLTS = 0;
+        public static final double KV_VOLT_SEC_PER_ROTATION = 0;
+    }
 }
