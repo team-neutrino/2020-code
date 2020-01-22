@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.commands.NeutrinoRamseteCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -44,6 +45,7 @@ public class RobotContainer {
 
   public final DriveSubsystem m_Drive = new DriveSubsystem();
   public final IntakeSubsystem m_Intake = new IntakeSubsystem();
+  public final LEDSubsystem m_Led;
 
   public Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
   public Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
@@ -58,7 +60,9 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {
+  public RobotContainer() 
+  {
+    m_Led = new LEDSubsystem();
     final Command tankDriveCommand = new RunCommand(
         () -> m_Drive.tankDrive(joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())),
         m_Drive);
@@ -72,7 +76,8 @@ public class RobotContainer {
    * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
+  private void configureButtonBindings() 
+  {
     m_B.whenPressed(new IntakeDataCommand(m_Intake));
     m_X.whenPressed(new DriveDataCommand(m_Drive));
   }
@@ -82,21 +87,26 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() 
+  {
     return m_autoCommand;
   }
 
   /**
    * 
    */
-  private double joystickProcessor(double input) {
-    if (Math.abs(input) > Constants.JoystickConstants.DEADZONE_SIZE) {
+  private double joystickProcessor(double input) 
+  {
+    if (Math.abs(input) > Constants.JoystickConstants.DEADZONE_SIZE) 
+    {
       double absoluteValue = Math.abs(input);
       double deadzoneCorrectedAbsoluteValue = (1 / (1 - Constants.JoystickConstants.DEADZONE_SIZE))
           * (absoluteValue - 1.0) + 1.0;
       return Math.pow(deadzoneCorrectedAbsoluteValue, Constants.JoystickConstants.JOYSTICK_CURVE)
           * (absoluteValue / input);
-    } else {
+    } 
+    else 
+    {
       return 0.0;
     }
   }
