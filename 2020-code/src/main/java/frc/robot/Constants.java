@@ -69,4 +69,18 @@ public final class Constants {
         public static final double DEADZONE_SIZE = 0.1;
         public static final double JOYSTICK_CURVE = 1.0;
     }
+
+    public static final class ShooterConstants
+    {
+        //TODO get actual constants
+        public static final int WheelMotorPort = 0;
+        public static final int WheelEncoderPort1 = 0;
+        public static final int WheelEncoderPort2 = 0;
+        public static final int WheelEncoderDistancePerPulse = 0;
+        public static final int WheelP = 0;
+        public static final int WheelI = 0;
+        public static final int WheelD = 0;
+        public static final double kSVolts = 0;
+        public static final double kVVoltSecondsPerRotation = 0;
+    }
 }
