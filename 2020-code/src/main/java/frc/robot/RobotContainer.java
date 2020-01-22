@@ -86,7 +86,9 @@ public class RobotContainer {
   }
 
   /**
+   * Applies deadzoning and curve to the joystick input
    * 
+   * @return A processed joystick input
    */
   private double joystickProcessor(double input) 
   {
