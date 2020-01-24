@@ -1,4 +1,4 @@
-name: Java CI
+name: Build
 
 on:
   push:
@@ -21,3 +21,4 @@ jobs:
         run: |
           chmod +x ./2020-code/gradlew
           ./2020-code/gradlew build
+          ls
