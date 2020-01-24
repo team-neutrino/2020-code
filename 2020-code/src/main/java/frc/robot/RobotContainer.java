@@ -73,6 +73,7 @@ public class RobotContainer {
     {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenPressed(new InstantCommand(m_Hopper::intake),true).whenReleased(m_Hopper::stop,m_Hopper);
+        m_B.whenPressed(m_Hopper::reverse).whenReleased(m_Hopper::stop,m_Hopper);
     }
 
     /**
