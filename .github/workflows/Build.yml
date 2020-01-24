@@ -19,9 +19,6 @@ jobs:
           java-version: "11"
       - name: Gradle Build
         run: |
-          chmod +x ./2020-code/gradlew
-          ./2020-code/gradlew build
-          ls
-          ls 2020-code
-          ls 2020-code/build
-          ls 2020-code/build/libs
+          cd 2020-code
+          chmod +x ./gradlew
+          ./gradlew build
