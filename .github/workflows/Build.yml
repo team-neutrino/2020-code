@@ -22,3 +22,4 @@ jobs:
           cd 2020-code
           chmod +x ./gradlew
           ./gradlew build
+          du -h build/libs/2020-code.jar
