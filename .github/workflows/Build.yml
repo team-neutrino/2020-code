@@ -22,3 +22,6 @@ jobs:
           chmod +x ./2020-code/gradlew
           ./2020-code/gradlew build
           ls
+          ls 2020-code
+          ls 2020-code/build
+          ls 2020-code/build/libs
