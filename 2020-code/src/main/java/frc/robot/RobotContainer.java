@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.commands.NeutrinoRamseteCommand;
+import frc.robot.commands.ShooterDirectCurrentCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -25,6 +26,7 @@ import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeDataCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
+import frc.robot.commands.ShooterDirectCurrentCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -51,6 +53,7 @@ public class RobotContainer {
   private final NeutrinoRamseteCommand m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
   private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
   private final ShooterSetSpeedPIDCommand m_shooterCommand = new ShooterSetSpeedPIDCommand(m_Shooter);
+  private final ShooterDirectCurrentCommand m_shooterCurrentCommand = new ShooterDirectCurrentCommand(m_Shooter);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -75,7 +78,7 @@ public class RobotContainer {
   {
     m_B.whenPressed(new IntakeDataCommand(m_Intake));
     m_X.whenPressed(new DriveDataCommand(m_Drive));
-    m_A.whenPressed(new ShooterSetSpeedPIDCommand(m_Shooter));
+    m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
   }
 
   /**

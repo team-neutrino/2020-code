@@ -11,14 +11,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterDirectCurrentCommand extends CommandBase {
+  private ShooterSubsystem m_shooter;
   /**
    * Creates a new ShooterDirectCurrent.
    */
-  public ShooterDirectCurrentCommand(ShooterSubsystem m_shooter)
+  public ShooterDirectCurrentCommand(ShooterSubsystem p_shooter)
   {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooter);
-    m_shooter.setWheelMotor(1);
+    addRequirements(p_shooter);
+    m_shooter = p_shooter;
   }
 
   // Called when the command is initially scheduled.
@@ -31,13 +32,14 @@ public class ShooterDirectCurrentCommand extends CommandBase {
   @Override
   public void execute()
   {
-    
+    m_shooter.setWheelMotor(1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted)
   {
+    m_shooter.setWheelMotor(0);
   }
 
   // Returns true when the command should end.
