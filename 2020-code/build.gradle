@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2020.1.2"
+    id "edu.wpi.first.GradleRIO" version "2020.2.2"
     id "com.diffplug.gradle.spotless" version "3.26.1"
 }
 
@@ -71,9 +71,5 @@ jar {
 spotless {
   java {
     googleJavaFormat()
-    // optional: you can specify a specific version and/or switch to AOSP style
-    googleJavaFormat('1.1').aosp()
-    // you can then layer other format steps, such as
-    licenseHeaderFile 'spotless.license.java'
   }
 }
