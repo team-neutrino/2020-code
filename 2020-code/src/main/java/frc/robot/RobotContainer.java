@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.commands.NeutrinoRamseteCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -21,6 +22,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.*;
 import static edu.wpi.first.wpilibj.XboxController.Button;
+
+import java.nio.file.Paths;
+
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
@@ -49,8 +53,9 @@ public class RobotContainer {
   JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
   JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
   JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
-  private final Trajectory m_Trajectory = ExampleTrajectory.exampleTraj;
-  private final NeutrinoRamseteCommand m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
+  private Trajectory m_Trajectory;
+  
+  private NeutrinoRamseteCommand m_autoCommand;
   private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
   private final ShooterSetSpeedPIDCommand m_shooterCommand = new ShooterSetSpeedPIDCommand(m_Shooter);
   private final ShooterDirectCurrentCommand m_shooterCurrentCommand = new ShooterDirectCurrentCommand(m_Shooter);
@@ -60,6 +65,13 @@ public class RobotContainer {
    */
   public RobotContainer() 
   {
+    try {
+      m_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/3BallAuton.wpilib.json"));
+      m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
+    } 
+    catch (Exception e) {
+    }
+
     m_Led = new LEDSubsystem();
     final Command tankDriveCommand = new RunCommand(
         () -> m_Drive.tankDrive(joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())),
