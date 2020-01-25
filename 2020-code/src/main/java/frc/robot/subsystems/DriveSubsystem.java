@@ -1,3 +1,4 @@
+
 package frc.robot.subsystems;
 
 import java.util.ArrayList;
@@ -16,26 +17,30 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
-public class DriveSubsystem extends SubsystemBase{
+public class DriveSubsystem extends SubsystemBase
+{
 
+    private PowerDistributionPanel PDP = new PowerDistributionPanel();
+    private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1,
+        MotorType.kBrushless);
+    private CANSparkMax m_leftMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT2,
+        MotorType.kBrushless);
+    private CANSparkMax m_rightMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT1,
+        MotorType.kBrushless);
+    private CANSparkMax m_rightMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT2,
+        MotorType.kBrushless);
 
-   private PowerDistributionPanel PDP = new PowerDistributionPanel();
-   private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1, MotorType.kBrushless);
-   private CANSparkMax m_leftMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT2, MotorType.kBrushless);
-   private CANSparkMax m_rightMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT1, MotorType.kBrushless);
-   private CANSparkMax m_rightMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT2, MotorType.kBrushless);
-
-   private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
-   private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
-   private CANEncoder m_lEncoder = new CANEncoder(m_leftMotor1);
-   private CANEncoder m_rEncoder = new CANEncoder(m_rightMotor1);
-   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
-   private final DifferentialDriveOdometry m_odometry;
+    private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
+    private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
+    private CANEncoder m_lEncoder = new CANEncoder(m_leftMotor1);
+    private CANEncoder m_rEncoder = new CANEncoder(m_rightMotor1);
+    private AHRS m_navX = new AHRS(SPI.Port.kMXP);
+    private final DifferentialDriveOdometry m_odometry;
 
     public DriveSubsystem()
     {
         m_lEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
-        m_rEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION); 
+        m_rEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
         m_lEncoder.setPosition(0);
         m_rEncoder.setPosition(0);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
@@ -44,7 +49,7 @@ public class DriveSubsystem extends SubsystemBase{
     @Override
     public void periodic()
     {
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()),m_lEncoder.getPosition(), m_rEncoder.getPosition()); 
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_lEncoder.getPosition(), m_rEncoder.getPosition());
     }
 
     public void tankDrive(double leftPower, double rightPower)
@@ -82,7 +87,8 @@ public class DriveSubsystem extends SubsystemBase{
         m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
     }
 
-    public void getPDPCurrent() {
+    public void getPDPCurrent()
+    {
         double currentLeftOne = PDP.getCurrent(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1);
         double currentLeftTwo = PDP.getCurrent(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT2);
         double currentRightOne = PDP.getCurrent(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT1);
@@ -100,8 +106,7 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     /*
-    public ArrayList<Double> getCANTemp() {
-        double tempLeftOne = CANSparkMax.getMotorTempearture(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1);
-    }
-    */
+     * public ArrayList<Double> getCANTemp() { double tempLeftOne =
+     * CANSparkMax.getMotorTempearture(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1); }
+     */
 }
