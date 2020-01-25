@@ -1,6 +1,7 @@
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2020.2.2"
+    id "com.diffplug.gradle.spotless" version "3.27.1"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -65,4 +66,12 @@ dependencies {
 jar {
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
+}
+
+spotless {
+  java {
+    eclipseFormatFile rootProject.file('formatter.xml')
+    trimTrailingWhitespace()
+    endWithNewline()
+  }
 }
