@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.commands.NeutrinoRamseteCommand;
+import frc.robot.commands.ShooterDirectCurrentCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -27,6 +29,8 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeDataCommand;
+import frc.robot.commands.ShooterSetSpeedPIDCommand;
+import frc.robot.commands.ShooterDirectCurrentCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -40,6 +44,7 @@ public class RobotContainer {
 
   public final DriveSubsystem m_Drive = new DriveSubsystem();
   public final IntakeSubsystem m_Intake = new IntakeSubsystem();
+  public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
   public final LEDSubsystem m_Led;
 
   public Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
@@ -52,6 +57,8 @@ public class RobotContainer {
   
   private NeutrinoRamseteCommand m_autoCommand;
   private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
+  private final ShooterSetSpeedPIDCommand m_shooterCommand = new ShooterSetSpeedPIDCommand(m_Shooter);
+  private final ShooterDirectCurrentCommand m_shooterCurrentCommand = new ShooterDirectCurrentCommand(m_Shooter);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -83,6 +90,7 @@ public class RobotContainer {
   {
     m_B.whenPressed(new IntakeDataCommand(m_Intake));
     m_X.whenPressed(new DriveDataCommand(m_Drive));
+    m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
   }
 
   /**
