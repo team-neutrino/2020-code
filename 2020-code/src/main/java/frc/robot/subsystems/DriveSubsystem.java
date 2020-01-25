@@ -64,7 +64,7 @@ public class DriveSubsystem extends SubsystemBase{
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
     {
-        return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), m_rEncoder.getVelocity());
+        return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), -m_rEncoder.getVelocity());
     }
 
     //Returns robot angle in degrees from 180 to 180
