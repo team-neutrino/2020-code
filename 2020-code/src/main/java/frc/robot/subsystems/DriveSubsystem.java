@@ -50,7 +50,7 @@ public class DriveSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()),m_lEncoder.getPosition(), m_rEncoder.getPosition()); 
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_lEncoder.getPosition(), m_rEncoder.getPosition());
         SmartDashboard.putNumber("NavX Yaw", m_navX.getYaw());
         SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
     }
