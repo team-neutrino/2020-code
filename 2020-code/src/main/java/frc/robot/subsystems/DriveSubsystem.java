@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import com.revrobotics.CANEncoder;
@@ -49,7 +50,9 @@ public class DriveSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_lEncoder.getPosition(), m_rEncoder.getPosition());
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()),m_lEncoder.getPosition(), m_rEncoder.getPosition()); 
+        SmartDashboard.putNumber("NavX Yaw", m_navX.getYaw());
+        SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
     }
 
     public void tankDrive(double leftPower, double rightPower)
@@ -66,7 +69,7 @@ public class DriveSubsystem extends SubsystemBase
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
     {
-        return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), m_rEncoder.getVelocity());
+        return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), -m_rEncoder.getVelocity());
     }
 
     //Returns robot angle in degrees from 180 to 180

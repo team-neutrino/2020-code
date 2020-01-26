@@ -28,7 +28,7 @@ public final class Constants
         public static final double KS_VOLTS = 0;
         public static final double KV_VOLT_SECONDS_PER_METER = 0;
         public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0;
-        public static final double KP_DRIVE_VEL = 0;
+        public static final double KP_DRIVE_VEL = .1;
         public static final double K_TRACK_WIDTH_METERS = 0;
         public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = new DifferentialDriveKinematics(
             K_TRACK_WIDTH_METERS);
