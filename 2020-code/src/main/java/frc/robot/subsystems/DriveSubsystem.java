@@ -20,10 +20,10 @@ public class DriveSubsystem extends SubsystemBase{
 
 
    private PowerDistributionPanel PDP = new PowerDistributionPanel();
-   private CANSparkMax m_leftMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1, MotorType.kBrushless);
-   private CANSparkMax m_leftMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT2, MotorType.kBrushless);
-   private CANSparkMax m_rightMotor1 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT1, MotorType.kBrushless);
-   private CANSparkMax m_rightMotor2 = new CANSparkMax(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT2, MotorType.kBrushless);
+   private CANSparkMax m_leftMotor1 = new CANSparkMax(CanIds.MOTOR_CONTROLLER_DRIVER_LEFT1, MotorType.kBrushless);
+   private CANSparkMax m_leftMotor2 = new CANSparkMax(CanIds.MOTOR_CONTROLLER_DRIVER_LEFT2, MotorType.kBrushless);
+   private CANSparkMax m_rightMotor1 = new CANSparkMax(CanIds.MOTOR_CONTROLLER_DRIVER_RIGHT1, MotorType.kBrushless);
+   private CANSparkMax m_rightMotor2 = new CANSparkMax(CanIds.MOTOR_CONTROLLER_DRIVER_RIGHT2, MotorType.kBrushless);
 
    private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
    private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
