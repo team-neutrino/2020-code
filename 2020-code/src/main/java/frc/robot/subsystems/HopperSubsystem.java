@@ -42,19 +42,20 @@ public class HopperSubsystem extends SubsystemBase {
     {
         m_hopperMotor.set(ControlMode.PercentOutput, 0);
     }
+    
 
     @Override
     public void periodic() 
     {
-        // This method will be called once per scheduler run
-        if ((m_beamBreakTop.get() == true) || m_beamBreakBot.get() == false)
-        {
-            m_hopperMotor.set(ControlMode.PercentOutput, 0);
-        }   
-        else if(m_beamBreakTop.get() == false && m_beamBreakBot.get() == true)
+        // This method will be called once per scheduler run 
+        if(m_beamBreakTop.get() == false && m_beamBreakBot.get() == true)
         {
             m_hopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
         }
+        else if ((m_beamBreakTop.get() == true) || m_beamBreakBot.get() == false)
+        {
+            m_hopperMotor.set(ControlMode.PercentOutput, 0);
+        }  
     }
 
 }
