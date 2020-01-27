@@ -72,7 +72,6 @@ public class RobotContainer {
     catch (Exception e) {
     }
 
-    m_Led = new LEDSubsystem();
     final Command tankDriveCommand = new RunCommand(
         () -> m_Drive.tankDrive(joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())),
         m_Drive);
