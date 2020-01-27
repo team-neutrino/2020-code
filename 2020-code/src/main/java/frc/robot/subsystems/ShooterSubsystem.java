@@ -48,7 +48,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double setpoint()
   {
-      return 0;
+    return 1;
   }
 
   public double getWheelEncoderDistance()
