@@ -10,20 +10,31 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.commands.NeutrinoRamseteCommand;
+import frc.robot.commands.ShooterDirectCurrentCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.*;
 import static edu.wpi.first.wpilibj.XboxController.Button;
+<<<<<<< HEAD
 import frc.robot.subsystems.ClimberSubsystem;
+=======
+
+import java.nio.file.Paths;
+
+>>>>>>> master
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeDataCommand;
+import frc.robot.commands.ShooterSetSpeedPIDCommand;
+import frc.robot.commands.ShooterDirectCurrentCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -37,6 +48,7 @@ public class RobotContainer {
 
   public final DriveSubsystem m_Drive = new DriveSubsystem();
   public final IntakeSubsystem m_Intake = new IntakeSubsystem();
+  public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
   public final LEDSubsystem m_Led;
   public final ClimberSubsystem m_climber;
 
@@ -46,16 +58,29 @@ public class RobotContainer {
   JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
   JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
   JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
-  private final Trajectory m_Trajectory = ExampleTrajectory.exampleTraj;
-  private final NeutrinoRamseteCommand m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
+  private Trajectory m_Trajectory;
+  
+  private NeutrinoRamseteCommand m_autoCommand;
   private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
+  private final ShooterSetSpeedPIDCommand m_shooterCommand = new ShooterSetSpeedPIDCommand(m_Shooter);
+  private final ShooterDirectCurrentCommand m_shooterCurrentCommand = new ShooterDirectCurrentCommand(m_Shooter);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() 
   {
+<<<<<<< HEAD
     m_climber = new ClimberSubsystem();
+=======
+    try {
+      m_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/3BallAuton.wpilib.json"));
+      m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
+    } 
+    catch (Exception e) {
+    }
+
+>>>>>>> master
     m_Led = new LEDSubsystem();
     final Command tankDriveCommand = new RunCommand(
         () -> m_Drive.tankDrive(joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())),
@@ -74,6 +99,7 @@ public class RobotContainer {
   {
     m_B.whenPressed(new IntakeDataCommand(m_Intake));
     m_X.whenPressed(new DriveDataCommand(m_Drive));
+    m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
   }
 
   /**
