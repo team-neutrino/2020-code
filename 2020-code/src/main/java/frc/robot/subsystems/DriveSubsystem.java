@@ -1,5 +1,4 @@
 package frc.robot.subsystems;
-
 import java.util.ArrayList;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -8,15 +7,16 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.CanId;
 import frc.robot.Constants.DriveConstants;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
-// import com.revrobotics.CANSparkMax.getMotorTempearture;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
+<<<<<<< HEAD
 public class DriveSubsystem extends SubsystemBase{
 
 
@@ -32,6 +32,22 @@ public class DriveSubsystem extends SubsystemBase{
     private CANEncoder m_rEncoder = new CANEncoder(m_rightMotor1);
     private AHRS m_navX = new AHRS(SPI.Port.kMXP);
     private final DifferentialDriveOdometry m_odometry;
+=======
+public class DriveSubsystem extends SubsystemBase
+{
+   private PowerDistributionPanel PDP = new PowerDistributionPanel();
+   private CANSparkMax m_leftMotor1 = new CANSparkMax(CanId.MOTOR_CONTROLLER_DRIVER_LEFT1, MotorType.kBrushless);
+   private CANSparkMax m_leftMotor2 = new CANSparkMax(CanId.MOTOR_CONTROLLER_DRIVER_LEFT2, MotorType.kBrushless);
+   private CANSparkMax m_rightMotor1 = new CANSparkMax(CanId.MOTOR_CONTROLLER_DRIVER_RIGHT1, MotorType.kBrushless);
+   private CANSparkMax m_rightMotor2 = new CANSparkMax(CanId.MOTOR_CONTROLLER_DRIVER_RIGHT2, MotorType.kBrushless);
+
+   private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
+   private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
+   private CANEncoder m_lEncoder = new CANEncoder(m_leftMotor1);
+   private CANEncoder m_rEncoder = new CANEncoder(m_rightMotor1);
+   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
+   private final DifferentialDriveOdometry m_odometry;
+>>>>>>> master
 
     public DriveSubsystem()
     {
@@ -86,11 +102,12 @@ public class DriveSubsystem extends SubsystemBase{
         m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
     }
 
-    public void getPDPCurrent() {
-        double currentLeftOne = PDP.getCurrent(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1);
-        double currentLeftTwo = PDP.getCurrent(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT2);
-        double currentRightOne = PDP.getCurrent(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT1);
-        double currentRightTwo = PDP.getCurrent(DriveConstants.MOTOR_CONTROLLER_DRIVER_RIGHT2);
+    public void getPDPCurrent() 
+    {
+        double currentLeftOne = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_LEFT1);
+        double currentLeftTwo = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_LEFT2);
+        double currentRightOne = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_RIGHT1);
+        double currentRightTwo = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_RIGHT2);
         ArrayList<Double> currents = new ArrayList<Double>();
         currents.add(currentLeftOne);
         currents.add(currentLeftTwo);

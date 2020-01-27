@@ -41,10 +41,7 @@ public final class Constants {
         private static final double K_WHEEL_CIRCUMFERENCE = Math.PI*0.127;
         public static final double K_DRIVE_ENCODER_CONVERSION = K_GEAR_RATIO*K_WHEEL_CIRCUMFERENCE;
 
-        public static final int MOTOR_CONTROLLER_DRIVER_LEFT1 = 1;
-        public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
-        public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
-        public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
+       
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint = //this used to be type var, why?
             new DifferentialDriveVoltageConstraint(
                 new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
@@ -56,7 +53,7 @@ public final class Constants {
 
     public static final class IntakeConstants {
         public static final int INTAKE_MOTOR_POWER = 1;
-        public static final int MOTOR_CONTROLLER_INTAKE = 15;
+       
     }
     public static final class HopperConstants
     {
@@ -80,7 +77,7 @@ public final class Constants {
     public static final class ShooterConstants
     {
         //TODO get actual constants
-        public static final int WHEEL_MOTOR_PORT = 14;
+       
         public static final int WHEEL_ENCODER_PORT_1 = 0;
         public static final int WHEEL_ENCODER_PORT_2 = 1;
         public static final int WHEEL_ENCODER_DIST_PER_PULSE = 0;
@@ -89,5 +86,14 @@ public final class Constants {
         public static final double WHEEL_D = 0;
         public static final double KS_VOLTS = 0;
         public static final double KV_VOLT_SEC_PER_ROTATION = 0;
+    }
+    public static final class CanId
+    {
+        public static final int MOTOR_CONTROLLER_SHOOTERWHEEL = 14;
+        public static final int MOTOR_CONTROLLER_INTAKE = 15;
+        public static final int MOTOR_CONTROLLER_DRIVER_LEFT1 = 1;
+        public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
+        public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
+        public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
     }
 }
