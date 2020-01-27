@@ -44,7 +44,7 @@ public class RobotContainer {
   public final DriveSubsystem m_Drive = new DriveSubsystem();
   public final IntakeSubsystem m_Intake = new IntakeSubsystem();
   public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
-  public final LEDSubsystem m_Led;
+  public final LEDSubsystem m_Led = new LEDSubsystem();
   public final ClimberSubsystem m_climber = new ClimberSubsystem();
 
   public Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
