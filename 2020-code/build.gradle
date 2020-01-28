@@ -72,6 +72,5 @@ spotless {
   java {
     eclipseFormatFile rootProject.file('formatter.xml')
     trimTrailingWhitespace()
-    endWithNewline()
   }
 }
