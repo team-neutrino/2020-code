@@ -6,18 +6,27 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ClimberSubsystem extends SubsystemBase {
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.CanId;
+
+public class ClimberSubsystem extends SubsystemBase 
+{
+  private CANSparkMax m_ClimbWheel = new CANSparkMax(CanId.MOTOR_CONTROLLER_CLIMBER, MotorType.kBrushless);
   /**
    * Creates a new ClimberSubsystem.
    */
-  public ClimberSubsystem() {
+  public ClimberSubsystem() 
+  {
 
   }
   
   @Override
-  public void periodic() {
+  public void periodic() 
+  {
     // This method will be called once per scheduler run
   }
 }
