@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {
+public final class Constants 
+{
 
     public static final class DriveConstants
     {
@@ -51,16 +52,23 @@ public final class Constants {
                                         10);
     }
 
-    public static final class IntakeConstants {
+    public static final class IntakeConstants 
+    {
         public static final int INTAKE_MOTOR_POWER = 1;
-       
+        public static final double ARM_DOWN_ANGLE = 0; // placeholder 
+        public static final double ARM_UP_ANGLE = 0; // placeholder
+        public static final int ADJUST_MOTOR_ENCODER = 0;
+        public static final double INTAKE_DISTANCE_PER_PULSE = 0;
+        public static final double ADJUST_DISTANCE_PER_PULSE = 0;
     }
 
-    public static final class ControllerPorts {
+    public static final class ControllerPorts 
+    {
         public static final int XBOX_CONTROLLER_PORT = 2;
     }
 
-    public static final class JoystickConstants {
+    public static final class JoystickConstants 
+    {
         public static final int LEFT_JOYSTICK_PORT = 0;
         public static final int RIGHT_JOYSTICK__PORT = 1;
         public static final double DEADZONE_SIZE = 0.1;
@@ -80,13 +88,22 @@ public final class Constants {
         public static final double KS_VOLTS = 0;
         public static final double KV_VOLT_SEC_PER_ROTATION = 0;
     }
+
     public static final class CanId
     {
         public static final int MOTOR_CONTROLLER_SHOOTERWHEEL = 14;
         public static final int MOTOR_CONTROLLER_INTAKE = 15;
+        public static final int MOTOR_CONTROLLER_INTAKE_ADJUST = 13;
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT1 = 1;
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
+    }
+
+    public static final class PIDConstants
+    {
+        public static final double PROPORTION_COEFFICIENT = 0.1;
+        public static final double INTEGRAL_COEFFICIENT = 0;
+        public static final double DERIVATIVE_COEFFICEINT = 0;
     }
 }

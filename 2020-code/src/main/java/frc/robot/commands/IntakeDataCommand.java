@@ -21,7 +21,7 @@ public class IntakeDataCommand extends ParallelCommandGroup {
   public IntakeDataCommand(IntakeSubsystem Intake) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    super(
+    super (
           new InstantCommand(() -> Intake.setIntake(true)),
           new InstantCommand(Intake::getPDPCurrent)
     );
