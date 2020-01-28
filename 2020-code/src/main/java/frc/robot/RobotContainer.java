@@ -29,13 +29,9 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
-<<<<<<< HEAD
-import frc.robot.commands.HopperIntakeCommand;
-=======
 import frc.robot.commands.IntakeDataCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
->>>>>>> master
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -47,11 +43,12 @@ import frc.robot.commands.ShooterDirectCurrentCommand;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
 
-<<<<<<< HEAD
     public final DriveSubsystem m_Drive = new DriveSubsystem();
     public final IntakeSubsystem m_Intake = new IntakeSubsystem();
-    public final LEDSubsystem m_Led;
-    public final HopperSubsystem m_Hopper;
+    public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
+    public final LEDSubsystem m_Led = new LEDSubsystem();
+    public final ClimberSubsystem m_climber = new ClimberSubsystem();
+    public final HopperSubsystem m_hopper = new HopperSubsystem();
 
     public Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
     public Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
@@ -59,73 +56,31 @@ public class RobotContainer {
     JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
-    private final Trajectory m_Trajectory = ExampleTrajectory.exampleTraj;
-    private final NeutrinoRamseteCommand m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
+    private Trajectory m_Trajectory;
+  
+    private NeutrinoRamseteCommand m_autoCommand;
+    private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
+    private final ShooterSetSpeedPIDCommand m_shooterCommand = new ShooterSetSpeedPIDCommand(m_Shooter);
+    private final ShooterDirectCurrentCommand m_shooterCurrentCommand = new ShooterDirectCurrentCommand(m_Shooter);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() 
     {
-        m_Led = new LEDSubsystem();
+        try {
+        m_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/3BallAuton.wpilib.json"));
+        m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
+        } 
+        catch (Exception e) {
+        }
+
         final Command tankDriveCommand = new RunCommand(
             () -> m_Drive.tankDrive(joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())),
-            m_Drive);
+        m_Drive);
         m_Drive.setDefaultCommand(tankDriveCommand);
         configureButtonBindings();
     }
-=======
-  public final DriveSubsystem m_Drive = new DriveSubsystem();
-  public final IntakeSubsystem m_Intake = new IntakeSubsystem();
-  public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
-  public final LEDSubsystem m_Led = new LEDSubsystem();
-  public final ClimberSubsystem m_climber = new ClimberSubsystem();
-
-  public Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
-  public Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
-  XboxController m_OperatorController = new XboxController(ControllerPorts.XBOX_CONTROLLER_PORT);
-  JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
-  JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
-  JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
-  private Trajectory m_Trajectory;
-  
-  private NeutrinoRamseteCommand m_autoCommand;
-  private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
-  private final ShooterSetSpeedPIDCommand m_shooterCommand = new ShooterSetSpeedPIDCommand(m_Shooter);
-  private final ShooterDirectCurrentCommand m_shooterCurrentCommand = new ShooterDirectCurrentCommand(m_Shooter);
-
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() 
-  {
-    try {
-      m_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/3BallAuton.wpilib.json"));
-      m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
-    } 
-    catch (Exception e) {
-    }
-
-    final Command tankDriveCommand = new RunCommand(
-        () -> m_Drive.tankDrive(joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())),
-        m_Drive);
-    m_Drive.setDefaultCommand(tankDriveCommand);
-    configureButtonBindings();
-  }
-
-  /**
-   * Use this method to define your button->command mappings. Buttons can be
-   * created by instantiating a {@link GenericHID} or one of its subclasses
-   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
-   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() 
-  {
-    m_B.whenPressed(new IntakeDataCommand(m_Intake));
-    m_X.whenPressed(new DriveDataCommand(m_Drive));
-    m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
-  }
->>>>>>> master
 
     /**
      * Use this method to define your button->command mappings. Buttons can be
@@ -135,9 +90,22 @@ public class RobotContainer {
      */
     private void configureButtonBindings() 
     {
+      m_B.whenPressed(new IntakeDataCommand(m_Intake));
+      m_X.whenPressed(new DriveDataCommand(m_Drive));
+      m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
+    }
+
+    /**
+     * Use this method to define your button->command mappings. Buttons can be
+     * created by instantiating a {@link GenericHID} or one of its subclasses
+     * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+     * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     */
+    private void configureButtonBindings2() 
+    {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
-        m_A.whenPressed(new InstantCommand(m_Hopper::intake),true).whenReleased(m_Hopper::stop,m_Hopper);
-        m_B.whenPressed(m_Hopper::reverse).whenReleased(m_Hopper::stop,m_Hopper);
+        m_A.whenPressed(new InstantCommand(m_hopper::intake),true).whenReleased(m_hopper::stop,m_hopper);
+        m_B.whenPressed(m_hopper::reverse).whenReleased(m_hopper::stop,m_hopper);
     }
 
     /**
@@ -159,11 +127,11 @@ public class RobotContainer {
     {
         if (Math.abs(input) > Constants.JoystickConstants.DEADZONE_SIZE) 
         {
-          double absoluteValue = Math.abs(input);
-          double deadzoneCorrectedAbsoluteValue = (1 / (1 - Constants.JoystickConstants.DEADZONE_SIZE))
-              * (absoluteValue - 1.0) + 1.0;
-          return Math.pow(deadzoneCorrectedAbsoluteValue, Constants.JoystickConstants.JOYSTICK_CURVE)
-              * (absoluteValue / input);
+            double absoluteValue = Math.abs(input);
+            double deadzoneCorrectedAbsoluteValue = (1 / (1 - Constants.JoystickConstants.DEADZONE_SIZE))
+                * (absoluteValue - 1.0) + 1.0;
+            return Math.pow(deadzoneCorrectedAbsoluteValue, Constants.JoystickConstants.JOYSTICK_CURVE)
+                * (absoluteValue / input);
         } 
         else 
         {

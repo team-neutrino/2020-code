@@ -42,6 +42,7 @@ public class HopperSubsystem extends SubsystemBase {
     {
         m_hopperMotor.set(ControlMode.PercentOutput, 0);
     }
+
     
 
     @Override
