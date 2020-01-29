@@ -70,17 +70,7 @@ public class DriveSubsystem extends SubsystemBase
     //Returns robot angle in degrees from -180 to 180
     public double getHeading()
     {
-        if (m_navX.getFusedHeading() <= 180)
-        {
-            //if angle is positve (0-180) return a negative angle
-            return m_navX.getFusedHeading() * -1;
-        }
-        else
-        {
-            //if angle is negative (180-360) return a positive angle
-            return m_navX.getFusedHeading() - 180;
-        }
-
+        return m_navX.getYaw() * -1;
     }
 
     public Pose2d getPose()
