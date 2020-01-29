@@ -15,29 +15,31 @@ import frc.robot.subsystems.ShooterSubsystem;;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class ShooterSetSpeedPIDCommand extends PIDCommand {
-  /**
-   * Creates a new ShooterSetSpeedPIDCommand.
-   */
-  public ShooterSetSpeedPIDCommand(ShooterSubsystem m_shooter)
-  {
-    super(
-        // The controller that the command will use
-        new PIDController(Constants.ShooterConstants.WHEEL_P, Constants.ShooterConstants.WHEEL_I, Constants.ShooterConstants.WHEEL_D),
-        // This should return the measurement
-        () -> m_shooter.getWheelEncoderDistance(),
-        // This should return the setpoint (can also be a constant)
-        () -> m_shooter.setpoint(),
-        // This uses the output
-        output -> m_shooter.setWheelMotor(output));
-    // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
-  }
+public class ShooterSetSpeedPIDCommand extends PIDCommand
+{
+    /**
+     * Creates a new ShooterSetSpeedPIDCommand.
+     */
+    public ShooterSetSpeedPIDCommand(ShooterSubsystem m_shooter)
+    {
+        super(
+            // The controller that the command will use
+            new PIDController(Constants.ShooterConstants.WHEEL_P, Constants.ShooterConstants.WHEEL_I,
+                Constants.ShooterConstants.WHEEL_D),
+            // This should return the measurement
+            () -> m_shooter.getWheelEncoderDistance(),
+            // This should return the setpoint (can also be a constant)
+            () -> m_shooter.setpoint(),
+            // This uses the output
+            output -> m_shooter.setWheelMotor(output));
+        // Use addRequirements() here to declare subsystem dependencies.
+        // Configure additional PID options by calling `getController` here.
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished()
-  {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished()
+    {
+        return false;
+    }
 }
