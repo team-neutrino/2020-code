@@ -7,23 +7,47 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class IntakeDataCommand extends ParallelCommandGroup {
+public class IntakeDataCommand extends CommandBase 
+{
+  private IntakeSubsystem m_intake;
   /**
-   * Creates a new OutputDataCommand.
+   * Creates a new ShooterDirectCurrent.
    */
-  public IntakeDataCommand(IntakeSubsystem Intake) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());super();
-    super (
-          new InstantCommand(() -> Intake.setIntake(true)),
-          new InstantCommand(Intake::getPDPCurrent)
-    );
+  public IntakeDataCommand(IntakeSubsystem p_intake)
+  {
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(p_intake);
+    m_intake = p_intake;
   }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize()
+  {
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute()
+  {
+    m_intake.setIntakeOn();
+    m_intake.getPDPCurrent();
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted)
+  {
+    m_intake.setIntakeOff();
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+
 }

@@ -28,9 +28,9 @@ public class IntakeSetPositionPIDCommand extends PIDCommand {
         // This should return the measurement
         () -> m_intake.getPotentiometerReading(),
         // This should return the setpoint (can also be a constant)
-        () -> m_intake.getIntakeSetpoint(),
+        () -> m_intake.getSetpoint(),
         // This uses the output
-        output -> m_intake.setIntakeAngle(Constants.IntakeConstants.ARM_DOWN_ANGLE));
+        output -> m_intake.setPositionMotorDown(output));
           // Use the output here
       
     // Use addRequirements() here to declare subsystem dependencies.
