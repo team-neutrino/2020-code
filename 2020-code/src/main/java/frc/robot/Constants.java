@@ -89,4 +89,8 @@ public final class Constants
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
     }
+    public static final class HopperConstants
+    {
+        public static final 
+    }
 }
