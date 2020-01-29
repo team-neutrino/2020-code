@@ -30,18 +30,20 @@ public class HopperSubsystem extends SubsystemBase {
 
     public void intake()
     {
-        m_hopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
+        m_hopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);                 
     }
   
     public void reverse()
     {
-        m_hopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER_REVERSE);
+        m_hopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER_REVERSE);    
     }
 
     public void stop()
     {
         m_hopperMotor.set(ControlMode.PercentOutput, 0);
     }
+
+
 
     @Override
     public void periodic() {

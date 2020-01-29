@@ -25,11 +25,9 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.ClimberSubsystem;
 import java.nio.file.Paths;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeDataCommand;
-import frc.robot.commands.ShooterSetSpeedPIDCommand;
-import frc.robot.commands.ShooterDirectCurrentCommand;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -55,10 +53,7 @@ public class RobotContainer
     private Trajectory m_Trajectory;
 
     private NeutrinoRamseteCommand m_autoCommand;
-    private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
-    private final ShooterSetSpeedPIDCommand m_shooterCommand = new ShooterSetSpeedPIDCommand(m_Shooter);
-    private final ShooterDirectCurrentCommand m_shooterCurrentCommand = new ShooterDirectCurrentCommand(m_Shooter);
-
+    
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
