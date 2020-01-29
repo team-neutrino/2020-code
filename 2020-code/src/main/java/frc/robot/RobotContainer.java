@@ -87,9 +87,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() 
   {
-    m_B.whenPressed(new IntakeDataCommand(m_Intake));
     m_X.whenPressed(new DriveDataCommand(m_Drive));
     m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
+    m_B.whenHeld(new IntakeDataCommand(m_Intake));
   }
 
   /**

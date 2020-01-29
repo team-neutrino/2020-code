@@ -23,40 +23,34 @@ import frc.robot.Constants.IntakeConstants;
  */
 public class IntakeSubsystem extends SubsystemBase 
 {
-    private AnalogPotentiometer adjustMotorPotentiometer = new AnalogPotentiometer(Constants.IntakeConstants.ADJUST_MOTOR_ENCODER);
-    private TalonSRX intakeMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE);
-    private TalonSRX intakeAdjustMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_ADJUST);
+    private AnalogPotentiometer m_adjustMotorPotentiometer = new AnalogPotentiometer(Constants.IntakeConstants.ADJUST_MOTOR_ENCODER);
+    private TalonSRX m_intakeMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE);
+    private TalonSRX m_intakeAdjustMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_ADJUST);
     private PowerDistributionPanel PDP = new PowerDistributionPanel();
 
-    private PIDController PID = new PIDController(Constants.PIDConstants.PROPORTION_COEFFICIENT, 
-                                                Constants.PIDConstants.INTEGRAL_COEFFICIENT, 
-                                                Constants.PIDConstants.DERIVATIVE_COEFFICEINT);
-
-    public void setIntake(boolean on)   
+    public void setIntakeOn()   
     {
-        if (on == true) 
-        {
-            intakeMotor.set(ControlMode.PercentOutput, IntakeConstants.INTAKE_MOTOR_POWER);
-        }
-        else
-        {
-            intakeMotor.set(ControlMode.PercentOutput, 0);
-        }
+        m_intakeMotor.set(ControlMode.PercentOutput, Constants.IntakeConstants.INTAKE_MOTOR_POWER);
     }
 
-    public void setIntakeAngle(double angle)
+    public void setIntakeOff()
     {
-        PID.setSetpoint(angle);
+        m_intakeMotor.set(ControlMode.PercentOutput, 0);
     }
 
-    public double getIntakeSetpoint()
+    public double getSetpoint()
     {
-        return PID.getSetpoint();
+        return Constants.IntakeConstants.ARM_DOWN_ANGLE;
     }
 
     public double getPotentiometerReading()
     {
-        return adjustMotorPotentiometer.get();
+        return m_adjustMotorPotentiometer.get();
+    }
+
+    public void setPositionMotorDown(double PIDPower)
+    {
+        m_intakeAdjustMotor.set(ControlMode.PercentOutput, PIDPower);
     }
   
     public void getPDPCurrent() 
@@ -67,7 +61,7 @@ public class IntakeSubsystem extends SubsystemBase
 
     public void intakePrinter()
     {
-        SmartDashboard.putNumber("Arm setpoint: ", PID.getSetpoint());
+        //SmartDashboard.putNumber("Arm setpoint: ", PID.getSetpoint());
         SmartDashboard.putNumber("Potentiometer reading: ", getPotentiometerReading());
     }
 
