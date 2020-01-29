@@ -11,19 +11,19 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 import frc.robot.subsystems.DriveSubsystem;
+
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class DriveDataCommand extends ParallelCommandGroup {
-  /**
-   * Creates a new DriveDataCommand.
-   */
-  public DriveDataCommand(DriveSubsystem Drive) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());super();
-    super(
-          new InstantCommand(() -> Drive.tankDrive(1, 1)),
-          new InstantCommand(Drive::getPDPCurrent)
-    );
-  }
+public class DriveDataCommand extends ParallelCommandGroup
+{
+    /**
+     * Creates a new DriveDataCommand.
+     */
+    public DriveDataCommand(DriveSubsystem Drive)
+    {
+        // Add your commands in the super() call, e.g.
+        // super(new FooCommand(), new BarCommand());super();
+        super(new InstantCommand(() -> Drive.tankDrive(1, 1)), new InstantCommand(Drive::getPDPCurrent));
+    }
 }

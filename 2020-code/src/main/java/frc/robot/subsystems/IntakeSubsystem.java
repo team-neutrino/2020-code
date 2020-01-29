@@ -11,18 +11,20 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.CanId;
 import frc.robot.Constants.IntakeConstants;
 
 /**
  * Add your docs here.
  */
-public class IntakeSubsystem extends SubsystemBase {
-    private CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.MOTOR_CONTROLLER_INTAKE, MotorType.kBrushless);
+public class IntakeSubsystem extends SubsystemBase
+{
+    private CANSparkMax intakeMotor = new CANSparkMax(CanId.MOTOR_CONTROLLER_INTAKE, MotorType.kBrushless);
     private PowerDistributionPanel PDP = new PowerDistributionPanel();
 
-    public void setIntake(boolean on) 
+    public void setIntake(boolean on)
     {
-        if (on == true) 
+        if (on == true)
         {
             intakeMotor.set(IntakeConstants.INTAKE_MOTOR_POWER);
         }
@@ -32,10 +34,10 @@ public class IntakeSubsystem extends SubsystemBase {
         }
 
     }
-  
-    public void getPDPCurrent() 
+
+    public void getPDPCurrent()
     {
-        double currentIntakeMotor = PDP.getCurrent(IntakeConstants.MOTOR_CONTROLLER_INTAKE);
+        double currentIntakeMotor = PDP.getCurrent(CanId.MOTOR_CONTROLLER_INTAKE);
         System.out.println("MOTOR_CONTROLLER_INTAKE: " + currentIntakeMotor);
     }
 }

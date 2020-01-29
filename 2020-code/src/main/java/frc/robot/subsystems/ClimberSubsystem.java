@@ -7,31 +7,21 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class LEDSubsystem extends SubsystemBase
+public class ClimberSubsystem extends SubsystemBase
 {
-    AddressableLED led = new AddressableLED(0);
-    AddressableLEDBuffer buffer = new AddressableLEDBuffer(17);
-
     /**
-     * Creates a new LED.
+     * Creates a new ClimberSubsystem.
      */
-    public LEDSubsystem()
+    public ClimberSubsystem()
     {
-        led.setLength(17);
-        for (int i = 0; i < 17; i++)
-        {
-            buffer.setRGB(i, 200, 25, 10);
-        }
-        led.setData(buffer);
-        led.start();
+
     }
 
     @Override
     public void periodic()
     {
+        // This method will be called once per scheduler run
     }
 }
