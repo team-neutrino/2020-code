@@ -40,6 +40,8 @@ public class DriveSubsystem extends SubsystemBase
         m_lEncoder.setPosition(0);
         m_rEncoder.setPosition(0);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+        m_rightMotors.setInverted(true);
+        m_leftMotors.setInverted(false);
     }
 
     @Override
@@ -53,18 +55,18 @@ public class DriveSubsystem extends SubsystemBase
     public void tankDrive(double leftPower, double rightPower)
     {
         m_leftMotors.set(leftPower);
-        m_rightMotors.set(-rightPower);
+        m_rightMotors.set(rightPower);
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts)
     {
         m_leftMotors.setVoltage(leftVolts);
-        m_rightMotors.setVoltage(-rightVolts);
+        m_rightMotors.setVoltage(rightVolts);
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
     {
-        return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), -m_rEncoder.getVelocity());
+        return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), m_rEncoder.getVelocity());
     }
 
     //Returns robot angle in degrees from 180 to 180

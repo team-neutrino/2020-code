@@ -80,7 +80,7 @@ public class Robot extends TimedRobot {
     leftEncoder = leftMaster.getEncoder();
 
     rightMaster = new CANSparkMax(3, MotorType.kBrushless);
-    rightMaster.setInverted(false);
+    rightMaster.setInverted(true);
     rightMaster.setIdleMode(IdleMode.kBrake);
 
     rightEncoder = rightMaster.getEncoder();
@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
     leftSlave0.setIdleMode(IdleMode.kBrake);
 
     CANSparkMax rightSlave0 = new CANSparkMax(4, MotorType.kBrushless);
-    rightSlave0.follow(rightMaster);
+    rightSlave0.follow(rightMaster, true);
     rightSlave0.setIdleMode(IdleMode.kBrake);
 
     //
