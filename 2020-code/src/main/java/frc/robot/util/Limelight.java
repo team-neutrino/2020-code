@@ -23,7 +23,7 @@ import edu.wpi.first.networktables.NetworkTable;
  * code readability.
  * 
  * @author Indelisio (FIRST FRC Team #3928 Team Neutrino)
- * @version 1.4.1
+ * @version 1.4.2
  * @apiNote Still in development
  * 
  */
@@ -375,16 +375,17 @@ public class Limelight {
 
     /**
      * Uses fancy trig magic to judge distance
+     * From limelight Case Study: Estimating Distance converted into code form.
      * 
      * @param camHeight How high the camera is off the floor
      * @param targetHeight How high the target is off the floor
-     * @param camAngle Angle between the 
+     * @param camAngle Angle between the floor and the camera
      * @return Distance in same unit as camHeight and targetHeight
      * 
      * @apiNote This function has not been tested
      */
     public double trigDistance(double camHeight, double targetHeight, double camAngle) {
-        return (camHeight + targetHeight) / Math.tan(Math.toRadians(camAngle  + getYAngle()));
+        return (targetHeight - camHeight) / Math.tan(Math.toRadians(camAngle  + getYAngle()));
     }
 
     /**
