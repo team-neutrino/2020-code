@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -38,6 +39,8 @@ public class ShooterSubsystem extends SubsystemBase
 
     public ShooterSubsystem()
     {
+        m_wheelMotor2.follow(m_wheelMotor, FollowerType.PercentOutput);
+        m_wheelMotor3.follow(m_wheelMotor, FollowerType.PercentOutput);
         m_wheelMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL);
         m_wheelMotor2 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
         m_wheelMotor3 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL3);
@@ -64,9 +67,7 @@ public class ShooterSubsystem extends SubsystemBase
 
     public void setWheelMotor(double power)
     {
-        m_wheelMotor.set(ControlMode.PercentOutput, power);
-        m_wheelMotor2.set(ControlMode.PercentOutput, power);
-        m_wheelMotor3.set(ControlMode.PercentOutput, power);
+        m_wheelMotor.set(ControlMode.PercentOutput, power);  
     }
 
     public boolean getMotorSpeedStatus()
