@@ -21,14 +21,16 @@ import frc.robot.Constants.IntakeConstants;
 /**
  * Add your docs here.
  */
-public class IntakeSubsystem extends SubsystemBase 
+
+public class IntakeSubsystem extends SubsystemBase
 {
-    private AnalogPotentiometer m_adjustMotorPotentiometer = new AnalogPotentiometer(Constants.IntakeConstants.ADJUST_MOTOR_ENCODER);
+    private AnalogPotentiometer m_adjustMotorPotentiometer = new AnalogPotentiometer(
+        Constants.IntakeConstants.ADJUST_MOTOR_ENCODER);
     private TalonSRX m_intakeMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE);
     private TalonSRX m_intakeAdjustMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_ADJUST);
     private PowerDistributionPanel PDP = new PowerDistributionPanel();
 
-    public void setIntakeOn()   
+    public void setIntakeOn()
     {
         m_intakeMotor.set(ControlMode.PercentOutput, Constants.IntakeConstants.INTAKE_MOTOR_POWER);
     }
@@ -52,8 +54,8 @@ public class IntakeSubsystem extends SubsystemBase
     {
         m_intakeAdjustMotor.set(ControlMode.PercentOutput, PIDPower);
     }
-  
-    public void getPDPCurrent() 
+
+    public void getPDPCurrent()
     {
         double currentIntakeMotor = PDP.getCurrent(CanId.MOTOR_CONTROLLER_INTAKE);
         System.out.println("MOTOR_CONTROLLER_INTAKE: " + currentIntakeMotor);

@@ -10,41 +10,44 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterDirectCurrentCommand extends CommandBase {
-  private ShooterSubsystem m_shooter;
-  /**
-   * Creates a new ShooterDirectCurrent.
-   */
-  public ShooterDirectCurrentCommand(ShooterSubsystem p_shooter)
-  {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(p_shooter);
-    m_shooter = p_shooter;
-  }
+public class ShooterDirectCurrentCommand extends CommandBase
+{
+    private ShooterSubsystem m_shooter;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize()
-  {
-  }
+    /**
+     * Creates a new ShooterDirectCurrent.
+     */
+    public ShooterDirectCurrentCommand(ShooterSubsystem p_shooter)
+    {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(p_shooter);
+        m_shooter = p_shooter;
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute()
-  {
-    m_shooter.setWheelMotor(1);
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize()
+    {
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted)
-  {
-    m_shooter.setWheelMotor(0);
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute()
+    {
+        m_shooter.setWheelMotor(1);
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted)
+    {
+        m_shooter.setWheelMotor(0);
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished()
+    {
+        return false;
+    }
 }

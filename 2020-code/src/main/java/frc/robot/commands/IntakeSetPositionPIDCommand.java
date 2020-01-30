@@ -15,31 +15,33 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class IntakeSetPositionPIDCommand extends PIDCommand {
-  /**
-   * Creates a new IntakeSetPositionPIDCommand.
-   */
-  public IntakeSetPositionPIDCommand(IntakeSubsystem m_intake) {
-    super(
-        // The controller that the command will use
-        new PIDController(Constants.PIDConstants.PROPORTION_COEFFICIENT, 
-                        Constants.PIDConstants.INTEGRAL_COEFFICIENT, 
-                        Constants.PIDConstants.DERIVATIVE_COEFFICEINT),
-        // This should return the measurement
-        () -> m_intake.getPotentiometerReading(),
-        // This should return the setpoint (can also be a constant)
-        () -> m_intake.getSetpoint(),
-        // This uses the output
-        output -> m_intake.setPositionMotorDown(output));
-          // Use the output here
-      
-    // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
-  }
+public class IntakeSetPositionPIDCommand extends PIDCommand
+{
+    /**
+     * Creates a new IntakeSetPositionPIDCommand.
+     */
+    public IntakeSetPositionPIDCommand(IntakeSubsystem m_intake)
+    {
+        super(
+            // The controller that the command will use
+            new PIDController(Constants.PIDConstants.PROPORTION_COEFFICIENT,
+                Constants.PIDConstants.INTEGRAL_COEFFICIENT, Constants.PIDConstants.DERIVATIVE_COEFFICEINT),
+            // This should return the measurement
+            () -> m_intake.getPotentiometerReading(),
+            // This should return the setpoint (can also be a constant)
+            () -> m_intake.getSetpoint(),
+            // This uses the output
+            output -> m_intake.setPositionMotorDown(output));
+        // Use the output here
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+        // Use addRequirements() here to declare subsystem dependencies.
+        // Configure additional PID options by calling `getController` here.
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished()
+    {
+        return false;
+    }
 }
