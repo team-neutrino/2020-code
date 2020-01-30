@@ -82,11 +82,14 @@ public final class Constants
     }
     public static final class CanId
     {
+        public static final int MOTOR_CONTROLLER_SHOOTERWHEEL3 = 12;
+        public static final int MOTOR_CONTROLLER_SHOOTERWHEEL2 = 13;
         public static final int MOTOR_CONTROLLER_SHOOTERWHEEL = 14;
         public static final int MOTOR_CONTROLLER_INTAKE = 15;
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT1 = 1;
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
+
     }
 }
