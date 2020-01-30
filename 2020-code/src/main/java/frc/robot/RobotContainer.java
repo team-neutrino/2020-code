@@ -17,6 +17,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
@@ -49,11 +50,12 @@ public class RobotContainer
     public Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
     public Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
     XboxController m_OperatorController = new XboxController(ControllerPorts.XBOX_CONTROLLER_PORT);
+    JoystickButton m_back = new JoystickButton(m_OperatorController, Button.kBack.value);
+    JoystickButton m_start = new JoystickButton(m_OperatorController, Button.kStart.value);
     JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
     private Trajectory m_Trajectory;
-
     private NeutrinoRamseteCommand m_autoCommand;
     private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
     private final ShooterSetSpeedPIDCommand m_shooterCommand = new ShooterSetSpeedPIDCommand(m_Shooter);
@@ -72,11 +74,6 @@ public class RobotContainer
         catch (Exception e)
         {
         }
-
-        final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
-            joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
-        m_Drive.setDefaultCommand(tankDriveCommand);
-        configureButtonBindings();
     }
 
     /**
@@ -86,9 +83,13 @@ public class RobotContainer
      */
     private void configureButtonBindings()
     {
-        m_B.whenPressed(new IntakeDataCommand(m_Intake));
         m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
+        m_B.whenHeld(new IntakeDataCommand(m_Intake));
+        final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
+            joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
+        m_Drive.setDefaultCommand(tankDriveCommand);
+        configureButtonBindings();
     }
 
     /**
