@@ -62,11 +62,11 @@ public class ShooterSubsystem extends SubsystemBase
         return m_wheelEncoder.getRate();
     }
 
-    public void setWheelMotor(double demand)
+    public void setWheelMotor(double power)
     {
-        m_wheelMotor.set(ControlMode.PercentOutput, demand);
-        m_wheelMotor2.set(ControlMode.PercentOutput, demand);
-        m_wheelMotor3.set(ControlMode.PercentOutput, demand);
+        m_wheelMotor.set(ControlMode.PercentOutput, power);
+        m_wheelMotor2.set(ControlMode.PercentOutput, power);
+        m_wheelMotor3.set(ControlMode.PercentOutput, power);
     }
 
     public boolean getMotorSpeedStatus()

@@ -80,6 +80,7 @@ public final class Constants
         public static final double KS_VOLTS = 0;
         public static final double KV_VOLT_SEC_PER_ROTATION = 0;
     }
+
     public static final class CanId
     {
         public static final int MOTOR_CONTROLLER_SHOOTERWHEEL3 = 12;
@@ -92,8 +93,10 @@ public final class Constants
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
         public static final int MOTOR_CONTROLLER_CLIMBER = 5;
     }
+
     public static final class ClimberConstants
     {
         public static final double CLIMBER_MOTOR_POWER = 0.5;
     }
+
 }
