@@ -68,6 +68,7 @@ public class ShooterSubsystem extends SubsystemBase
         m_wheelMotor2.set(ControlMode.PercentOutput, demand);
         m_wheelMotor3.set(ControlMode.PercentOutput, demand);
     }
+
     public boolean getMotorSpeedStatus()
     {
         return false;
