@@ -27,7 +27,8 @@ import java.nio.file.Paths;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
-import frc.robot.commands.IntakeDataCommand;
+import frc.robot.commands.IntakeBallDataCommand;
+import frc.robot.commands.IntakeBallDataCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
 
@@ -56,7 +57,7 @@ public class RobotContainer {
   private Trajectory m_Trajectory;
   
   private NeutrinoRamseteCommand m_autoCommand;
-  private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
+  private final IntakeBallDataCommand m_intakeData = new IntakeBallDataCommand(m_Intake);
   private final ShooterSetSpeedPIDCommand m_shooterCommand = new ShooterSetSpeedPIDCommand(m_Shooter);
   private final ShooterDirectCurrentCommand m_shooterCurrentCommand = new ShooterDirectCurrentCommand(m_Shooter);
 
@@ -79,6 +80,7 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
+
   /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by instantiating a {@link GenericHID} or one of its subclasses
@@ -89,7 +91,9 @@ public class RobotContainer {
   {
     m_X.whenPressed(new DriveDataCommand(m_Drive));
     m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
-    m_B.whenHeld(new IntakeDataCommand(m_Intake));
+    m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
+    m_B.whenReleased(new endIntakeCommand());
+        
   }
 
   /**
