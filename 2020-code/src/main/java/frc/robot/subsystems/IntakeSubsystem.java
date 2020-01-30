@@ -21,6 +21,7 @@ import frc.robot.Constants.IntakeConstants;
 /**
  * Add your docs here.
  */
+
 public class IntakeSubsystem extends SubsystemBase 
 {
     private AnalogPotentiometer m_adjustMotorPotentiometer = new AnalogPotentiometer(Constants.IntakeConstants.ADJUST_MOTOR_ENCODER);
@@ -52,8 +53,8 @@ public class IntakeSubsystem extends SubsystemBase
     {
         m_intakeAdjustMotor.set(ControlMode.PercentOutput, PIDPower);
     }
-  
-    public void getPDPCurrent() 
+
+    public void getPDPCurrent()
     {
         double currentIntakeMotor = PDP.getCurrent(CanId.MOTOR_CONTROLLER_INTAKE);
         System.out.println("MOTOR_CONTROLLER_INTAKE: " + currentIntakeMotor);

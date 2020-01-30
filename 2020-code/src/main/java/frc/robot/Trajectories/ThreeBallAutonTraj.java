@@ -10,7 +10,7 @@ package frc.robot.Trajectories;
 /**
  * Trajectories for a three ball auton
  */
-public class ThreeBallAutonTraj 
+public class ThreeBallAutonTraj
 {
 
 }
