@@ -67,7 +67,7 @@ public class ShooterSubsystem extends SubsystemBase
 
     public void setWheelMotor(double power)
     {
-        m_wheelMotor.set(ControlMode.PercentOutput, power);  
+        m_wheelMotor.set(ControlMode.PercentOutput, power);
     }
 
     public boolean getMotorSpeedStatus()

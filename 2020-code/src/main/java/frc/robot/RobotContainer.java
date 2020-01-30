@@ -74,6 +74,11 @@ public class RobotContainer
         catch (Exception e)
         {
         }
+
+        final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
+            joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
+        m_Drive.setDefaultCommand(tankDriveCommand);
+        configureButtonBindings();
     }
 
     /**
@@ -83,13 +88,9 @@ public class RobotContainer
      */
     private void configureButtonBindings()
     {
+        m_B.whenPressed(new IntakeDataCommand(m_Intake));
         m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
-        m_B.whenHeld(new IntakeDataCommand(m_Intake));
-        final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
-            joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
-        m_Drive.setDefaultCommand(tankDriveCommand);
-        configureButtonBindings();
     }
 
     /**
