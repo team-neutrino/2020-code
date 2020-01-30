@@ -49,22 +49,22 @@ public final class Constants
                 DriveConstants.K_DRIVE_KINEMATICS, 10);
     }
 
-    public static final class IntakeConstants 
+    public static final class IntakeConstants
     {
         public static final int INTAKE_MOTOR_POWER = 1;
-        public static final double ARM_DOWN_ANGLE = 0; // placeholder 
+        public static final double ARM_DOWN_ANGLE = 0; // placeholder
         public static final double ARM_UP_ANGLE = 0; // placeholder
         public static final int ADJUST_MOTOR_ENCODER = 0;
         public static final double INTAKE_DISTANCE_PER_PULSE = 0;
         public static final double ADJUST_DISTANCE_PER_PULSE = 0;
     }
 
-    public static final class ControllerPorts 
+    public static final class ControllerPorts
     {
         public static final int XBOX_CONTROLLER_PORT = 2;
     }
 
-    public static final class JoystickConstants 
+    public static final class JoystickConstants
     {
         public static final int LEFT_JOYSTICK_PORT = 0;
         public static final int RIGHT_JOYSTICK__PORT = 1;

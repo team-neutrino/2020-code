@@ -75,22 +75,22 @@ public class RobotContainer
         {
         }
     }
-  /**
-   * Use this method to define your button->command mappings. Buttons can be
-   * created by instantiating a {@link GenericHID} or one of its subclasses
-   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
-   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-   private void configureButtonBindings() 
-   {
-    m_X.whenPressed(new DriveDataCommand(m_Drive));
-    m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
-    m_B.whenHeld(new IntakeDataCommand(m_Intake));
-    final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
+
+    /**
+     * Use this method to define your button->command mappings. Buttons can be created by instantiating a
+     * {@link GenericHID} or one of its subclasses ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}),
+     * and then passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     */
+    private void configureButtonBindings()
+    {
+        m_X.whenPressed(new DriveDataCommand(m_Drive));
+        m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
+        m_B.whenHeld(new IntakeDataCommand(m_Intake));
+        final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
             joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
-            m_Drive.setDefaultCommand(tankDriveCommand);
-            configureButtonBindings();
-   }
+        m_Drive.setDefaultCommand(tankDriveCommand);
+        configureButtonBindings();
+    }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
