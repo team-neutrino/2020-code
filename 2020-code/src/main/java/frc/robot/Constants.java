@@ -90,14 +90,10 @@ public final class Constants
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
-<<<<<<< HEAD
-
-=======
         public static final int MOTOR_CONTROLLER_CLIMBER = 5;
     }
     public static final class ClimberConstants
     {
         public static final double CLIMBER_MOTOR_POWER = 0.5;
->>>>>>> master
     }
 }
