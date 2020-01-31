@@ -28,7 +28,8 @@ import java.nio.file.Paths;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
-import frc.robot.commands.IntakeDataCommand;
+import frc.robot.commands.IntakeBallDataCommand;
+import frc.robot.commands.IntakeBallDataCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
 
@@ -47,19 +48,17 @@ public class RobotContainer
     public final LEDSubsystem m_Led = new LEDSubsystem();
     public final ClimberSubsystem m_climber = new ClimberSubsystem();
 
-    public Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
-    public Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
+    private Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
+    private Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
     XboxController m_OperatorController = new XboxController(ControllerPorts.XBOX_CONTROLLER_PORT);
     JoystickButton m_back = new JoystickButton(m_OperatorController, Button.kBack.value);
     JoystickButton m_start = new JoystickButton(m_OperatorController, Button.kStart.value);
     JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
+
     private Trajectory m_Trajectory;
     private NeutrinoRamseteCommand m_autoCommand;
-    private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
-    private final ShooterSetSpeedPIDCommand m_shooterCommand = new ShooterSetSpeedPIDCommand(m_Shooter);
-    private final ShooterDirectCurrentCommand m_shooterCurrentCommand = new ShooterDirectCurrentCommand(m_Shooter);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -89,8 +88,8 @@ public class RobotContainer
     {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
-        m_B.whenHeld(new IntakeDataCommand(m_Intake));
-
+        m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
+        m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
     }
 
     /**
