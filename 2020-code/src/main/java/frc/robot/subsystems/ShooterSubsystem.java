@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -24,10 +25,9 @@ import frc.robot.Constants;
 { "all" })
 public class ShooterSubsystem extends SubsystemBase
 {
-
     private TalonSRX m_wheelMotor;
-    private TalonSRX m_wheelMotor2;
-    private TalonSRX m_wheelMotor3;
+    private VictorSPX m_wheelMotor2;
+    private VictorSPX m_wheelMotor3;
     //TODO find out what kind of encoder we are using
     private Encoder m_wheelEncoder;
     private final SimpleMotorFeedforward m_shooterFeedforward = new SimpleMotorFeedforward(
@@ -39,11 +39,11 @@ public class ShooterSubsystem extends SubsystemBase
 
     public ShooterSubsystem()
     {
+        m_wheelMotor2 = new VictorSPX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
+        m_wheelMotor3 = new VictorSPX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL3);
         m_wheelMotor2.follow(m_wheelMotor, FollowerType.PercentOutput);
         m_wheelMotor3.follow(m_wheelMotor, FollowerType.PercentOutput);
-        m_wheelMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL);
-        m_wheelMotor2 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
-        m_wheelMotor3 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL3);
+        m_wheelMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL);    
         m_wheelEncoder = new Encoder(Constants.ShooterConstants.WHEEL_ENCODER_PORT_1,
             Constants.ShooterConstants.WHEEL_ENCODER_PORT_2);
         m_wheelEncoder.setDistancePerPulse(Constants.ShooterConstants.WHEEL_ENCODER_DIST_PER_PULSE);
