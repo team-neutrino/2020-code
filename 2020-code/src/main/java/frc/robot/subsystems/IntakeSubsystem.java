@@ -57,8 +57,8 @@ public class IntakeSubsystem extends SubsystemBase
 
     public void getPDPCurrent()
     {
-        double currentIntakeMotor = PDP.getCurrent(CanId.MOTOR_CONTROLLER_INTAKE);
-        System.out.println("MOTOR_CONTROLLER_INTAKE: " + currentIntakeMotor);
+        double currentIntakeMotor = m_intakeMotor.getSupplyCurrent();
+        SmartDashboard.putNumber("MOTOR_CONTROLLER_INTAKE: ", currentIntakeMotor);
     }
 
     public void intakePrinter()
