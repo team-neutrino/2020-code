@@ -18,16 +18,15 @@ import edu.wpi.first.networktables.NetworkTable;
 //TODO: Better value typing instead of just doubles
 
 /**
- * A simple but complete wrapper API for interfacing with everyone's favrote PnP
- * vision system. Some descriptions are taken from Limelight's docs. Made for
- * code readability.
- * 
+ * A simple but complete wrapper API for interfacing with everyone's favrote PnP vision system. Some descriptions are
+ * taken from Limelight's docs. Made for code readability.
+ *
  * @author Indelisio (FIRST FRC Team #3928 Team Neutrino)
  * @version 1.4.2
  * @apiNote Still in development
- * 
  */
-public class Limelight {
+public class Limelight
+{
     //#region Declarations
     private NetworkTable limeTable;
 
@@ -153,12 +152,18 @@ public class Limelight {
     /**
      * Camera matrix [Row][Col]
      */
-    public static final double[][] CAM_MATRIX = {{772.53876202, 0.0, 479.132337442},{0.0, 769.052151477, 359.143001808},{0.0, 0.0, 1.0}};
+    public static final double[][] CAM_MATRIX =
+    {
+            { 772.53876202, 0.0, 479.132337442 },
+            { 0.0, 769.052151477, 359.143001808 },
+            { 0.0, 0.0, 1.0 } };
 
     /**
      * Distortion Coefficient
      */
-    public static final double[] DISTORTION_COEFF = {2.9684613693070039e-01, -1.4380252254747885e+00,-2.2098421479494509e-03,-3.3894563533907176e-03, 2.5344430354806740e+00};
+    public static final double[] DISTORTION_COEFF =
+    { 2.9684613693070039e-01, -1.4380252254747885e+00, -2.2098421479494509e-03, -3.3894563533907176e-03,
+            2.5344430354806740e+00 };
 
     /**
      * Focal Length (mm)
@@ -170,35 +175,42 @@ public class Limelight {
      */
     public static final double LATENCY_COMP = 11.0;
 
-    public enum LedMode {
+    public enum LedMode
+    {
         DEFAULT, OFF, BLINKING, ON
     }
 
-    public enum CameraMode {
+    public enum CameraMode
+    {
         VISION_PROCESSOR, DRIVER_CAMERA
     }
 
-    public enum StreamingMode {
+    public enum StreamingMode
+    {
         STANDARD, PIP_MAIN, PIP_SECONDARY
     }
 
-    public enum SnapshotMode {
+    public enum SnapshotMode
+    {
         OFF, ON
     }
 
-    public enum TargetID {
+    public enum TargetID
+    {
         TARGET_ONE, TARGET_TWO, TARGET_THREE
     }
 
-    public enum CrosshairID {
+    public enum CrosshairID
+    {
         CROSSHAIR_A, CROSSHAIR_B
     }
     //#endregion
     /**
-     * A simple but complete wrapper API for interfacing with everyone's favrote PnP
-     * vision system. Includes value descriptions from Limelight's docs.
+     * A simple but complete wrapper API for interfacing with everyone's favrote PnP vision system. Includes value
+     * descriptions from Limelight's docs.
      */
-    public Limelight() {
+    public Limelight()
+    {
 
         limeTable = NetworkTableInstance.getDefault().getTable("limelight");
 
@@ -272,8 +284,10 @@ public class Limelight {
         bestLongestSideLengthValue = bestLongestSideLengthEntry.getDouble(0.0);
         bestHorizontalSideLengthValue = bestHorizontalSideLengthEntry.getDouble(0.0);
         bestVerticalSideLengthValue = bestVerticalSideLengthEntry.getDouble(0.0);
-        rgbColor = rgbColorEntry.getDoubleArray(new double[] {0.0,0.0,0.0});
-        camTranValue = camTranEntry.getDoubleArray(new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+        rgbColor = rgbColorEntry.getDoubleArray(new double[]
+        { 0.0, 0.0, 0.0 });
+        camTranValue = camTranEntry.getDoubleArray(new double[]
+        { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
 
         // Pipeline value section
         activePipelineValue = activePipelineEntry.getDouble(0.0);
@@ -286,8 +300,10 @@ public class Limelight {
         snapshotModeValue = snapshotModeEntry.getDouble(0.0);
 
         // Corner value section
-        cornerXArrayValue = cornerXArrayEntry.getDoubleArray(new double[] { 0.0 });
-        cornerYArrayValue = cornerYArrayEntry.getDoubleArray(new double[] { 0.0 });
+        cornerXArrayValue = cornerXArrayEntry.getDoubleArray(new double[]
+        { 0.0 });
+        cornerYArrayValue = cornerYArrayEntry.getDoubleArray(new double[]
+        { 0.0 });
 
         // Raw Target value section
         rawX0Value = rawX0Entry.getDouble(0.0);
@@ -318,7 +334,8 @@ public class Limelight {
     /**
      * Replace currently stored values with new ones from the Limelight
      */
-    public void update() {
+    public void update()
+    {
         // Validity value section
         hasTargetValue = hasTargetEntry.getDouble(0.0);
 
@@ -332,8 +349,10 @@ public class Limelight {
         bestLongestSideLengthValue = bestLongestSideLengthEntry.getDouble(0.0);
         bestHorizontalSideLengthValue = bestHorizontalSideLengthEntry.getDouble(0.0);
         bestVerticalSideLengthValue = bestVerticalSideLengthEntry.getDouble(0.0);
-        rgbColor = rgbColorEntry.getDoubleArray(new double[] {0.0,0.0,0.0});
-        camTranValue = camTranEntry.getDoubleArray(new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+        rgbColor = rgbColorEntry.getDoubleArray(new double[]
+        { 0.0, 0.0, 0.0 });
+        camTranValue = camTranEntry.getDoubleArray(new double[]
+        { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
 
         // Pipeline value section
         activePipelineValue = activePipelineEntry.getDouble(0.0);
@@ -346,8 +365,10 @@ public class Limelight {
         snapshotModeValue = snapshotModeEntry.getDouble(0.0);
 
         // Corner value section
-        cornerXArrayValue = cornerXArrayEntry.getDoubleArray(new double[] { 0.0 });
-        cornerYArrayValue = cornerYArrayEntry.getDoubleArray(new double[] { 0.0 });
+        cornerXArrayValue = cornerXArrayEntry.getDoubleArray(new double[]
+        { 0.0 });
+        cornerYArrayValue = cornerYArrayEntry.getDoubleArray(new double[]
+        { 0.0 });
 
         // Raw Target value section
         rawX0Value = rawX0Entry.getDouble(0.0);
@@ -374,525 +395,597 @@ public class Limelight {
     }
 
     /**
-     * Uses fancy trig magic to judge distance
-     * From limelight Case Study: Estimating Distance converted into code form.
-     * 
+     * Uses fancy trig magic to judge distance From limelight Case Study: Estimating Distance converted into code form.
+     *
      * @param camHeight How high the camera is off the floor
      * @param targetHeight How high the target is off the floor
      * @param camAngle Angle between the floor and the camera
      * @return Distance in same unit as camHeight and targetHeight
-     * 
      * @apiNote This function has not been tested
      */
-    public double trigDistance(double camHeight, double targetHeight, double camAngle) {
-        return (targetHeight - camHeight) / Math.tan(Math.toRadians(camAngle  + getYAngle()));
+    public double trigDistance(double camHeight, double targetHeight, double camAngle)
+    {
+        return (targetHeight - camHeight) / Math.tan(Math.toRadians(camAngle + getYAngle()));
     }
 
     /**
      * Checks if the Limelight has a target
+     *
      * @return Whether the limelight has any valid targets (0 or 1)
-     * 
      */
-    public double hasTarget() {
+    public double hasTarget()
+    {
         return hasTargetValue;
     }
 
     /**
      * Obtains an X angle for the main target relative to the main crosshair
+     *
      * @return Horizontal Offset From Crosshair To Target (-29.8 to 29.8 degrees)
-     * 
      */
-    public double getXAngle() {
+    public double getXAngle()
+    {
         return bestHorizontalOffsetFromCrosshairValue;
     }
 
-     /**
+    /**
      * Obtains a normalized X value for the main target relative to the main crosshair
+     *
      * @return Horizontal Offset From Crosshair To Target (-1.0 to 1.0)
      * @apiNote This function has not been tested
      */
-    public double getNormalizedXAngle() {
-        return bestHorizontalOffsetFromCrosshairValue/HORIZONTAL_MAX_DEGREES;
+    public double getNormalizedXAngle()
+    {
+        return bestHorizontalOffsetFromCrosshairValue / HORIZONTAL_MAX_DEGREES;
     }
 
     /**
      * Obtains an Y angle for the main target relative to the main crosshair
+     *
      * @return Vertical Offset From Crosshair To Target (-24.85 to 24.85 degrees)
-     * 
      */
-    public double getYAngle() {
+    public double getYAngle()
+    {
         return bestVerticalOffsetFromCrosshairValue;
     }
 
-     /**
+    /**
      * Obtains a normalized Y value for the main target relative to the main crosshair
+     *
      * @return Vertical Offset From Crosshair To Target (-1.0 to 1.0)
      * @apiNote This function has not been tested
      */
-    public double getNormalizedYAngle() {
-        return bestHorizontalOffsetFromCrosshairValue/VERTICAL_MAX_DEGREES;
+    public double getNormalizedYAngle()
+    {
+        return bestHorizontalOffsetFromCrosshairValue / VERTICAL_MAX_DEGREES;
     }
 
     /**
      * Obtains the area of the main target
+     *
      * @return Target Area (0% of image to 100% of image)
-     * 
      */
-    public double getArea() {
+    public double getArea()
+    {
         return bestAreaValue;
     }
 
     /**
      * Obtains the skew or rotation of the main target
+     *
      * @return Skew or rotation (-90 degrees to 0 degrees)
-     * 
      */
-    public double getSkewRot() {
+    public double getSkewRot()
+    {
         return bestSkewOrRotationValue;
     }
 
     /**
      * Obtains the latency of the pipeline alone
+     *
      * @return The pipeline’s latency contribution (ms)
-     * 
      */
-    public double getPipelineLatency() {
+    public double getPipelineLatency()
+    {
         return bestPipelineLatencyValue;
     }
 
     /**
      * Obtains the likely total latency
+     *
      * @return The total latency (ms)
-     * 
      */
-    public double getTotalLatency() {
+    public double getTotalLatency()
+    {
         return bestPipelineLatencyValue + LATENCY_COMP;
     }
 
     /**
      * Obtains the length of the shortest side of the F.B.B.
+     *
      * @return Sidelength of shortest side of the fitted bounding box (pixels)
-     * 
      */
-    public double getShortestSideLength() {
+    public double getShortestSideLength()
+    {
         return bestShortestSideLengthValue;
     }
 
     /**
      * Obtains the length of the shortest side of the F.B.B.
+     *
      * @return Sidelength of longest side of the fitted bounding box (pixels)
-     * 
      */
-    public double getLongestSideLength() {
+    public double getLongestSideLength()
+    {
         return bestLongestSideLengthValue;
     }
 
     /**
      * Obtains horizontal length of the R.B.B.
+     *
      * @return Horizontal sidelength of the rough bounding box (0 - 320 pixels)
      */
-    public double getHorizontalSideLength() {
+    public double getHorizontalSideLength()
+    {
         return bestHorizontalSideLengthValue;
     }
 
     /**
      * Obtains vertical length of the R.B.B.
+     *
      * @return Vertical sidelength of the rough bounding box (0 - 320 pixels)
      */
-    public double getVerticalSideLength() {
+    public double getVerticalSideLength()
+    {
         return bestVerticalSideLengthValue;
     }
 
     /**
      * Obtains the color the limelight sees
+     *
      * @return An array in the order R,G,B
      */
-    public double[] getRGB() {
+    public double[] getRGB()
+    {
         return rgbColor;
     }
 
     /**
      * Obtains what pipeline the Limelight is actually running
+     *
      * @return True active pipeline index of the camera (0 .. 9)
      */
-    public double getActualPipeline() {
+    public double getActualPipeline()
+    {
         return activePipelineValue;
     }
 
     /**
      * Obtains what pipeline the Limelight is supposed to be running
+     *
      * @return the selectedPipelineValue
      * @apiNote This function has not been tested
      */
-    public double getSelectedPipeline() {
+    public double getSelectedPipeline()
+    {
         return selectedPipelineValue;
     }
 
     /**
      * Sets the current pipeline (It may not switch right away, make sure to check)
+     *
      * @param PipelineID Sets limelight’s current pipeline
      * @apiNote This function has not been tested
      */
 
-    public void setSelectedPipeline(double pipelineID){
+    public void setSelectedPipeline(double pipelineID)
+    {
         selectedPipelineEntry.setNumber(pipelineID);
     }
 
-
     /**
-     * Checks whether or not the selected pipeline and the active pipeline
-     * are consistant
-     * 
+     * Checks whether or not the selected pipeline and the active pipeline are consistant
+     *
      * @return a boolean indicating if the selected pipeline and the active pipeline are equal
      * @apiNote This function has not been tested
      */
-    public boolean isPipelineSet(){
+    public boolean isPipelineSet()
+    {
         return activePipelineValue == selectedPipelineValue;
     }
 
     /**
      * Obtains X position of designated target
-     * 
+     *
      * @param target The desired target
-     * 
      * @return Raw Screenspace X (-1.0 to 1.0)
      * @apiNote This function has not been tested
      */
-    public double getRawX(TargetID target) {
-        switch (target) {
-        case TARGET_ONE:
-            return rawX0Value;
-        case TARGET_TWO:
-            return rawX1Value;
-        case TARGET_THREE:
-            return rawX2Value;
-        default:
-            return 0.0;
+    public double getRawX(TargetID target)
+    {
+        switch (target)
+        {
+            case TARGET_ONE:
+                return rawX0Value;
+            case TARGET_TWO:
+                return rawX1Value;
+            case TARGET_THREE:
+                return rawX2Value;
+            default:
+                return 0.0;
         }
     }
 
     /**
      * Obtains Y position of designated target
-     * 
+     *
      * @param target The desired target
-     * 
      * @return Raw Screenspace Y (-1.0 to 1.0)
      * @apiNote This function has not been tested
      */
-    public double getRawY(TargetID target) {
-        switch (target) {
-        case TARGET_ONE:
-            return rawY0Value;
-        case TARGET_TWO:
-            return rawY1Value;
-        case TARGET_THREE:
-            return rawY2Value;
-        default:
-            return 0.0;
+    public double getRawY(TargetID target)
+    {
+        switch (target)
+        {
+            case TARGET_ONE:
+                return rawY0Value;
+            case TARGET_TWO:
+                return rawY1Value;
+            case TARGET_THREE:
+                return rawY2Value;
+            default:
+                return 0.0;
         }
     }
 
     /**
      * Obtains area of designated target
-     * 
+     *
      * @param target The desired target
-     * 
      * @return Area (0% of image to 100% of image)
      * @apiNote This function has not been tested
      */
-    public double getRawArea(TargetID target) {
-        switch (target) {
-        case TARGET_ONE:
-            return rawArea0Value;
-        case TARGET_TWO:
-            return rawArea1Value;
-        case TARGET_THREE:
-            return rawArea2Value;
-        default:
-            return 0.0;
+    public double getRawArea(TargetID target)
+    {
+        switch (target)
+        {
+            case TARGET_ONE:
+                return rawArea0Value;
+            case TARGET_TWO:
+                return rawArea1Value;
+            case TARGET_THREE:
+                return rawArea2Value;
+            default:
+                return 0.0;
         }
     }
 
     /**
      * Obtains skew or rotation of designated target
-     * 
+     *
      * @param target The desired target
-     * 
      * @return Skew or rotation (-90 degrees to 0 degrees)
      * @apiNote This function has not been tested
      */
-    public double getRawRotSkew(TargetID target) {
-        switch (target) {
-        case TARGET_ONE:
-            return rawSkewOrRot0Value;
-        case TARGET_TWO:
-            return rawSkewOrRot1Value;
-        case TARGET_THREE:
-            return rawSkewOrRot2Value;
-        default:
-            return 0.0;
+    public double getRawRotSkew(TargetID target)
+    {
+        switch (target)
+        {
+            case TARGET_ONE:
+                return rawSkewOrRot0Value;
+            case TARGET_TWO:
+                return rawSkewOrRot1Value;
+            case TARGET_THREE:
+                return rawSkewOrRot2Value;
+            default:
+                return 0.0;
         }
     }
-    
+
     //TODO: Find out whether "N.S.S" means -1.0 to 1.0 or 0.0 to 1.0
-    
+
     /**
      * Obtains X position of designated crosshair
-     * 
+     *
      * @param crosshair The desired crosshair
-     * 
      * @return Crosshair X in normalized screen space
      * @apiNote This function has not been tested
      */
-    public double getCrosshairX(CrosshairID crosshair) {
-        switch (crosshair) {
-        case CROSSHAIR_A:
-            return crosshairAXValue;
-        case CROSSHAIR_B:
-            return crosshairBXValue;
-        default:
-            return 0.0;
+    public double getCrosshairX(CrosshairID crosshair)
+    {
+        switch (crosshair)
+        {
+            case CROSSHAIR_A:
+                return crosshairAXValue;
+            case CROSSHAIR_B:
+                return crosshairBXValue;
+            default:
+                return 0.0;
         }
     }
 
     /**
      * Obtains Y position of designated crosshair
-     * 
+     *
      * @param crosshair The desired crosshair
-     * 
      * @return Crosshair Y in normalized screen space
      * @apiNote This function has not been tested
      */
-    public double getCrosshairY(CrosshairID crosshair) {
-        switch (crosshair) {
-        case CROSSHAIR_A:
-            return crosshairAYValue;
-        case CROSSHAIR_B:
-            return crosshairBYValue;
-        default:
-            return 0.0;
+    public double getCrosshairY(CrosshairID crosshair)
+    {
+        switch (crosshair)
+        {
+            case CROSSHAIR_A:
+                return crosshairAYValue;
+            case CROSSHAIR_B:
+                return crosshairBYValue;
+            default:
+                return 0.0;
         }
     }
 
     /**
      * If enabled, obtains an array of the X position of corners
-     * 
+     *
      * @return Double array of corner x-coordinates
      * @apiNote This function has not been tested
      */
-    public double[] getCornerXArrayValue() {
+    public double[] getCornerXArrayValue()
+    {
         return cornerXArrayValue;
     }
 
     /**
      * If enabled, obtains an array of the Y position of corners
-     * 
+     *
      * @return Double array of corner y-coordinates
      * @apiNote This function has not been tested
      */
-    public double[] getCornerYArrayValue() {
+    public double[] getCornerYArrayValue()
+    {
         return cornerYArrayValue;
     }
+
     //TODO: Find if the documentation is in error with (x,y,y), replaced currently with (x,y,z)
     /**
      * If enabled, obtains an array of values for 3D tracking
-     * 
+     *
      * @return Results of a 3D position solution, Array of 6 Doubles: Translation (x,y,z) Rotation(pitch,yaw,roll)
      * @apiNote This function has not been tested
      */
-    public double[] getSolved3D() {
+    public double[] getSolved3D()
+    {
         return camTranValue;
     }
 
     /**
      * Obtains the current status of the LEDs
-     * 
-     * @return An enum corresponding with the current status: <p>
-     * DEFAULT: using the LED Mode set in the current pipeline <p>
-     * OFF: forced off <p>
-     * BLINKING: forced to blink <p>
-     * ON: forced on
+     *
+     * @return An enum corresponding with the current status:
+     *         <p>
+     *         DEFAULT: using the LED Mode set in the current pipeline
+     *         <p>
+     *         OFF: forced off
+     *         <p>
+     *         BLINKING: forced to blink
+     *         <p>
+     *         ON: forced on
      */
-    public LedMode getLEDMode() {
-        switch ((int) ledModeValue) {
-        case 0:
-            return LedMode.DEFAULT;
+    public LedMode getLEDMode()
+    {
+        switch ((int) ledModeValue)
+        {
+            case 0:
+                return LedMode.DEFAULT;
 
-        case 1:
-            return LedMode.OFF;
+            case 1:
+                return LedMode.OFF;
 
-        case 2:
-            return LedMode.BLINKING;
+            case 2:
+                return LedMode.BLINKING;
 
-        case 3:
-            return LedMode.ON;
+            case 3:
+                return LedMode.ON;
 
-        default:
-            System.err.println("Error while getting LED status");
-            return LedMode.DEFAULT;
+            default:
+                System.err.println("Error while getting LED status");
+                return LedMode.DEFAULT;
         }
     }
 
     /**
      * Sets the current mode of the LEDs on the Limelight
-     * 
-     * @param mode The mode that you want the LEDs to be in:<p>
-     * DEFAULT: use the LED Mode set in the current pipeline <p>
-     * OFF: force off <p>
-     * BLINKING: force to blink <p>
-     * ON: force on
+     *
+     * @param mode The mode that you want the LEDs to be in:
+     *        <p>
+     *        DEFAULT: use the LED Mode set in the current pipeline
+     *        <p>
+     *        OFF: force off
+     *        <p>
+     *        BLINKING: force to blink
+     *        <p>
+     *        ON: force on
      */
-    public void setLEDMode(LedMode mode) {
-        switch (mode) {
-        case DEFAULT:
-            ledModeEntry.setNumber(0.0);
-            break;
-        case OFF:
-            ledModeEntry.setNumber(1.0);
-            break;
-        case BLINKING:
-            ledModeEntry.setNumber(2.0);
-            break;
-        case ON:
-            ledModeEntry.setNumber(3.0);
-            break;
-        default:
-            break;
+    public void setLEDMode(LedMode mode)
+    {
+        switch (mode)
+        {
+            case DEFAULT:
+                ledModeEntry.setNumber(0.0);
+                break;
+            case OFF:
+                ledModeEntry.setNumber(1.0);
+                break;
+            case BLINKING:
+                ledModeEntry.setNumber(2.0);
+                break;
+            case ON:
+                ledModeEntry.setNumber(3.0);
+                break;
+            default:
+                break;
         }
     }
 
     /**
      * Obtains the current status of the Limelight camera
-     * 
-     * @return An enum corresponding with the current status:<p>
-     * VISION_PROCESSOR: Normal vision processing mode <p>
-     * DRIVER_CAMERA: Driver Camera mode (Increases exposure, disables vision processing)
+     *
+     * @return An enum corresponding with the current status:
+     *         <p>
+     *         VISION_PROCESSOR: Normal vision processing mode
+     *         <p>
+     *         DRIVER_CAMERA: Driver Camera mode (Increases exposure, disables vision processing)
      */
-    public CameraMode getCameraMode() {
-        switch ((int) camModeValue) {
-        case 0:
-            return CameraMode.VISION_PROCESSOR;
+    public CameraMode getCameraMode()
+    {
+        switch ((int) camModeValue)
+        {
+            case 0:
+                return CameraMode.VISION_PROCESSOR;
 
-        case 1:
-            return CameraMode.DRIVER_CAMERA;
+            case 1:
+                return CameraMode.DRIVER_CAMERA;
 
-        default:
-            System.err.println("Error while getting Camera status");
-            return CameraMode.VISION_PROCESSOR;
+            default:
+                System.err.println("Error while getting Camera status");
+                return CameraMode.VISION_PROCESSOR;
         }
     }
 
     /**
      * Sets the current mode of the Limelight camera
-     * 
-     * @param mode The mode that you want the camera to be in:<p>
-     * VISION_PROCESSOR: Normal vision processing mode <p>
-     * DRIVER_CAMERA: Driver Camera mode (Increases exposure, disables vision processing)
-     */ 
-    public void setCameraMode(CameraMode mode) {
-        switch (mode) {
-        case VISION_PROCESSOR:
-            camModeEntry.setNumber(0.0);
-            break;
-        case DRIVER_CAMERA:
-            camModeEntry.setNumber(1.0);
-            break;
-        default:
-            break;
+     *
+     * @param mode The mode that you want the camera to be in:
+     *        <p>
+     *        VISION_PROCESSOR: Normal vision processing mode
+     *        <p>
+     *        DRIVER_CAMERA: Driver Camera mode (Increases exposure, disables vision processing)
+     */
+    public void setCameraMode(CameraMode mode)
+    {
+        switch (mode)
+        {
+            case VISION_PROCESSOR:
+                camModeEntry.setNumber(0.0);
+                break;
+            case DRIVER_CAMERA:
+                camModeEntry.setNumber(1.0);
+                break;
+            default:
+                break;
         }
     }
 
     /**
      * Obtains the current status of how the limelight is doing multi-camera display
-     * 
-     * @return An enum corresponding with the current status:<p>
-     * STANDARD: Side-by-side streams if a webcam is attached to Limelight<p>
-     * PIP_MAIN: The secondary camera stream is placed in the lower-right corner of the primary camera stream<p>
-     * PIP_SECONDARY: The primary camera stream is placed in the lower-right corner of the secondary camera stream
+     *
+     * @return An enum corresponding with the current status:
+     *         <p>
+     *         STANDARD: Side-by-side streams if a webcam is attached to Limelight
+     *         <p>
+     *         PIP_MAIN: The secondary camera stream is placed in the lower-right corner of the primary camera stream
+     *         <p>
+     *         PIP_SECONDARY: The primary camera stream is placed in the lower-right corner of the secondary camera
+     *         stream
      * @apiNote This function has not been tested
      */
-    public StreamingMode getStreamMode() {
-        switch ((int) streamModeValue) {
-        case 0:
-            return StreamingMode.STANDARD;
+    public StreamingMode getStreamMode()
+    {
+        switch ((int) streamModeValue)
+        {
+            case 0:
+                return StreamingMode.STANDARD;
 
-        case 1:
-            return StreamingMode.PIP_MAIN;
+            case 1:
+                return StreamingMode.PIP_MAIN;
 
-        case 2:
-            return StreamingMode.PIP_SECONDARY;
+            case 2:
+                return StreamingMode.PIP_SECONDARY;
 
-        default:
-            System.err.println("Error while getting Stream status");
-            return StreamingMode.STANDARD;
+            default:
+                System.err.println("Error while getting Stream status");
+                return StreamingMode.STANDARD;
         }
     }
 
     /**
      * Sets how the Limelight handles multi-camera display
-     * 
-     * @param mode The mode that you want the display to be in:<p>
-     * STANDARD: Side-by-side streams if a webcam is attached to Limelight<p>
-     * PIP_MAIN: Place the secondary camera stream in the lower-right corner of the primary camera stream<p>
-     * PIP_SECONDARY: Place the primary camera stream in the lower-right corner of the secondary camera stream
+     *
+     * @param mode The mode that you want the display to be in:
+     *        <p>
+     *        STANDARD: Side-by-side streams if a webcam is attached to Limelight
+     *        <p>
+     *        PIP_MAIN: Place the secondary camera stream in the lower-right corner of the primary camera stream
+     *        <p>
+     *        PIP_SECONDARY: Place the primary camera stream in the lower-right corner of the secondary camera stream
      * @apiNote This function has not been tested
      */
-    public void setStreamMode(StreamingMode mode) {
-        switch (mode) {
-        case STANDARD:
-            streamModeEntry.setNumber(0.0);
-            break;
-        case PIP_MAIN:
-            streamModeEntry.setNumber(1.0);
-            break;
-        case PIP_SECONDARY:
-            streamModeEntry.setNumber(2.0);
-            break;
-        default:
-            break;
+    public void setStreamMode(StreamingMode mode)
+    {
+        switch (mode)
+        {
+            case STANDARD:
+                streamModeEntry.setNumber(0.0);
+                break;
+            case PIP_MAIN:
+                streamModeEntry.setNumber(1.0);
+                break;
+            case PIP_SECONDARY:
+                streamModeEntry.setNumber(2.0);
+                break;
+            default:
+                break;
         }
     }
 
     /**
      * Obtains whether or not the Limelight is currently saving match pictures.
-     * 
-     * @return An enum corresponding with the current status:<p>
-     * OFF: Not currently taking snapshots<p>
-     * ON: Taking two snapshots per second
+     *
+     * @return An enum corresponding with the current status:
+     *         <p>
+     *         OFF: Not currently taking snapshots
+     *         <p>
+     *         ON: Taking two snapshots per second
      * @apiNote This function has not been tested
      */
-    public SnapshotMode getSnapshotMode() {
-        switch ((int) snapshotModeValue) {
-        case 0:
-            return SnapshotMode.OFF;
+    public SnapshotMode getSnapshotMode()
+    {
+        switch ((int) snapshotModeValue)
+        {
+            case 0:
+                return SnapshotMode.OFF;
 
-        case 1:
-            return SnapshotMode.ON;
+            case 1:
+                return SnapshotMode.ON;
 
-        default:
-            System.err.println("Error while getting Snapshot status");
-            return SnapshotMode.OFF;
+            default:
+                System.err.println("Error while getting Snapshot status");
+                return SnapshotMode.OFF;
         }
     }
 
     /**
      * Sets whether or not the Limelight is currently saving match pictures.
-     * 
-     * @param mode The mode that you want the camera to be in:<p>
-     * OFF: Stop taking snapshots<p>
-     * ON: Take two snapshots per second
+     *
+     * @param mode The mode that you want the camera to be in:
+     *        <p>
+     *        OFF: Stop taking snapshots
+     *        <p>
+     *        ON: Take two snapshots per second
      * @apiNote This function has not been tested
      */
-    public void setSnapshotMode(SnapshotMode mode) {
-        switch (mode) {
-        case OFF:
-            snapshotModeEntry.setNumber(0.0);
-            break;
-        case ON:
-            snapshotModeEntry.setNumber(1.0);
-            break;
-        default:
-            break;
+    public void setSnapshotMode(SnapshotMode mode)
+    {
+        switch (mode)
+        {
+            case OFF:
+                snapshotModeEntry.setNumber(0.0);
+                break;
+            case ON:
+                snapshotModeEntry.setNumber(1.0);
+                break;
+            default:
+                break;
         }
     }
 
