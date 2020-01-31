@@ -48,18 +48,15 @@ public class RobotContainer
     public final LEDSubsystem m_Led = new LEDSubsystem();
     public final ClimberSubsystem m_climber = new ClimberSubsystem();
 
-    public Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
-    public Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
+    private Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
+    private Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
     XboxController m_OperatorController = new XboxController(ControllerPorts.XBOX_CONTROLLER_PORT);
     JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
-    private Trajectory m_Trajectory;
 
+    private Trajectory m_Trajectory;
     private NeutrinoRamseteCommand m_autoCommand;
-    private final IntakeBallDataCommand m_intakeData = new IntakeBallDataCommand(m_Intake);
-    private final ShooterSetSpeedPIDCommand m_shooterCommand = new ShooterSetSpeedPIDCommand(m_Shooter);
-    private final ShooterDirectCurrentCommand m_shooterCurrentCommand = new ShooterDirectCurrentCommand(m_Shooter);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
