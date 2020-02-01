@@ -26,8 +26,8 @@ import frc.robot.Constants;
 public class ShooterSubsystem extends SubsystemBase
 {
     private TalonSRX m_wheelMotor;
-    private VictorSPX m_wheelMotor2;
-    private VictorSPX m_wheelMotor3;
+    private TalonSRX m_wheelMotor2;
+    private TalonSRX m_wheelMotor3;
     //TODO find out what kind of encoder we are using
     private Encoder m_wheelEncoder;
     private final SimpleMotorFeedforward m_shooterFeedforward = new SimpleMotorFeedforward(
@@ -39,8 +39,8 @@ public class ShooterSubsystem extends SubsystemBase
 
     public ShooterSubsystem()
     {
-        m_wheelMotor2 = new VictorSPX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
-        m_wheelMotor3 = new VictorSPX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL3);
+        m_wheelMotor2 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
+        m_wheelMotor3 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL3);
         m_wheelMotor2.follow(m_wheelMotor, FollowerType.PercentOutput);
         m_wheelMotor3.follow(m_wheelMotor, FollowerType.PercentOutput);
         m_wheelMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL);
