@@ -26,7 +26,14 @@ import frc.robot.subsystems.ClimberSubsystem;
 import java.nio.file.Paths;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.commands.DriveDataCommand;
+<<<<<<< HEAD
 import frc.robot.commands.IntakeDataCommand;
+=======
+import frc.robot.commands.IntakeBallDataCommand;
+import frc.robot.commands.IntakeBallDataCommand;
+import frc.robot.commands.ShooterSetSpeedPIDCommand;
+import frc.robot.commands.ShooterDirectCurrentCommand;
+>>>>>>> master
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -43,14 +50,15 @@ public class RobotContainer
     public final LEDSubsystem m_Led = new LEDSubsystem();
     public final ClimberSubsystem m_climber = new ClimberSubsystem();
 
-    public Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
-    public Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
+    private Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
+    private Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
     XboxController m_OperatorController = new XboxController(ControllerPorts.XBOX_CONTROLLER_PORT);
     JoystickButton m_back = new JoystickButton(m_OperatorController, Button.kBack.value);
     JoystickButton m_start = new JoystickButton(m_OperatorController, Button.kStart.value);
     JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
+
     private Trajectory m_Trajectory;
     private NeutrinoRamseteCommand m_autoCommand;
 
@@ -67,6 +75,10 @@ public class RobotContainer
         catch (Exception e)
         {
         }
+        final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
+            joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
+        m_Drive.setDefaultCommand(tankDriveCommand);
+        configureButtonBindings();
     }
 
     /**
@@ -78,11 +90,8 @@ public class RobotContainer
     {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
-        m_B.whenHeld(new IntakeDataCommand(m_Intake));
-        final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
-            joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
-        m_Drive.setDefaultCommand(tankDriveCommand);
-        configureButtonBindings();
+        m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
+        m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
     }
 
     /**
