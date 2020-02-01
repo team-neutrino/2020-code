@@ -10,13 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeDataCommand extends CommandBase
+public class IntakeBallDataCommand extends CommandBase
 {
-    private IntakeSubsystem m_intake;
+    IntakeSubsystem m_intake;
     /**
-     * Creates a new ShooterDirectCurrent.
+     * Creates a new IntakeBallDataCommand.
      */
-    public IntakeDataCommand(IntakeSubsystem p_intake)
+    public IntakeBallDataCommand(IntakeSubsystem p_intake)
     {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(p_intake);
@@ -27,6 +27,7 @@ public class IntakeDataCommand extends CommandBase
     @Override
     public void initialize()
     {
+        m_intake.printPDPCurrent();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -34,14 +35,14 @@ public class IntakeDataCommand extends CommandBase
     public void execute()
     {
         m_intake.setIntakeOn();
-        m_intake.getPDPCurrent();
+        m_intake.printPDPCurrent();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted)
     {
-        m_intake.setIntakeOff();
+        m_intake.printPDPCurrent();
     }
 
     // Returns true when the command should end.
