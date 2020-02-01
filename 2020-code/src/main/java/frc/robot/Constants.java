@@ -57,6 +57,7 @@ public final class Constants
         public static final int ADJUST_MOTOR_ENCODER = 0;
         public static final double INTAKE_DISTANCE_PER_PULSE = 0;
         public static final double ADJUST_DISTANCE_PER_PULSE = 0;
+        public static final boolean SENSOR_PHASE = true;
     }
 
     public static final class ControllerPorts
@@ -103,12 +104,12 @@ public final class Constants
 
     public static final class PIDConstants
     {
-        public static final double PROPORTION_COEFFICIENT = 0.1;
+        public static final double PROPORTION_COEFFICIENT = 0.001;
         public static final double INTEGRAL_COEFFICIENT = 0;
         public static final double DERIVATIVE_COEFFICEINT = 0;
         public static final int TIMEOUT_MS = 20;
         public static final int PID_ID = 0;
         public static final double POSITION_MULTIPLIER = 1 / 360;
-        public static final int ROTATION_TICKS = 4096;
+        public static final int ROTATION_TICKS = 2048;
     }
 }
