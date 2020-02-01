@@ -100,19 +100,19 @@ public final class Constants
     {
         public static final double CLIMBER_MOTOR_POWER = 0.5;
     }
-<<<<<<< HEAD
-    public static final class HopperConstants
-    {
-        public static final double HOPPER_MOTOR_POWER = 0.8;
-        public static final double HOPPER_MOTOR_POWER_REVERSE = -0.5;
-        public static final int MOTOR_CONTROLLER_HOPPER = 6;
-=======
 
     public static final class PIDConstants
     {
         public static final double PROPORTION_COEFFICIENT = 0.1;
         public static final double INTEGRAL_COEFFICIENT = 0;
         public static final double DERIVATIVE_COEFFICEINT = 0;
->>>>>>> master
+    }
+    public static final class HopperConstants
+    {
+        public static final double HOPPER_MOTOR_POWER = 0.8;
+        public static final double HOPPER_MOTOR_POWER_REVERSE = -0.5;
+
+        public static final int MOTOR_CONTROLLER_HOPPER = 6;
+
     }
 }

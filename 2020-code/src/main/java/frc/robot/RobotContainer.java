@@ -28,7 +28,6 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeDataCommand;
 
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
  * little robot logic should actually be handled in the {@link Robot} periodic methods (other than the scheduler calls).
@@ -54,7 +53,7 @@ public class RobotContainer
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
     private Trajectory m_Trajectory;
     private NeutrinoRamseteCommand m_autoCommand;
-    
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
