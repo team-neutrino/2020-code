@@ -2,16 +2,21 @@ package frc.robot.subsystems;
 
 import java.util.ArrayList;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import frc.robot.Constants.DriveConstants;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
-// import com.revrobotics.CANSparkMax.getMotorTempearture;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -32,19 +37,31 @@ public class DriveSubsystem extends SubsystemBase{
    private AHRS m_navX = new AHRS(SPI.Port.kMXP);
    private final DifferentialDriveOdometry m_odometry;
 
+    private double velocity = 0;
     public DriveSubsystem()
     {
-        m_lEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
-        m_rEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION); 
+        m_lEncoder.setPositionConversionFactor(1);
+        m_rEncoder.setPositionConversionFactor(1);
         m_lEncoder.setPosition(0);
         m_rEncoder.setPosition(0);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+        m_rightMotors.setInverted(true);
+        m_leftMotors.setInverted(false);
+        m_leftMotor1.setIdleMode(IdleMode.kBrake);
+        m_leftMotor2.setIdleMode(IdleMode.kBrake);
+        m_rightMotor1.setIdleMode(IdleMode.kBrake);
+        m_rightMotor2.setIdleMode(IdleMode.kBrake);
     }
 
     @Override
     public void periodic()
     {
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()),m_lEncoder.getPosition(), m_rEncoder.getPosition()); 
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_lEncoder.getPosition(), m_rEncoder.getPosition());
+        SmartDashboard.putNumber("NavX Yaw", m_navX.getYaw());
+        SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
+        SmartDashboard.putNumber("Velocity",(m_lEncoder.getVelocity()*DriveConstants.K_DRIVE_ENCODER_CONVERSION));
+        SmartDashboard.putNumber("Acceleration", getMaxAcceleration());
+
     }
 
     public void tankDrive(double leftPower, double rightPower)
@@ -99,6 +116,13 @@ public class DriveSubsystem extends SubsystemBase{
 
     }
 
+    public double getMaxAcceleration()
+    {
+        double oldVelocity = velocity;
+        velocity = m_lEncoder.getVelocity()*Constants.DriveConstants.K_DRIVE_ENCODER_CONVERSION;
+    
+        return (velocity-oldVelocity)/2;
+    }
     /*
     public ArrayList<Double> getCANTemp() {
         double tempLeftOne = CANSparkMax.getMotorTempearture(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1);

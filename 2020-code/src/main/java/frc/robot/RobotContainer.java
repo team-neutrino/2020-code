@@ -53,22 +53,24 @@ public class RobotContainer {
   private NeutrinoRamseteCommand m_autoCommand;
   private final IntakeDataCommand m_intakeData = new IntakeDataCommand(m_Intake);
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() 
-  {
-    try {
-      m_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/3BallAuton.wpilib.json"));
-      m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
-    } 
-    catch (Exception e) {
-    }
-
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer()
+    {
+        try
+        {
+            m_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/3BallAuton.wpilib.json"));
+            var transform = m_Drive.getPose().minus(m_Trajectory.getInitialPose());
+            m_Trajectory = m_Trajectory.transformBy(transform);
+            m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
+        }
+        catch (Exception e)
+        {
+        }
+        final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
+            joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
     m_Led = new LEDSubsystem();
-    final Command tankDriveCommand = new RunCommand(
-        () -> m_Drive.tankDrive(joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())),
-        m_Drive);
     m_Drive.setDefaultCommand(tankDriveCommand);
     configureButtonBindings();
   }

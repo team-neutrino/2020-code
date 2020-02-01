@@ -33,13 +33,14 @@ public final class Constants {
             new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
 
         public static final double K_MAX_SPEED_METERS_PER_SECOND = 3;
-        public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3;
+        public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = .18;
         public static final double K_RAMSETE_B = 2;
-        public static final double K_RAMSETE_ZETA = 0.7; 
-    
-        private static final double K_GEAR_RATIO = 9.0/84.0;
-        private static final double K_WHEEL_CIRCUMFERENCE = Math.PI*0.127;
-        public static final double K_DRIVE_ENCODER_CONVERSION = K_GEAR_RATIO*K_WHEEL_CIRCUMFERENCE;
+        public static final double K_RAMSETE_ZETA = 0.7;
+
+        private static final double K_GEAR_RATIO = 33.0 / 340.0;
+        private static final double K_WHEEL_CIRCUMFERENCE = Math.PI * 0.127;
+        //convert NEO encoder RPM to wheel meters/second
+        public static final double K_DRIVE_ENCODER_CONVERSION = (K_GEAR_RATIO * K_WHEEL_CIRCUMFERENCE)/60;
 
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT1 = 1;
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
