@@ -9,6 +9,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.commands.NeutrinoRamseteCommand;
@@ -18,6 +23,7 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
@@ -45,7 +51,7 @@ public class RobotContainer
     //public final IntakeSubsystem m_Intake = new IntakeSubsystem();
     //public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
     public final LEDSubsystem m_Led = new LEDSubsystem();
-   // public final ClimberSubsystem m_climber = new ClimberSubsystem();
+    // public final ClimberSubsystem m_climber = new ClimberSubsystem();
 
     private Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
     private Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
@@ -57,6 +63,7 @@ public class RobotContainer
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
 
     private Trajectory m_Trajectory;
+    private Trajectory auton_Trajectory;
     private NeutrinoRamseteCommand m_autoCommand;
 
     /**
@@ -66,10 +73,11 @@ public class RobotContainer
     {
         try
         {
-            m_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Janurary.wpilib.json"));
-            var transform = m_Drive.getPose().minus(m_Trajectory.getInitialPose());
-            m_Trajectory = m_Trajectory.transformBy(transform);
-            m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
+            m_Trajectory = TrajectoryUtil.fromPathweaverJson(
+                Paths.get("/home/lvuser/deploy/output/DriveStraightTest.wpilib.json"));
+            Pose2d bOrigin = m_Drive.getPose();
+            auton_Trajectory = m_Trajectory.relativeTo(bOrigin);
+            // m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
         }
         catch (Exception e)
         {
@@ -78,9 +86,9 @@ public class RobotContainer
         }
         final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
             joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
-    m_Drive.setDefaultCommand(tankDriveCommand);
-    configureButtonBindings();
-  }
+        m_Drive.setDefaultCommand(tankDriveCommand);
+        configureButtonBindings();
+    }
 
     /**
      * Use this method to define your button->command mappings. Buttons can be created by instantiating a
@@ -102,7 +110,18 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        return m_autoCommand;
+
+        RamseteCommand ramseteCommand = new RamseteCommand(auton_Trajectory, m_Drive::getPose,
+            new RamseteController(DriveConstants.K_RAMSETE_B, DriveConstants.K_RAMSETE_ZETA),
+            new SimpleMotorFeedforward(DriveConstants.KS_VOLTS, DriveConstants.KV_VOLT_SECONDS_PER_METER,
+                DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
+            DriveConstants.K_DRIVE_KINEMATICS, m_Drive::getWheelSpeeds,
+            new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0), new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0),
+            // RamseteCommand passes volts to the callback
+            m_Drive::tankDriveVolts, m_Drive);
+
+        // Run path following command, then stop at the end.
+        return ramseteCommand.andThen(() -> m_Drive.tankDriveVolts(0, 0));
     }
 
     /**

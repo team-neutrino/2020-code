@@ -40,8 +40,10 @@ public class DriveSubsystem extends SubsystemBase
     private double velocity = 0;
     public DriveSubsystem()
     {
-        m_lEncoder.setPositionConversionFactor(1);
-        m_rEncoder.setPositionConversionFactor(1);
+        m_lEncoder.setPositionConversionFactor(-1 * DriveConstants.K_DRIVE_ENCODER_CONVERSION);
+        m_rEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
+        m_lEncoder.setVelocityConversionFactor(-1 * DriveConstants.K_DRIVE_ENCODER_CONVERSION);
+        m_lEncoder.setVelocityConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
         m_lEncoder.setPosition(0);
         m_rEncoder.setPosition(0);
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
@@ -57,9 +59,12 @@ public class DriveSubsystem extends SubsystemBase
     public void periodic()
     {
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_lEncoder.getPosition(), m_rEncoder.getPosition());
+        //SmartDashboard.putData("Pose", getPose());
+        SmartDashboard.putNumber("Left Velocity", -1 * m_lEncoder.getVelocity());
+        SmartDashboard.putNumber("Right Velocity", m_rEncoder.getVelocity());
         SmartDashboard.putNumber("NavX Yaw", m_navX.getYaw());
         SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
-        SmartDashboard.putNumber("Velocity",(m_lEncoder.getVelocity()*DriveConstants.K_DRIVE_ENCODER_CONVERSION));
+        SmartDashboard.putNumber("Velocity", (m_lEncoder.getVelocity() * DriveConstants.K_DRIVE_ENCODER_CONVERSION));
         SmartDashboard.putNumber("Acceleration", getMaxAcceleration());
     }
 
@@ -67,12 +72,15 @@ public class DriveSubsystem extends SubsystemBase
     {
         m_leftMotors.set(leftPower);
         m_rightMotors.set(rightPower);
+
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts)
     {
         m_leftMotors.setVoltage(leftVolts);
         m_rightMotors.setVoltage(rightVolts);
+        // System.out.println("Left Volts " + leftVolts);
+        // System.out.println("Right Volts " + rightVolts);
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
@@ -119,9 +127,9 @@ public class DriveSubsystem extends SubsystemBase
     public double getMaxAcceleration()
     {
         double oldVelocity = velocity;
-        velocity = m_lEncoder.getVelocity()*Constants.DriveConstants.K_DRIVE_ENCODER_CONVERSION;
-    
-        return (velocity-oldVelocity)/2;
+        velocity = m_lEncoder.getVelocity() * Constants.DriveConstants.K_DRIVE_ENCODER_CONVERSION;
+
+        return (velocity - oldVelocity) / 2;
     }
     /*
      * public ArrayList<Double> getCANTemp() { double tempLeftOne =
