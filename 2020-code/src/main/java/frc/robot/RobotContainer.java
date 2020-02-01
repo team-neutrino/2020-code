@@ -29,7 +29,6 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeBallDataCommand;
-import frc.robot.commands.IntakeBallDataCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
 
@@ -43,10 +42,10 @@ public class RobotContainer
     // The robot's subsystems and commands are defined here...
 
     public final DriveSubsystem m_Drive = new DriveSubsystem();
-    public final IntakeSubsystem m_Intake = new IntakeSubsystem();
-    public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
+    //public final IntakeSubsystem m_Intake = new IntakeSubsystem();
+    //public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
     public final LEDSubsystem m_Led = new LEDSubsystem();
-    public final ClimberSubsystem m_climber = new ClimberSubsystem();
+   // public final ClimberSubsystem m_climber = new ClimberSubsystem();
 
     private Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
     private Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
@@ -67,17 +66,18 @@ public class RobotContainer
     {
         try
         {
-            m_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/3BallAuton.wpilib.json"));
+            m_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/Janurary.wpilib.json"));
             var transform = m_Drive.getPose().minus(m_Trajectory.getInitialPose());
             m_Trajectory = m_Trajectory.transformBy(transform);
             m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
         }
         catch (Exception e)
         {
+            e.printStackTrace();
+            System.out.println("This didnt work" + e);
         }
         final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
             joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
-    m_Led = new LEDSubsystem();
     m_Drive.setDefaultCommand(tankDriveCommand);
     configureButtonBindings();
   }
@@ -90,9 +90,9 @@ public class RobotContainer
     private void configureButtonBindings()
     {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
-        m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
-        m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
-        m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
+        // m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
+        // m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
+        // m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
     }
 
     /**
