@@ -18,6 +18,7 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
@@ -56,6 +57,7 @@ public class RobotContainer
     JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
+    JoystickButton m_Y = new JoystickButton(m_OperatorController, Button.kY.value);
 
     private Trajectory m_Trajectory;
     private NeutrinoRamseteCommand m_autoCommand;
@@ -90,6 +92,8 @@ public class RobotContainer
         m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
         m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
         m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
+        m_Y.whenHeld(new InstantCommand(() -> m_Intake.setArmPosition(0)));
+
     }
 
     /**

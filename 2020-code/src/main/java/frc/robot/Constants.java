@@ -52,7 +52,7 @@ public final class Constants
     public static final class IntakeConstants
     {
         public static final int INTAKE_MOTOR_POWER = 1;
-        public static final double ARM_DOWN_ANGLE = 0; // placeholder
+        public static final double ARM_DOWN_ANGLE = 200; // placeholder
         public static final double ARM_UP_ANGLE = 0; // placeholder
         public static final int ADJUST_MOTOR_ENCODER = 0;
         public static final double INTAKE_DISTANCE_PER_PULSE = 0;
@@ -106,5 +106,9 @@ public final class Constants
         public static final double PROPORTION_COEFFICIENT = 0.1;
         public static final double INTEGRAL_COEFFICIENT = 0;
         public static final double DERIVATIVE_COEFFICEINT = 0;
+        public static final int TIMEOUT_MS = 20;
+        public static final int PID_ID = 0;
+        public static final double POSITION_MULTIPLIER = 1 / 360;
+        public static final int ROTATION_TICKS = 4096;
     }
 }
