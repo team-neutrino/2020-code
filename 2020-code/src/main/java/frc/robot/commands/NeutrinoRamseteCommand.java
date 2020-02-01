@@ -35,6 +35,7 @@ public class NeutrinoRamseteCommand extends RamseteCommand
             new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0), new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0),
             // RamseteCommand passes volts to the callback
             p_Drive::tankDriveVolts, p_Drive);
+        // System.out.println(p_Trajectory);
         m_Drive = p_Drive;
         addRequirements(p_Drive);
     }
@@ -45,6 +46,7 @@ public class NeutrinoRamseteCommand extends RamseteCommand
         System.out.println("Ramsete command running");
         Pose2d pose = new Pose2d();
         m_Drive.resetOdometry(pose);
+        System.out.println("Ramsete command completed initialization");
     }
 
     @Override

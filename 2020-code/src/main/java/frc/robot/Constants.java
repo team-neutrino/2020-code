@@ -26,7 +26,7 @@ public final class Constants
     public static final class DriveConstants
     {
         //TODO get actual constants
-        public static final double KS_VOLTS = 0;
+        public static final double KS_VOLTS = 0.18;
         public static final double KV_VOLT_SECONDS_PER_METER = 3.21;
         public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.479;
         public static final double KP_DRIVE_VEL = 0.168;
