@@ -50,6 +50,6 @@ public class IntakeBallDataCommand extends CommandBase
     public boolean isFinished()
     {
         return false;
-
     }
+
 }
