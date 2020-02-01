@@ -72,10 +72,17 @@ public class IntakeSubsystem extends SubsystemBase
 
     public void setArmPosition(double position)
     {
-        double demand = position * Constants.PIDConstants.POSITION_MULTIPLIER * (double)Constants.PIDConstants.ROTATION_TICKS;
-        
+        //double demand = position * Constants.PIDConstants.POSITION_MULTIPLIER * (double)Constants.PIDConstants.ROTATION_TICKS;
+        double demand = 2.7;
+        m_intakeAdjustMotor.set(ControlMode.Position, demand);
         SmartDashboard.putNumber("intake positon: ", demand);
-        m_intakeAdjustMotor.set(ControlMode.Position, 0);
+    }
+
+    public void periodic()
+    {
+
+        SmartDashboard.putNumber("tgt: ", m_intakeAdjustMotor.getClosedLoopTarget());
+        SmartDashboard.putNumber("err: ", m_intakeAdjustMotor.getClosedLoopError());
     }
 
     public void printPDPCurrent()
