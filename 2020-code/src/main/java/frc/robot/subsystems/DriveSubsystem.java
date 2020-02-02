@@ -32,39 +32,55 @@ public class DriveSubsystem extends SubsystemBase
 
     private SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(m_leftMotor1, m_leftMotor2);
     private SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(m_rightMotor1, m_rightMotor2);
-    private CANEncoder m_lEncoder = new CANEncoder(m_leftMotor1);
-    private CANEncoder m_rEncoder = new CANEncoder(m_rightMotor1);
+    private CANEncoder m_lEncoder;
+    private CANEncoder m_rEncoder;
     private AHRS m_navX = new AHRS(SPI.Port.kMXP);
     private final DifferentialDriveOdometry m_odometry;
 
     private double velocity = 0;
     public DriveSubsystem()
     {
-        m_lEncoder.setPositionConversionFactor(-1 * DriveConstants.K_DRIVE_ENCODER_CONVERSION);
-        m_rEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
-        m_lEncoder.setVelocityConversionFactor(-1 * DriveConstants.K_DRIVE_ENCODER_CONVERSION);
-        m_lEncoder.setVelocityConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
-        m_lEncoder.setPosition(0);
-        m_rEncoder.setPosition(0);
-        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
         m_rightMotors.setInverted(true);
         m_leftMotors.setInverted(false);
+
         m_leftMotor1.setIdleMode(IdleMode.kBrake);
         m_leftMotor2.setIdleMode(IdleMode.kBrake);
         m_rightMotor1.setIdleMode(IdleMode.kBrake);
         m_rightMotor2.setIdleMode(IdleMode.kBrake);
+
+        m_lEncoder = m_leftMotor1.getEncoder();
+        m_rEncoder = m_rightMotor1.getEncoder();
+
+        // position and velocity are in RPM of the drive wheels
+        m_lEncoder.setPositionConversionFactor(DriveConstants.K_GEAR_RATIO);
+        m_rEncoder.setPositionConversionFactor(DriveConstants.K_GEAR_RATIO);
+        m_lEncoder.setVelocityConversionFactor(DriveConstants.K_GEAR_RATIO);
+        m_rEncoder.setVelocityConversionFactor(DriveConstants.K_GEAR_RATIO);
+
+        m_lEncoder.setPosition(0);
+        m_rEncoder.setPosition(0);
+
+        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     }
 
     @Override
     public void periodic()
     {
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_lEncoder.getPosition(), m_rEncoder.getPosition());
-        //SmartDashboard.putData("Pose", getPose());
-        SmartDashboard.putNumber("Left Velocity", -1 * m_lEncoder.getVelocity());
-        SmartDashboard.putNumber("Right Velocity", m_rEncoder.getVelocity());
+        double lrpm = m_lEncoder.getVelocity();
+        double rrpm = m_rEncoder.getVelocity();
+        double lrev = m_lEncoder.getPosition();
+        double rrev = m_rEncoder.getPosition();
+
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()), lrev, rrev);
+
+        SmartDashboard.putNumber("Left RPM", lrpm);
+        SmartDashboard.putNumber("Right RPM", rrpm);
+        SmartDashboard.putNumber("Left m/s", rpm_to_mps(lrpm));
+        SmartDashboard.putNumber("Right m/s", rpm_to_mps(rrpm));
+        SmartDashboard.putNumber("Left m", rev_to_m(lrev));
+        SmartDashboard.putNumber("Right m", rev_to_m(rrev));
         SmartDashboard.putNumber("NavX Yaw", m_navX.getYaw());
         SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
-        SmartDashboard.putNumber("Velocity", (m_lEncoder.getVelocity() * DriveConstants.K_DRIVE_ENCODER_CONVERSION));
         SmartDashboard.putNumber("Acceleration", getMaxAcceleration());
     }
 
@@ -72,20 +88,30 @@ public class DriveSubsystem extends SubsystemBase
     {
         m_leftMotors.set(leftPower);
         m_rightMotors.set(rightPower);
-
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts)
     {
         m_leftMotors.setVoltage(leftVolts);
         m_rightMotors.setVoltage(rightVolts);
-        // System.out.println("Left Volts " + leftVolts);
-        // System.out.println("Right Volts " + rightVolts);
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
     {
         return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), m_rEncoder.getVelocity());
+    }
+
+    public double rpm_to_mps(double rpm)
+    {
+        final double METERS_PER_REV = DriveConstants.K_WHEEL_CIRCUMFERENCE;
+        final double SEC_PER_MIN = 60;
+        return rpm * METERS_PER_REV / SEC_PER_MIN;
+    }
+
+    public double rev_to_m(double rev)
+    {
+        final double METERS_PER_REV = DriveConstants.K_WHEEL_CIRCUMFERENCE;
+        return rev * METERS_PER_REV;
     }
 
     //Returns robot angle in degrees from -180 to 180

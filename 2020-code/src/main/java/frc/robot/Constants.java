@@ -39,8 +39,8 @@ public final class Constants
         public static final double K_RAMSETE_B = 2;
         public static final double K_RAMSETE_ZETA = 0.7;
 
-        private static final double K_GEAR_RATIO = 33.0 / 340.0;
-        private static final double K_WHEEL_CIRCUMFERENCE = Math.PI * 0.127;
+        public static final double K_GEAR_RATIO = 33.0 / 340.0;
+        public static final double K_WHEEL_CIRCUMFERENCE = Math.PI * 0.127;
         //convert NEO encoder RPM to wheel meters/second
         public static final double K_DRIVE_ENCODER_CONVERSION = (K_GEAR_RATIO * K_WHEEL_CIRCUMFERENCE) / 60;
 
