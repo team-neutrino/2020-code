@@ -37,9 +37,19 @@ public class DriveSubsystem extends SubsystemBase
     private AHRS m_navX = new AHRS(SPI.Port.kMXP);
     private final DifferentialDriveOdometry m_odometry;
 
+    private double m_lrpm;
+    private double m_rrpm;
+    private double m_lrev;
+    private double m_rrev;
+
     private double velocity = 0;
     public DriveSubsystem()
     {
+        m_leftMotor1.restoreFactoryDefaults();
+        m_leftMotor2.restoreFactoryDefaults();
+        m_rightMotor1.restoreFactoryDefaults();
+        m_rightMotor2.restoreFactoryDefaults();
+
         m_rightMotors.setInverted(true);
         m_leftMotors.setInverted(false);
 
@@ -66,19 +76,21 @@ public class DriveSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        double lrpm = m_lEncoder.getVelocity();
-        double rrpm = m_rEncoder.getVelocity();
-        double lrev = m_lEncoder.getPosition();
-        double rrev = m_rEncoder.getPosition();
+        double m_lrpm = m_lEncoder.getVelocity();
+        double m_rrpm = m_rEncoder.getVelocity();
+        double m_lrev = m_lEncoder.getPosition();
+        double m_rrev = m_rEncoder.getPosition();
+        double lmeters = rev_to_m(m_lrev);
+        double rmeters = rev_to_m(m_rrev);
 
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()), lrev, rrev);
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()), lmeters, rmeters);
 
-        SmartDashboard.putNumber("Left RPM", lrpm);
-        SmartDashboard.putNumber("Right RPM", rrpm);
-        SmartDashboard.putNumber("Left m/s", rpm_to_mps(lrpm));
-        SmartDashboard.putNumber("Right m/s", rpm_to_mps(rrpm));
-        SmartDashboard.putNumber("Left m", rev_to_m(lrev));
-        SmartDashboard.putNumber("Right m", rev_to_m(rrev));
+        SmartDashboard.putNumber("Left RPM", m_lrpm);
+        SmartDashboard.putNumber("Right RPM", m_rrpm);
+        SmartDashboard.putNumber("Left m/s", rpm_to_mps(m_lrpm));
+        SmartDashboard.putNumber("Right m/s", rpm_to_mps(m_rrpm));
+        SmartDashboard.putNumber("Left m", lmeters);
+        SmartDashboard.putNumber("Right m", rmeters);
         SmartDashboard.putNumber("NavX Yaw", m_navX.getYaw());
         SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
         SmartDashboard.putNumber("Acceleration", getMaxAcceleration());
@@ -98,7 +110,7 @@ public class DriveSubsystem extends SubsystemBase
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
     {
-        return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), m_rEncoder.getVelocity());
+        return new DifferentialDriveWheelSpeeds(rpm_to_mps(m_lrpm), rpm_to_mps(m_rrpm));
     }
 
     public double rpm_to_mps(double rpm)
