@@ -87,6 +87,8 @@ public final class Constants
 
     public static final class CanId
     {
+        public static final int MOTOR_CONTROLLER_SHOOTERWHEEL3 = 11;
+        public static final int MOTOR_CONTROLLER_SHOOTERWHEEL2 = 12;
         public static final int MOTOR_CONTROLLER_SHOOTERWHEEL = 14;
         public static final int MOTOR_CONTROLLER_INTAKE = 15;
         public static final int MOTOR_CONTROLLER_INTAKE_ADJUST = 13;
@@ -96,6 +98,7 @@ public final class Constants
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
         public static final int MOTOR_CONTROLLER_CLIMBER = 5;
     }
+
     public static final class ClimberConstants
     {
         public static final double CLIMBER_MOTOR_POWER = 0.5;
