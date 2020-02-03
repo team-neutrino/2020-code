@@ -10,13 +10,13 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.controller.PIDController;
+//import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanId;
-import frc.robot.Constants.IntakeConstants;
+//import frc.robot.Constants.IntakeConstants;
 
 /**
  * Add your docs here.
@@ -55,10 +55,10 @@ public class IntakeSubsystem extends SubsystemBase
         m_intakeAdjustMotor.set(ControlMode.PercentOutput, PIDPower);
     }
 
-    public void printPDPCurrent()
+    public void getPDPCurrent()
     {
-        double currentIntakeMotor = m_intakeMotor.getSupplyCurrent();
-        SmartDashboard.putNumber("MOTOR_CONTROLLER_INTAKE: ", currentIntakeMotor);
+        double currentIntakeMotor = PDP.getCurrent(CanId.MOTOR_CONTROLLER_INTAKE);
+        System.out.println("MOTOR_CONTROLLER_INTAKE: " + currentIntakeMotor);
     }
 
     public void intakePrinter()

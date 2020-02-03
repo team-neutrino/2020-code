@@ -27,7 +27,7 @@ public class IntakeBallDataCommand extends CommandBase
     @Override
     public void initialize()
     {
-        m_intake.printPDPCurrent();
+        m_intake.getPDPCurrent();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -35,14 +35,14 @@ public class IntakeBallDataCommand extends CommandBase
     public void execute()
     {
         m_intake.setIntakeOn();
-        m_intake.printPDPCurrent();
+        m_intake.getPDPCurrent();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted)
     {
-        m_intake.printPDPCurrent();
+        m_intake.getPDPCurrent();
     }
 
     // Returns true when the command should end.

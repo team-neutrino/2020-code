@@ -21,7 +21,7 @@ public class HopperSubsystem extends SubsystemBase
      */
     public DigitalInput m_beamBreakTop = new DigitalInput(8);
     public DigitalInput m_beamBreakBot = new DigitalInput(7);
-    private TalonSRX m_hopperMotor = new TalonSRX(HopperConstants.MOTOR_CONTROLLER_HOPPER); 
+    private TalonSRX m_hopperMotor = new TalonSRX(HopperConstants.MOTOR_CONTROLLER_HOPPER);
 
     public HopperSubsystem()
     {
