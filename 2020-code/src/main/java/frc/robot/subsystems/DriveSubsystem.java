@@ -76,10 +76,10 @@ public class DriveSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        double m_lrpm = m_lEncoder.getVelocity();
-        double m_rrpm = m_rEncoder.getVelocity();
-        double m_lrev = m_lEncoder.getPosition();
-        double m_rrev = m_rEncoder.getPosition();
+        m_lrpm = m_lEncoder.getVelocity();
+        m_rrpm = m_rEncoder.getVelocity();
+        m_lrev = m_lEncoder.getPosition();
+        m_rrev = m_rEncoder.getPosition();
         double lmeters = rev_to_m(m_lrev);
         double rmeters = rev_to_m(m_rrev);
 
