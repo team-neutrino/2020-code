@@ -30,8 +30,6 @@ public class IntakeSubsystem extends SubsystemBase
     private TalonSRX m_intakeAdjustMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_ADJUST);
     //private PowerDistributionPanel PDP = new PowerDistributionPanel();
 
-    
-
     public void setIntakeOn()
     {
         m_intakeMotor.set(ControlMode.PercentOutput, Constants.IntakeConstants.INTAKE_MOTOR_POWER);
