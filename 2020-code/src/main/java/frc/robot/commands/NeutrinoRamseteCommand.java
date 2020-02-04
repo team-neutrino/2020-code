@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants.DriveConstants;
@@ -34,8 +35,18 @@ public class NeutrinoRamseteCommand extends RamseteCommand
             new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0), new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0),
             // RamseteCommand passes volts to the callback
             p_Drive::tankDriveVolts, p_Drive);
+        // System.out.println(p_Trajectory);
         m_Drive = p_Drive;
+        addRequirements(p_Drive);
+    }
 
+    @Override
+    public void initialize()
+    {
+        System.out.println("Ramsete command running");
+        Pose2d pose = new Pose2d();
+        m_Drive.resetOdometry(pose);
+        System.out.println("Ramsete command completed initialization");
     }
 
     @Override
