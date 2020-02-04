@@ -47,11 +47,11 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
 
+    public final IntakeSubsystem m_Intake = new IntakeSubsystem();
+    public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
     public final DriveSubsystem m_Drive = new DriveSubsystem();
-    //public final IntakeSubsystem m_Intake = new IntakeSubsystem();
-    //public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
     public final LEDSubsystem m_Led = new LEDSubsystem();
-    // public final ClimberSubsystem m_climber = new ClimberSubsystem();
+    public final ClimberSubsystem m_climber = new ClimberSubsystem();
 
     private Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
     private Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
@@ -78,7 +78,7 @@ public class RobotContainer
                 Paths.get("/home/lvuser/deploy/output/DriveStraightTest.wpilib.json"));
             Pose2d bOrigin = m_Drive.getPose();
             auton_Trajectory = m_Trajectory.relativeTo(bOrigin);
-            // m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
+            m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
         }
         catch (Exception e)
         {
@@ -99,9 +99,9 @@ public class RobotContainer
     private void configureButtonBindings()
     {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
-        // m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
-        // m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
-        // m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
+        m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
+        m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
+        m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
     }
 
     /**
