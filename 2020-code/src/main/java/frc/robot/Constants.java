@@ -52,7 +52,7 @@ public final class Constants
     public static final class IntakeConstants
     {
         public static final int INTAKE_MOTOR_POWER = 1;
-        public static final double ARM_DOWN_ANGLE = 200; // placeholder
+        public static final double ARM_DOWN_ANGLE = 200 / 360; // placeholder
         public static final double ARM_UP_ANGLE = 0; // placeholder
         public static final int ADJUST_MOTOR_ENCODER = 0;
         public static final double INTAKE_DISTANCE_PER_PULSE = 0;

@@ -32,7 +32,6 @@ import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeBallDataCommand;
 import frc.robot.commands.IntakeBallDataCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
-import frc.robot.commands.armTestCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
 
 /**
@@ -93,8 +92,7 @@ public class RobotContainer
         m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
         m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
         m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
-        m_Y.whenHeld(new armTestCommand(m_Intake));
-        m_Y.whenReleased(new InstantCommand(m_Intake::armPositionTestStop));
+        m_Y.whenPressed(new RunCommand(m_Intake::setArmDown));
     }
 
     /**
