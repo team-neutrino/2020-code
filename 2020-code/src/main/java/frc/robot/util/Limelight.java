@@ -401,7 +401,6 @@ public class Limelight
      * @param targetHeight How high the target is off the floor
      * @param camAngle Angle between the floor and the camera
      * @return Distance in same unit as camHeight and targetHeight
-     * @apiNote This function has not been tested
      */
     public double trigDistance(double camHeight, double targetHeight, double camAngle)
     {
