@@ -76,9 +76,9 @@ public class DriveSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        m_lrpm = m_lEncoder.getVelocity();
+        m_lrpm = -1 * m_lEncoder.getVelocity();
         m_rrpm = m_rEncoder.getVelocity();
-        m_lrev = m_lEncoder.getPosition();
+        m_lrev = -1 * m_lEncoder.getPosition();
         m_rrev = m_rEncoder.getPosition();
         double lmeters = rev_to_m(m_lrev);
         double rmeters = rev_to_m(m_rrev);
@@ -87,8 +87,8 @@ public class DriveSubsystem extends SubsystemBase
 
         SmartDashboard.putNumber("Left RPM", m_lrpm);
         SmartDashboard.putNumber("Right RPM", m_rrpm);
-        SmartDashboard.putNumber("Left m/s", rpm_to_mps(m_lrpm));
-        SmartDashboard.putNumber("Right m/s", rpm_to_mps(m_rrpm));
+        SmartDashboard.putNumber("Left meters per second", rpm_to_mps(m_lrpm));
+        SmartDashboard.putNumber("Right meters per second", rpm_to_mps(m_rrpm));
         SmartDashboard.putNumber("Left m", lmeters);
         SmartDashboard.putNumber("Right m", rmeters);
         SmartDashboard.putNumber("NavX Yaw", m_navX.getYaw());
