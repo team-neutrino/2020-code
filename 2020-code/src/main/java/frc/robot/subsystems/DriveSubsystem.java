@@ -173,4 +173,12 @@ public class DriveSubsystem extends SubsystemBase
      * public ArrayList<Double> getCANTemp() { double tempLeftOne =
      * CANSparkMax.getMotorTempearture(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1); }
      */
+
+    /**
+     * Initalize the drive subsystem for Auton
+     */
+    public void initAuton()
+    {
+        resetOdometry(m_odometry.getPoseMeters());
+    }
 }
