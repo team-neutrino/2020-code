@@ -77,6 +77,10 @@ public class Robot extends TimedRobot
         {
             m_autonomousCommand.schedule();
         }
+        else
+        {
+            System.out.println("no auton?");
+        }
     }
 
     /**
