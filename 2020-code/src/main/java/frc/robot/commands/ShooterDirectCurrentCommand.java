@@ -35,6 +35,7 @@ public class ShooterDirectCurrentCommand extends CommandBase
     public void execute()
     {
         m_shooter.setWheelMotor(1);
+
     }
 
     // Called once the command ends or is interrupted.
