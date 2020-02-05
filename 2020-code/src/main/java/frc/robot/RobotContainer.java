@@ -90,9 +90,20 @@ public class RobotContainer
     {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
-        m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
+
+        m_B.whenHeld(new RunCommand(m_Intake::setIntakeOn));
         m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
-        m_Y.whenPressed(new RunCommand(m_Intake::setArmDown));
+
+        if (m_Intake.yButtonCounter % 2 == 0)
+        {
+            m_Y.whenPressed(new ParallelCommandGroup(new RunCommand(m_Intake::setArmDown),
+                new InstantCommand(m_Intake::increaseYButtonCounter)));
+        }
+        else
+        {
+            m_Y.whenPressed(new ParallelCommandGroup(new RunCommand(m_Intake::setArmUp),
+                new InstantCommand(m_Intake::increaseYButtonCounter)));
+        }
     }
 
     /**

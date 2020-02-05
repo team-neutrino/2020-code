@@ -1,3 +1,4 @@
+
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
@@ -28,11 +29,19 @@ public class IntakeSubsystem extends SubsystemBase
 
     public IntakeSubsystem()
     {
-        m_intakeAdjustMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, Constants.PIDConstants.PID_ID,
-            Constants.PIDConstants.TIMEOUT_MS);
+        m_intakeAdjustMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
         m_intakeAdjustMotor.config_kP(Constants.PIDConstants.PID_ID, Constants.PIDConstants.PROPORTION_COEFFICIENT);
         m_intakeAdjustMotor.config_kD(Constants.PIDConstants.PID_ID, Constants.PIDConstants.DERIVATIVE_COEFFICEINT);
         m_intakeAdjustMotor.config_kI(Constants.PIDConstants.PID_ID, Constants.PIDConstants.INTEGRAL_COEFFICIENT);
+    }
+
+    public void periodic()
+    {
+
+        SmartDashboard.putNumber("tgt: ", m_intakeAdjustMotor.getClosedLoopTarget());
+        SmartDashboard.putNumber("err: ", m_intakeAdjustMotor.getClosedLoopError());
+        SmartDashboard.putNumber("Intake motor current: ", m_intakeMotor.getSupplyCurrent());
+        SmartDashboard.putNumber("Arm motor current: ", m_intakeAdjustMotor.getSupplyCurrent());
     }
 
     public void setIntakeOn()
@@ -45,57 +54,29 @@ public class IntakeSubsystem extends SubsystemBase
         m_intakeMotor.set(ControlMode.PercentOutput, 0);
     }
 
-    public double getSetpoint()
+    public int yButtonCounter = 0;
+    public void increaseYButtonCounter()
     {
-        return Constants.IntakeConstants.ARM_DOWN_ANGLE;
+        yButtonCounter++;
     }
-
-    public double getPotentiometerReading()
-    {
-        return m_adjustMotorPotentiometer.get();
-    }
-
-    /*
-    public void setArmPosition(double position)
-    {
-        //double demand = position * Constants.PIDConstants.POSITION_MULTIPLIER * (double)Constants.PIDConstants.ROTATION_TICKS;
-        double demand ;
-        m_intakeAdjustMotor.set(ControlMode.Position, demand);
-        SmartDashboard.putNumber("intake positon: ", demand);
-    }
-    */
 
     public void setArmDown()
     {
-        double DOWN_DEMAND = Constants.IntakeConstants.ARM_DOWN_ANGLE * 4096;
+        double DOWN_DEMAND = Constants.IntakeConstants.ARM_DOWN_ANGLE
+                * Constants.IntakeConstants.ENCODER_PULSES_PER_REV;
         m_intakeAdjustMotor.set(ControlMode.Position, DOWN_DEMAND);
     }
 
     public void setArmUp()
     {
-        double UP_DEMAND = Constants.IntakeConstants.ARM_UP_ANGLE * 4096;
+        double UP_DEMAND = Constants.IntakeConstants.ARM_UP_ANGLE * Constants.IntakeConstants.ENCODER_PULSES_PER_REV;
         m_intakeAdjustMotor.set(ControlMode.Position, UP_DEMAND);
     }
 
-    public void periodic()
-    {
-
-        SmartDashboard.putNumber("tgt: ", m_intakeAdjustMotor.getClosedLoopTarget());
-        SmartDashboard.putNumber("err: ", m_intakeAdjustMotor.getClosedLoopError());
-        printCurrent();
-        printPotentiometer();
-    }
-
-    public void printCurrent()
-    {
-        double currentIntakeMotor = m_intakeMotor.getSupplyCurrent();
-        SmartDashboard.putNumber("MOTOR_CONTROLLER_INTAKE: ", currentIntakeMotor);
-    }
-
-    public void printPotentiometer()
-    {
-        //SmartDashboard.putNumber("Arm setpoint: ", PID.getSetpoint());
-        SmartDashboard.putNumber("Potentiometer reading: ", getPotentiometerReading());
-    }
+    /*
+     * public void printCurrent() { SmartDashboard.putNumber("MOTOR_CONTROLLER_INTAKE: ", currentIntakeMotor); } public
+     * void printPotentiometer() { //SmartDashboard.putNumber("Arm setpoint: ", PID.getSetpoint());
+     * SmartDashboard.putNumber("Potentiometer reading: ", getPotentiometerReading()); }
+     */
 
 }

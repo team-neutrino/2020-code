@@ -39,8 +39,8 @@ public final class Constants
         public static final double K_RAMSETE_B = 2;
         public static final double K_RAMSETE_ZETA = 0.7;
 
-        private static final double K_GEAR_RATIO = 9.0 / 84.0;
-        private static final double K_WHEEL_CIRCUMFERENCE = Math.PI * 0.127;
+        public static final double K_GEAR_RATIO = 9.0 / 84.0;
+        public static final double K_WHEEL_CIRCUMFERENCE = Math.PI * 0.127;
         public static final double K_DRIVE_ENCODER_CONVERSION = K_GEAR_RATIO * K_WHEEL_CIRCUMFERENCE;
 
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint = //this used to be type var, why?
@@ -58,6 +58,7 @@ public final class Constants
         public static final double INTAKE_DISTANCE_PER_PULSE = 0;
         public static final double ADJUST_DISTANCE_PER_PULSE = 0;
         public static final boolean SENSOR_PHASE = true;
+        public static final double ENCODER_PULSES_PER_REV = 8192;
     }
 
     public static final class ControllerPorts
@@ -107,8 +108,8 @@ public final class Constants
         public static final double PROPORTION_COEFFICIENT = 0.001;
         public static final double INTEGRAL_COEFFICIENT = 0;
         public static final double DERIVATIVE_COEFFICEINT = 0;
-        public static final int TIMEOUT_MS = 20;
         public static final int PID_ID = 0;
+        public static final int TIMEOUT_MS = 20;
         public static final double POSITION_MULTIPLIER = 1 / 360;
         public static final int ROTATION_TICKS = 2048;
     }
