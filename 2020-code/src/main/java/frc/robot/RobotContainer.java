@@ -37,6 +37,7 @@ import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeBallDataCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
+import frc.robot.util.JoystickProcessor;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -86,7 +87,7 @@ public class RobotContainer
             System.out.println("This didnt work" + e);
         }
         final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
-            joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
+            JoystickProcessor.process(m_leftJoystick.getY()), JoystickProcessor.process(m_rightJoystick.getY())), m_Drive);
         m_Drive.setDefaultCommand(tankDriveCommand);
         configureButtonBindings();
     }
@@ -125,24 +126,5 @@ public class RobotContainer
         return ramseteCommand.andThen(() -> m_Drive.tankDriveVolts(0, 0));
     }
 
-    /**
-     * Applies deadzoning and curve to the joystick input
-     *
-     * @return A processed joystick input
-     */
-    private double joystickProcessor(double input)
-    {
-        if (Math.abs(input) > Constants.JoystickConstants.DEADZONE_SIZE)
-        {
-            double absoluteValue = Math.abs(input);
-            double deadzoneCorrectedAbsoluteValue = (1 / (1 - Constants.JoystickConstants.DEADZONE_SIZE))
-                    * (absoluteValue - 1.0) + 1.0;
-            return Math.pow(deadzoneCorrectedAbsoluteValue, Constants.JoystickConstants.JOYSTICK_CURVE)
-                    * (absoluteValue / input);
-        }
-        else
-        {
-            return 0.0;
-        }
-    }
+    
 }
