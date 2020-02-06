@@ -30,6 +30,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeBallDataCommand;
+import frc.robot.commands.IntakePIDCommand;
 import frc.robot.commands.IntakeBallDataCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
@@ -94,16 +95,10 @@ public class RobotContainer
         m_B.whenHeld(new RunCommand(m_Intake::setIntakeOn));
         m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
 
-        if (m_Intake.yButtonCounter % 2 == 0)
-        {
-            m_Y.whenPressed(new ParallelCommandGroup(new RunCommand(m_Intake::setArmDown),
-                new InstantCommand(m_Intake::increaseYButtonCounter)));
-        }
-        else
-        {
-            m_Y.whenPressed(new ParallelCommandGroup(new RunCommand(m_Intake::setArmUp),
-                new InstantCommand(m_Intake::increaseYButtonCounter)));
-        }
+        m_Y.whenPressed(new ParallelCommandGroup(
+            new IntakePIDCommand(m_Intake),
+            new InstantCommand(m_Intake::increaseYButtonCounter)
+        ));
     }
 
     /**
