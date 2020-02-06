@@ -35,11 +35,8 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeBallDataCommand;
-<<<<<<< HEAD
-=======
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
->>>>>>> master
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very

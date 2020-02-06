@@ -26,17 +26,10 @@ public final class Constants
     public static final class DriveConstants
     {
         //TODO get actual constants
-<<<<<<< HEAD
-        public static final double KS_VOLTS = 0;
-        public static final double KV_VOLT_SECONDS_PER_METER = 0;
-        public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0;
-        public static final double KP_DRIVE_VEL = .1;
-=======
         public static final double KS_VOLTS = 0.18;
         public static final double KV_VOLT_SECONDS_PER_METER = 3.21;
         public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.479;
         public static final double KP_DRIVE_VEL = 0.168;
->>>>>>> master
         public static final double K_TRACK_WIDTH_METERS = 0;
         public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = new DifferentialDriveKinematics(
             K_TRACK_WIDTH_METERS);
@@ -124,7 +117,7 @@ public final class Constants
         public static final double HOPPER_MOTOR_POWER_REVERSE = -0.5;
 
         public static final int MOTOR_CONTROLLER_HOPPER = 5;
-        
+
 
     }
 }
