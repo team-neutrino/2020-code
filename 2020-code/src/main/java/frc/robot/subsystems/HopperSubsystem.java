@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -46,7 +47,7 @@ public class HopperSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-      SmartDashboard.putBoolean("Beam Break", m_beamBreakBot.get());
+        SmartDashboard.putBoolean("Beam Break", m_beamBreakBot.get());
         // This method will be called once per scheduler run
         if (m_beamBreakTop.get() == false && m_beamBreakBot.get() == true)
         {
@@ -60,4 +61,3 @@ public class HopperSubsystem extends SubsystemBase
     }
 
 }
-  

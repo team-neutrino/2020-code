@@ -118,6 +118,5 @@ public final class Constants
 
         public static final int MOTOR_CONTROLLER_HOPPER = 5;
 
-
     }
 }
