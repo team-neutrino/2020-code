@@ -26,6 +26,7 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.ClimberSubsystem;
 import java.nio.file.Paths;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeBallDataCommand;
 
@@ -43,6 +44,7 @@ public class RobotContainer
     public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
     public final LEDSubsystem m_Led = new LEDSubsystem();
     public final ClimberSubsystem m_climber = new ClimberSubsystem();
+    public final HopperSubsystem m_Hopper = new HopperSubsystem();
 
     private Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
     private Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);

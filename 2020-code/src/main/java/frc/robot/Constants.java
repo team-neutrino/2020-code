@@ -115,7 +115,8 @@ public final class Constants
         public static final double HOPPER_MOTOR_POWER = 0.8;
         public static final double HOPPER_MOTOR_POWER_REVERSE = -0.5;
 
-        public static final int MOTOR_CONTROLLER_HOPPER = 6;
+        public static final int MOTOR_CONTROLLER_HOPPER = 5;
+        
 
     }
 }

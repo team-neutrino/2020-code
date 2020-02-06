@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -19,8 +19,8 @@ public class HopperSubsystem extends SubsystemBase
     /**
      * Creates a new HopperSubsystem.
      */
-    public DigitalInput m_beamBreakTop = new DigitalInput(8);
-    public DigitalInput m_beamBreakBot = new DigitalInput(7);
+    public DigitalInput m_beamBreakTop = new DigitalInput(7);
+    public DigitalInput m_beamBreakBot = new DigitalInput(6);
     private TalonSRX m_hopperMotor = new TalonSRX(HopperConstants.MOTOR_CONTROLLER_HOPPER);
 
     public HopperSubsystem()
@@ -46,6 +46,7 @@ public class HopperSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
+      SmartDashboard.putBoolean("Beam Break", m_beamBreakBot.get());
         // This method will be called once per scheduler run
         if (m_beamBreakTop.get() == false && m_beamBreakBot.get() == true)
         {
@@ -59,3 +60,4 @@ public class HopperSubsystem extends SubsystemBase
     }
 
 }
+  
