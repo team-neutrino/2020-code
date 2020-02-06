@@ -37,7 +37,6 @@ import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeBallDataCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
-import frc.robot.util.JoystickProcessor;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -87,7 +86,7 @@ public class RobotContainer
             System.out.println("This didnt work" + e);
         }
         final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
-            JoystickProcessor.process(m_leftJoystick.getY()), JoystickProcessor.process(m_rightJoystick.getY())), m_Drive);
+            m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
         m_Drive.setDefaultCommand(tankDriveCommand);
         configureButtonBindings();
     }
