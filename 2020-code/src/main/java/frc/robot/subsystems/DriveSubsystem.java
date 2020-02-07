@@ -98,8 +98,8 @@ public class DriveSubsystem extends SubsystemBase
 
     public void tankDrive(double leftPower, double rightPower)
     {
-        m_leftMotors.set(leftPower);
-        m_rightMotors.set(rightPower);
+        m_leftMotors.set(processJoystick(leftPower));
+        m_rightMotors.set(processJoystick(rightPower));
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts)
@@ -181,5 +181,26 @@ public class DriveSubsystem extends SubsystemBase
     {
         m_navX.reset();
         resetOdometry(m_odometry.getPoseMeters());
+    }
+
+    /**
+     * Applies deadzoning and curve to the joystick input
+     *
+     * @return A processed joystick input
+     */
+    private double processJoystick(double input)
+    {
+        if (Math.abs(input) > Constants.JoystickConstants.DEADZONE_SIZE)
+        {
+            double absoluteValue = Math.abs(input);
+            double deadzoneCorrectedAbsoluteValue = (1 / (1 - Constants.JoystickConstants.DEADZONE_SIZE))
+                    * (absoluteValue - 1.0) + 1.0;
+            return Math.pow(deadzoneCorrectedAbsoluteValue, Constants.JoystickConstants.JOYSTICK_CURVE)
+                    * (absoluteValue / input);
+        }
+        else
+        {
+            return 0.0;
+        }
     }
 }
