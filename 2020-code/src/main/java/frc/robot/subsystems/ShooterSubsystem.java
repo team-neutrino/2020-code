@@ -7,6 +7,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.*;
+import com.ctre.phoenix.motorcontrol.*;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Joystick;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.FollowerType;
@@ -52,6 +56,23 @@ public class ShooterSubsystem extends SubsystemBase
             Constants.ShooterConstants.WHEEL_ENCODER_PORT_2);
         m_wheelEncoder.setDistancePerPulse(Constants.ShooterConstants.WHEEL_ENCODER_DIST_PER_PULSE);
         m_wheelMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        m_wheelMotor.configFactoryDefault();
+        m_wheelMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+            Constants.PIDConstants.kPIDLoopIdx, Constants.PIDConstants.kTimeoutMs);
+        m_wheelMotor.setSensorPhase(true);
+        m_wheelMotor.configNominalOutputForward(0, Constants.PIDConstants.kTimeoutMs);
+        m_wheelMotor.configNominalOutputReverse(0, Constants.PIDConstants.kTimeoutMs);
+        m_wheelMotor.configPeakOutputForward(1, Constants.PIDConstants.kTimeoutMs);
+        m_wheelMotor.configPeakOutputReverse(-1, Constants.PIDConstants.kTimeoutMs);
+        m_wheelMotor.config_kF(Constants.PIDConstants.kPIDLoopIdx, Constants.PIDConstants.kF,
+            Constants.PIDConstants.kTimeoutMs);
+        m_wheelMotor.config_kP(Constants.PIDConstants.kPIDLoopIdx, Constants.PIDConstants.kP,
+            Constants.PIDConstants.kTimeoutMs);
+        m_wheelMotor.config_kI(Constants.PIDConstants.kPIDLoopIdx, Constants.PIDConstants.kI,
+            Constants.PIDConstants.kTimeoutMs);
+        m_wheelMotor.config_kD(Constants.PIDConstants.kPIDLoopIdx, Constants.PIDConstants.kD,
+            Constants.PIDConstants.kTimeoutMs);
+
     }
 
     @Override
