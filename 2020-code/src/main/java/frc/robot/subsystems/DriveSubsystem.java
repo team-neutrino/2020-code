@@ -179,7 +179,7 @@ public class DriveSubsystem extends SubsystemBase
      *
      * @return A processed joystick input
      */
-    private static double processJoystick(double input)
+    private double processJoystick(double input)
     {
         if (Math.abs(input) > Constants.JoystickConstants.DEADZONE_SIZE)
         {
