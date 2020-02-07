@@ -85,8 +85,8 @@ public class RobotContainer
             e.printStackTrace();
             System.out.println("This didnt work" + e);
         }
-        final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
-            m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
+        final Command tankDriveCommand = new RunCommand(
+            () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
         m_Drive.setDefaultCommand(tankDriveCommand);
         configureButtonBindings();
     }
@@ -125,5 +125,4 @@ public class RobotContainer
         return ramseteCommand.andThen(() -> m_Drive.tankDriveVolts(0, 0));
     }
 
-    
 }

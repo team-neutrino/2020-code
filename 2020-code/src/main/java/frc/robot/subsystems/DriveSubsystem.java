@@ -173,8 +173,8 @@ public class DriveSubsystem extends SubsystemBase
      * public ArrayList<Double> getCANTemp() { double tempLeftOne =
      * CANSparkMax.getMotorTempearture(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1); }
      */
-    
-     /**
+
+    /**
      * Applies deadzoning and curve to the joystick input
      *
      * @return A processed joystick input
