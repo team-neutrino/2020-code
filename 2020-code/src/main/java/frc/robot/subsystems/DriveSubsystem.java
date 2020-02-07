@@ -179,6 +179,7 @@ public class DriveSubsystem extends SubsystemBase
      */
     public void initAuton()
     {
+        m_navX.reset();
         resetOdometry(m_odometry.getPoseMeters());
     }
 }
