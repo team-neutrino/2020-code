@@ -57,8 +57,6 @@ public class ShooterSubsystem extends SubsystemBase
         m_wheelEncoder.setDistancePerPulse(Constants.ShooterConstants.WHEEL_ENCODER_DIST_PER_PULSE);
         m_wheelMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         m_wheelMotor.configFactoryDefault();
-        m_wheelMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
-            Constants.PIDConstants.kPIDLoopIdx, Constants.PIDConstants.kTimeoutMs);
         m_wheelMotor.setSensorPhase(true);
         m_wheelMotor.configNominalOutputForward(0, Constants.PIDConstants.kTimeoutMs);
         m_wheelMotor.configNominalOutputReverse(0, Constants.PIDConstants.kTimeoutMs);
