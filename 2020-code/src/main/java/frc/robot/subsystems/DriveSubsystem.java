@@ -175,6 +175,15 @@ public class DriveSubsystem extends SubsystemBase
      */
 
     /**
+     * Initalize the drive subsystem for Auton
+     */
+    public void initAuton()
+    {
+        m_navX.reset();
+        resetOdometry(m_odometry.getPoseMeters());
+    }
+
+    /**
      * Applies deadzoning and curve to the joystick input
      *
      * @return A processed joystick input
