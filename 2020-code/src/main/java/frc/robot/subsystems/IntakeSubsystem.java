@@ -55,10 +55,10 @@ public class IntakeSubsystem extends SubsystemBase
         m_intakeAdjustMotor.set(ControlMode.PercentOutput, PIDPower);
     }
 
-    public void getPDPCurrent()
+    public void printPDPCurrent()
     {
-        //double currentIntakeMotor = PDP.getCurrent(CanId.MOTOR_CONTROLLER_INTAKE);
-        //System.out.println("MOTOR_CONTROLLER_INTAKE: " + currentIntakeMotor);
+        double currentIntakeMotor = m_intakeMotor.getSupplyCurrent();
+        SmartDashboard.putNumber("MOTOR_CONTROLLER_INTAKE: ", currentIntakeMotor);
     }
 
     public void intakePrinter()

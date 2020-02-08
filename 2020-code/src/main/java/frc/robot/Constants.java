@@ -98,6 +98,7 @@ public final class Constants
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
         public static final int MOTOR_CONTROLLER_CLIMBER = 5;
+        public static final int MOTOR_CONTROLLER_HOPPER = 6;
     }
 
     public static final class ClimberConstants
@@ -117,8 +118,6 @@ public final class Constants
         public static final double HOPPER_MOTOR_POWER_REVERSE = -0.5;
         public static final int HOPPER_TOP_BEAMBREAK = 7;
         public static final int HOPPER_BOT_BEAMBREAK = 6;
-
-        public static final int MOTOR_CONTROLLER_HOPPER = 5;
 
     }
 }

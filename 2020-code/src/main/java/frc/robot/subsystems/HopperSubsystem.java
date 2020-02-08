@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.HopperConstants;
 
 public class HopperSubsystem extends SubsystemBase
@@ -22,7 +23,7 @@ public class HopperSubsystem extends SubsystemBase
      */
     public DigitalInput m_beamBreakTop = new DigitalInput(HopperConstants.HOPPER_TOP_BEAMBREAK);
     public DigitalInput m_beamBreakBot = new DigitalInput(HopperConstants.HOPPER_BOT_BEAMBREAK);
-    private TalonSRX m_hopperMotor = new TalonSRX(HopperConstants.MOTOR_CONTROLLER_HOPPER);
+    private TalonSRX m_hopperMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_HOPPER);
 
     public HopperSubsystem()
     {
@@ -47,7 +48,9 @@ public class HopperSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        SmartDashboard.putBoolean("Beam Break", m_beamBreakBot.get());
+        SmartDashboard.putBoolean("Beam Break 1", m_beamBreakBot.get());
+        SmartDashboard.putBoolean("Beam Break 2", m_beamBreakTop.get());
+        SmartDashboard.putBoolean("Beam Break 3", m_beamBreakTop.get() == false && m_beamBreakBot.get() == true);
         // This method will be called once per scheduler run
         if (m_beamBreakTop.get() == false && m_beamBreakBot.get() == true)
         {
@@ -58,6 +61,7 @@ public class HopperSubsystem extends SubsystemBase
             stop();
         }
         System.out.print(ControlMode.PercentOutput);
+
     }
 
 }
