@@ -30,12 +30,8 @@ import frc.robot.Constants.*;
 import static edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.ClimberSubsystem;
 import java.nio.file.Paths;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.HopperSubsystem;
-import frc.robot.commands.DriveDataCommand;
-import frc.robot.commands.IntakeBallDataCommand;
-import frc.robot.commands.ShooterSetSpeedCommand;
-import frc.robot.commands.ShooterSetPowerCommand;
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very

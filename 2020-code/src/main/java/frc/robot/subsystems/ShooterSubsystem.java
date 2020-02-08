@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -26,6 +27,8 @@ import frc.robot.Constants.ShooterConstants;
 { "all" })
 public class ShooterSubsystem extends SubsystemBase
 {
+    private TalonSRXConfiguration WHEEL_MASTER_CONFIGURATION = new TalonSRXConfiguration();
+    private TalonSRXConfiguration WHEEL_FOLLOWER_CONFIGURATION = new TalonSRXConfiguration();
     private TalonSRX m_wheelMotor;
     private TalonSRX m_wheelMotor2;
     private TalonSRX m_wheelMotor3;
@@ -42,9 +45,9 @@ public class ShooterSubsystem extends SubsystemBase
         m_wheelMotor2 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
         m_wheelMotor3 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL3);
 
-        m_wheelMotor.configAllSettings(ShooterConstants.WHEEL_MASTER_CONFIGURATION);
-        m_wheelMotor2.configAllSettings(ShooterConstants.WHEEL_FOLLOWER_CONFIGURATION);
-        m_wheelMotor3.configAllSettings(ShooterConstants.WHEEL_FOLLOWER_CONFIGURATION);
+        m_wheelMotor.configAllSettings(WHEEL_MASTER_CONFIGURATION);
+        m_wheelMotor2.configAllSettings(WHEEL_FOLLOWER_CONFIGURATION);
+        m_wheelMotor3.configAllSettings(WHEEL_FOLLOWER_CONFIGURATION);
         m_wheelMotor2.follow(m_wheelMotor);
         m_wheelMotor3.follow(m_wheelMotor);
 
@@ -55,8 +58,6 @@ public class ShooterSubsystem extends SubsystemBase
         m_wheelMotor.setNeutralMode(NeutralMode.Coast);
         m_wheelMotor2.setNeutralMode(NeutralMode.Coast);
         m_wheelMotor3.setNeutralMode(NeutralMode.Coast);
-
-        m_wheelEncoder = new Encoder(ShooterConstants.WHEEL_ENCODER_PORT_1, ShooterConstants.WHEEL_ENCODER_PORT_2);
     }
 
     @Override
@@ -92,10 +93,10 @@ public class ShooterSubsystem extends SubsystemBase
 
     private void conifgSRX()
     {
-        ShooterConstants.WHEEL_MASTER_CONFIGURATION.slot0.kP = ShooterConstants.WHEEL_P;
-        ShooterConstants.WHEEL_MASTER_CONFIGURATION.slot0.kI = ShooterConstants.WHEEL_I;
-        ShooterConstants.WHEEL_MASTER_CONFIGURATION.slot0.kD = ShooterConstants.WHEEL_D;
-        ShooterConstants.WHEEL_MASTER_CONFIGURATION.slot0.kF = ShooterConstants.WHEEL_F;
+        WHEEL_MASTER_CONFIGURATION.slot0.kP = ShooterConstants.WHEEL_P;
+        WHEEL_MASTER_CONFIGURATION.slot0.kI = ShooterConstants.WHEEL_I;
+        WHEEL_MASTER_CONFIGURATION.slot0.kD = ShooterConstants.WHEEL_D;
+        WHEEL_MASTER_CONFIGURATION.slot0.kF = ShooterConstants.WHEEL_F;
     }
 
 }
