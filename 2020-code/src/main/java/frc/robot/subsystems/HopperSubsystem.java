@@ -20,8 +20,8 @@ public class HopperSubsystem extends SubsystemBase
     /**
      * Creates a new HopperSubsystem.
      */
-    public DigitalInput m_beamBreakTop = new DigitalInput(7);
-    public DigitalInput m_beamBreakBot = new DigitalInput(6);
+    public DigitalInput m_beamBreakTop = new DigitalInput(HopperConstants.HOPPER_TOP_BEAMBREAK);
+    public DigitalInput m_beamBreakBot = new DigitalInput(HopperConstants.HOPPER_BOT_BEAMBREAK);
     private TalonSRX m_hopperMotor = new TalonSRX(HopperConstants.MOTOR_CONTROLLER_HOPPER);
 
     public HopperSubsystem()
@@ -51,11 +51,11 @@ public class HopperSubsystem extends SubsystemBase
         // This method will be called once per scheduler run
         if (m_beamBreakTop.get() == false && m_beamBreakBot.get() == true)
         {
-            m_hopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
+            intake();
         }
-        else if ((m_beamBreakTop.get() == true) || m_beamBreakBot.get() == false)
+        else
         {
-            m_hopperMotor.set(ControlMode.PercentOutput, 0);
+            stop();
         }
         System.out.print(ControlMode.PercentOutput);
     }
