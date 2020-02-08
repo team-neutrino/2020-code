@@ -30,7 +30,6 @@ public class ShooterSubsystem extends SubsystemBase
     private TalonSRX m_wheelMotor2;
     private TalonSRX m_wheelMotor3;
     private Encoder m_wheelEncoder;
-    
 
     /**
      * Creates a new Shooter.
@@ -38,7 +37,7 @@ public class ShooterSubsystem extends SubsystemBase
 
     public ShooterSubsystem()
     {
-        conifgSRX(); 
+        conifgSRX();
         m_wheelMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL);
         m_wheelMotor2 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
         m_wheelMotor3 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL3);
@@ -57,9 +56,7 @@ public class ShooterSubsystem extends SubsystemBase
         m_wheelMotor2.setNeutralMode(NeutralMode.Coast);
         m_wheelMotor3.setNeutralMode(NeutralMode.Coast);
 
-
-        m_wheelEncoder = new Encoder(ShooterConstants.WHEEL_ENCODER_PORT_1,
-        ShooterConstants.WHEEL_ENCODER_PORT_2);
+        m_wheelEncoder = new Encoder(ShooterConstants.WHEEL_ENCODER_PORT_1, ShooterConstants.WHEEL_ENCODER_PORT_2);
     }
 
     @Override

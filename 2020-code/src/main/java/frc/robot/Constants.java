@@ -85,7 +85,7 @@ public final class Constants
         public static final int WHEEL_ENCODER_PORT_2 = 1;
         public static final TalonSRXConfiguration WHEEL_MASTER_CONFIGURATION = new TalonSRXConfiguration();
         public static final TalonSRXConfiguration WHEEL_FOLLOWER_CONFIGURATION = new TalonSRXConfiguration();
-        
+
         public static final TalonSRXPIDSetConfiguration WHEEL_PID_CONFIG = new TalonSRXPIDSetConfiguration();
         public static final double WHEEL_P = 0.04;
         public static final double WHEEL_I = 0;
