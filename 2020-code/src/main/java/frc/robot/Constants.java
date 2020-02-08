@@ -79,11 +79,10 @@ public final class Constants
         public static final int WHEEL_ENCODER_PORT_1 = 0;
         public static final int WHEEL_ENCODER_PORT_2 = 1;
         public static final int WHEEL_ENCODER_DIST_PER_PULSE = 0;
-        public static final double WHEEL_P = 0;
+        public static final double WHEEL_P = 0.04;
         public static final double WHEEL_I = 0;
-        public static final double WHEEL_D = 0;
-        public static final double KS_VOLTS = 0;
-        public static final double KV_VOLT_SEC_PER_ROTATION = 0;
+        public static final double WHEEL_D = 2;
+        public static final double WHEEL_F = 0.008;
     }
 
     public static final class CanId
