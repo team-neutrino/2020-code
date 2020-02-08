@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 
 @SuppressWarnings(
 { "all" })
@@ -36,17 +38,28 @@ public class ShooterSubsystem extends SubsystemBase
 
     public ShooterSubsystem()
     {
+        conifgSRX(); 
         m_wheelMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL);
         m_wheelMotor2 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
         m_wheelMotor3 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL3);
+
+        m_wheelMotor.configAllSettings(ShooterConstants.WHEEL_MASTER_CONFIGURATION);
+        m_wheelMotor2.configAllSettings(ShooterConstants.WHEEL_FOLLOWER_CONFIGURATION);
+        m_wheelMotor3.configAllSettings(ShooterConstants.WHEEL_FOLLOWER_CONFIGURATION);
         m_wheelMotor2.follow(m_wheelMotor);
         m_wheelMotor3.follow(m_wheelMotor);
-        //TODO: setup motor inversions
-        //configure m_wheelMotor PID
 
-        m_wheelEncoder = new Encoder(Constants.ShooterConstants.WHEEL_ENCODER_PORT_1,
-            Constants.ShooterConstants.WHEEL_ENCODER_PORT_2);
-        m_wheelEncoder.setDistancePerPulse(Constants.ShooterConstants.WHEEL_ENCODER_DIST_PER_PULSE);
+        m_wheelMotor.setInverted(true);
+        m_wheelMotor2.setInverted(true);
+        m_wheelMotor3.setInverted(true);
+
+        m_wheelMotor.setNeutralMode(NeutralMode.Coast);
+        m_wheelMotor2.setNeutralMode(NeutralMode.Coast);
+        m_wheelMotor3.setNeutralMode(NeutralMode.Coast);
+
+
+        m_wheelEncoder = new Encoder(ShooterConstants.WHEEL_ENCODER_PORT_1,
+        ShooterConstants.WHEEL_ENCODER_PORT_2);
     }
 
     @Override
@@ -78,6 +91,14 @@ public class ShooterSubsystem extends SubsystemBase
     public boolean getMotorSpeedStatus()
     {
         return false;
+    }
+
+    private void conifgSRX()
+    {
+        ShooterConstants.WHEEL_MASTER_CONFIGURATION.slot0.kP = ShooterConstants.WHEEL_P;
+        ShooterConstants.WHEEL_MASTER_CONFIGURATION.slot0.kI = ShooterConstants.WHEEL_I;
+        ShooterConstants.WHEEL_MASTER_CONFIGURATION.slot0.kD = ShooterConstants.WHEEL_D;
+        ShooterConstants.WHEEL_MASTER_CONFIGURATION.slot0.kF = ShooterConstants.WHEEL_F;
     }
 
 }

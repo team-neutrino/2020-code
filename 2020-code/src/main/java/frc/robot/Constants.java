@@ -7,6 +7,11 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration;
+import com.ctre.phoenix.motorcontrol.can.BaseTalonConfiguration;
+import com.ctre.phoenix.motorcontrol.can.BaseTalonPIDSetConfiguration;
+
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
@@ -78,7 +83,10 @@ public final class Constants
         //TODO add RPM conversion
         public static final int WHEEL_ENCODER_PORT_1 = 0;
         public static final int WHEEL_ENCODER_PORT_2 = 1;
-        public static final int WHEEL_ENCODER_DIST_PER_PULSE = 0;
+        public static final TalonSRXConfiguration WHEEL_MASTER_CONFIGURATION = new TalonSRXConfiguration();
+        public static final TalonSRXConfiguration WHEEL_FOLLOWER_CONFIGURATION = new TalonSRXConfiguration();
+        
+        public static final TalonSRXPIDSetConfiguration WHEEL_PID_CONFIG = new TalonSRXPIDSetConfiguration();
         public static final double WHEEL_P = 0.04;
         public static final double WHEEL_I = 0;
         public static final double WHEEL_D = 2;

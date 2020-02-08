@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.commands.NeutrinoRamseteCommand;
-import frc.robot.commands.ShooterSetPowerCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -35,7 +34,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeBallDataCommand;
-import frc.robot.commands.ShooterSetSpeedPIDCommand;
+import frc.robot.commands.ShooterSetSpeedCommand;
 import frc.robot.commands.ShooterSetPowerCommand;
 
 /**
@@ -100,7 +99,7 @@ public class RobotContainer
     private void configureButtonBindings()
     {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
-        m_A.whenHeld(new ShooterSetPowerCommand(m_Shooter));
+        m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
         m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
         m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
     }
@@ -121,6 +120,8 @@ public class RobotContainer
             new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0), new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0),
             // RamseteCommand passes volts to the callback
             m_Drive::tankDriveVolts, m_Drive);
+
+        //TODO: transform coordinates
 
         // Run path following command, then stop at the end.
         return ramseteCommand.andThen(() -> m_Drive.tankDriveVolts(0, 0));
