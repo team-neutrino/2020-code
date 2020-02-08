@@ -10,14 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterSetPowerCommand extends CommandBase
+public class ShooterSetSpeedCommand extends CommandBase
 {
     private ShooterSubsystem m_shooter;
-
     /**
-     * Creates a new ShooterDirectCurrent.
+     * Creates a new ShooterSetSpeedCommand.
      */
-    public ShooterSetPowerCommand(ShooterSubsystem p_shooter)
+    public ShooterSetSpeedCommand(ShooterSubsystem p_shooter)
     {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(p_shooter);
@@ -34,14 +33,13 @@ public class ShooterSetPowerCommand extends CommandBase
     @Override
     public void execute()
     {
-        m_shooter.setPower(1);
+      
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted)
     {
-        m_shooter.setPower(0);
     }
 
     // Returns true when the command should end.
