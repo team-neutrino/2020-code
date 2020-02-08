@@ -93,10 +93,6 @@ public final class Constants
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT2 = 4;
         public static final int MOTOR_CONTROLLER_CLIMBER = 5;
-<<<<<<< HEAD
-        public static final int MOTOR_CONTROLLER_TOWER = 6;
-        public static final int MOTOR_CONTROLLER_HOPPER = 7;
-=======
         public static final int MOTOR_CONTROLLER_HOPPER = 6;
         public static final int MOTOR_CONTROLLER_TURRET = 7;
         public static final int MOTOR_CONTROLLER_TOWER = 10;
@@ -105,7 +101,6 @@ public final class Constants
         public static final int MOTOR_CONTROLLER_INTAKE_ADJUST = 13;
         public static final int MOTOR_CONTROLLER_SHOOTERWHEEL = 14;
         public static final int MOTOR_CONTROLLER_INTAKE = 15;
->>>>>>> master
     }
 
     public static final class ClimberConstants
@@ -125,10 +120,6 @@ public final class Constants
         public static final double HOPPER_MOTOR_POWER_REVERSE = -0.5;
         public static final int HOPPER_TOP_BEAMBREAK = 7;
         public static final int HOPPER_BOT_BEAMBREAK = 6;
-<<<<<<< HEAD
-        public static final double HOPPER_INTAKE_POWER = 0.4;
-=======
->>>>>>> master
 
     }
 }
