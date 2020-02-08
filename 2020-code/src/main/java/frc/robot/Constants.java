@@ -59,6 +59,7 @@ public final class Constants
         public static final double ADJUST_DISTANCE_PER_PULSE = 0;
         public static final boolean SENSOR_PHASE = true;
         public static final double ENCODER_PULSES_PER_REV = 8192;
+        public static final int ENCODER_PORT = 8;
     }
 
     public static final class ControllerPorts
@@ -90,8 +91,8 @@ public final class Constants
     public static final class CanId
     {
         public static final int MOTOR_CONTROLLER_SHOOTERWHEEL = 14;
-        public static final int MOTOR_CONTROLLER_INTAKE = 15;
-        public static final int MOTOR_CONTROLLER_INTAKE_ADJUST = 13;
+        public static final int MOTOR_CONTROLLER_INTAKE_FEED = 15;
+        public static final int MOTOR_CONTROLLER_INTAKE_POSITION = 13;
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT1 = 1;
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;

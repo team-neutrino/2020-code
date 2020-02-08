@@ -27,11 +27,10 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.ClimberSubsystem;
 import java.nio.file.Paths;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakePIDSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
-import frc.robot.commands.IntakeBallDataCommand;
 import frc.robot.commands.IntakePIDCommand;
-import frc.robot.commands.IntakeBallDataCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
 
@@ -43,9 +42,12 @@ import frc.robot.commands.ShooterDirectCurrentCommand;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
+    private double k_DOWN_ANGLE = Constants.IntakeConstants.ARM_DOWN_ANGLE;
+    private double k_UP_ANGLE = Constants.IntakeConstants.ARM_UP_ANGLE;
+
 
     public final DriveSubsystem m_Drive = new DriveSubsystem();
-    public final IntakeSubsystem m_Intake = new IntakeSubsystem();
+    public final IntakePIDSubsystem m_Intake = new IntakePIDSubsystem();
     public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
     public final LEDSubsystem m_Led = new LEDSubsystem();
     public final ClimberSubsystem m_climber = new ClimberSubsystem();
@@ -91,14 +93,16 @@ public class RobotContainer
     {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
-
+        /*
         m_B.whenHeld(new RunCommand(m_Intake::setIntakeOn));
         m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
-
-        m_Y.whenPressed(new ParallelCommandGroup(
-            new IntakePIDCommand(m_Intake),
-            new InstantCommand(m_Intake::increaseYButtonCounter)
-        ));
+        */
+        m_B.whenHeld(new RunCommand(m_Intake::setIntakeOn));
+        m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
+        
+        //m_Y.whenPressed(new IntakePIDCommand(m_Intake));
+        m_Y.whenPressed(new InstantCommand(() -> m_Intake.setAngle(k_DOWN_ANGLE)));
+        
     }
 
     /**

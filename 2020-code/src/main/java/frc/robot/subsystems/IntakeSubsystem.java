@@ -23,21 +23,25 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 public class IntakeSubsystem extends SubsystemBase
 {
-    private AnalogPotentiometer m_adjustMotorPotentiometer = new AnalogPotentiometer(
-        Constants.IntakeConstants.ADJUST_MOTOR_ENCODER);
-    private TalonSRX m_intakeMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE);
-    private TalonSRX m_intakeAdjustMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_ADJUST);
+    /* //private AnalogPotentiometer m_adjustMotorPotentiometer = new AnalogPotentiometer(
+        Constants.IntakeConstants.ADJUST_MOTOR_ENCODER); */
+    private TalonSRX m_intakeMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_FEED);
+    private TalonSRX m_intakeAdjustMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_POSITION);
     private DutyCycleEncoder m_DutyCycleEncoder = new DutyCycleEncoder(8);
+    /*
     public int yButtonCounter = 0;
     public boolean upOrDown = yButtonCounter % 2 == 0 ? 
         true : false;
+    */
 
     public IntakeSubsystem()
     {
+        /*
         m_intakeAdjustMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
         m_intakeAdjustMotor.config_kP(Constants.PIDConstants.PID_ID, Constants.PIDConstants.PROPORTION_COEFFICIENT);
         m_intakeAdjustMotor.config_kD(Constants.PIDConstants.PID_ID, Constants.PIDConstants.DERIVATIVE_COEFFICEINT);
         m_intakeAdjustMotor.config_kI(Constants.PIDConstants.PID_ID, Constants.PIDConstants.INTEGRAL_COEFFICIENT);
+        */
     }
 
     public void periodic()
@@ -74,19 +78,17 @@ public class IntakeSubsystem extends SubsystemBase
 
     public double getSetpoint()
     {
-        if (upOrDown == true)
-        {
-            return getSetpointDown();
-        }
-        else
-        {
-            return getSetpointUp();
-        }
+        return getSetpointDown();
     }
 
     public void setPIDPower(double power)
     {
         m_intakeAdjustMotor.set(ControlMode.PercentOutput, power);
+    }
+
+    public void testSetPower()
+    {
+        m_intakeAdjustMotor.set(ControlMode.PercentOutput, 1);
     }
 
     public void setIntakeOn()
@@ -102,11 +104,6 @@ public class IntakeSubsystem extends SubsystemBase
     public void numberPut(double demand)
     {
         SmartDashboard.putNumber("Output: ", demand);
-    }
-
-    public void increaseYButtonCounter()
-    {
-        yButtonCounter++;
     }
 
     /*
