@@ -75,7 +75,7 @@ public final class Constants
 
     public static final class ShooterConstants
     {
-        //TODO get actual constants
+        //TODO add RPM conversion
         public static final int WHEEL_ENCODER_PORT_1 = 0;
         public static final int WHEEL_ENCODER_PORT_2 = 1;
         public static final int WHEEL_ENCODER_DIST_PER_PULSE = 0;
