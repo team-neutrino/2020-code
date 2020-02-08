@@ -27,12 +27,11 @@ import frc.robot.Constants.ShooterConstants;
 { "all" })
 public class ShooterSubsystem extends SubsystemBase
 {
-    private TalonSRXConfiguration WHEEL_MASTER_CONFIGURATION = new TalonSRXConfiguration();
-    private TalonSRXConfiguration WHEEL_FOLLOWER_CONFIGURATION = new TalonSRXConfiguration();
+    private TalonSRXConfiguration wheelMasterConfig = new TalonSRXConfiguration();
+    private TalonSRXConfiguration wheelFollowerConfig = new TalonSRXConfiguration();
     private TalonSRX m_wheelMotor;
     private TalonSRX m_wheelMotor2;
     private TalonSRX m_wheelMotor3;
-    private Encoder m_wheelEncoder;
 
     /**
      * Creates a new Shooter.
@@ -45,9 +44,9 @@ public class ShooterSubsystem extends SubsystemBase
         m_wheelMotor2 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
         m_wheelMotor3 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL3);
 
-        m_wheelMotor.configAllSettings(WHEEL_MASTER_CONFIGURATION);
-        m_wheelMotor2.configAllSettings(WHEEL_FOLLOWER_CONFIGURATION);
-        m_wheelMotor3.configAllSettings(WHEEL_FOLLOWER_CONFIGURATION);
+        m_wheelMotor.configAllSettings(wheelMasterConfig);
+        m_wheelMotor2.configAllSettings(wheelFollowerConfig);
+        m_wheelMotor3.configAllSettings(wheelFollowerConfig);
         m_wheelMotor2.follow(m_wheelMotor);
         m_wheelMotor3.follow(m_wheelMotor);
 
@@ -66,14 +65,9 @@ public class ShooterSubsystem extends SubsystemBase
         // This method will be called once per scheduler run
     }
 
-    public double setpoint()
+    public double getVelocity()
     {
-        return 1;
-    }
-
-    public double getWheelEncoderDistance()
-    {
-        return m_wheelEncoder.getRate();
+        return m_wheelMotor.getSelectedSensorVelocity();
     }
 
     public void setPower(double power)
@@ -81,9 +75,9 @@ public class ShooterSubsystem extends SubsystemBase
         m_wheelMotor.set(ControlMode.PercentOutput, power);
     }
 
-    public void setSpeed(double speed)
+    public void setVelocity(double velocity)
     {
-        m_wheelMotor.set(ControlMode.Velocity, speed);
+        m_wheelMotor.set(ControlMode.Velocity, velocity);
     }
 
     public boolean getMotorSpeedStatus()
@@ -93,10 +87,10 @@ public class ShooterSubsystem extends SubsystemBase
 
     private void conifgSRX()
     {
-        WHEEL_MASTER_CONFIGURATION.slot0.kP = ShooterConstants.WHEEL_P;
-        WHEEL_MASTER_CONFIGURATION.slot0.kI = ShooterConstants.WHEEL_I;
-        WHEEL_MASTER_CONFIGURATION.slot0.kD = ShooterConstants.WHEEL_D;
-        WHEEL_MASTER_CONFIGURATION.slot0.kF = ShooterConstants.WHEEL_F;
+        wheelMasterConfig.slot0.kP = ShooterConstants.WHEEL_P;
+        wheelMasterConfig.slot0.kI = ShooterConstants.WHEEL_I;
+        wheelMasterConfig.slot0.kD = ShooterConstants.WHEEL_D;
+        wheelMasterConfig.slot0.kF = ShooterConstants.WHEEL_F;
     }
 
 }
