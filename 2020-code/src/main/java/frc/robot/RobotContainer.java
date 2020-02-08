@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.commands.NeutrinoRamseteCommand;
-import frc.robot.commands.ShooterDirectCurrentCommand;
+import frc.robot.commands.ShooterSetPowerCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -36,7 +36,7 @@ import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
 import frc.robot.commands.IntakeBallDataCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
-import frc.robot.commands.ShooterDirectCurrentCommand;
+import frc.robot.commands.ShooterSetPowerCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -99,7 +99,7 @@ public class RobotContainer
     private void configureButtonBindings()
     {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
-        m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
+        m_A.whenHeld(new ShooterSetPowerCommand(m_Shooter));
         m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
         m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
     }

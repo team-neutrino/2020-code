@@ -10,14 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterDirectCurrentCommand extends CommandBase
+public class ShooterSetPowerCommand extends CommandBase
 {
     private ShooterSubsystem m_shooter;
 
     /**
      * Creates a new ShooterDirectCurrent.
      */
-    public ShooterDirectCurrentCommand(ShooterSubsystem p_shooter)
+    public ShooterSetPowerCommand(ShooterSubsystem p_shooter)
     {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(p_shooter);
