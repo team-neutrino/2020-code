@@ -23,8 +23,12 @@ public class HopperSubsystem extends SubsystemBase
      */
     private DigitalInput m_beamBreakTop = new DigitalInput(HopperConstants.HOPPER_TOP_BEAMBREAK);
     private DigitalInput m_beamBreakBot = new DigitalInput(HopperConstants.HOPPER_BOT_BEAMBREAK);
+<<<<<<< HEAD
     private TalonSRX m_hopperMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_TOWER);
     private TalonSRX m_intakeHopperMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_HOPPER);
+=======
+    private TalonSRX m_hopperMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_HOPPER);
+>>>>>>> master
 
     public HopperSubsystem()
     {
@@ -34,8 +38,11 @@ public class HopperSubsystem extends SubsystemBase
     public void intake()
     {
         m_hopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
+<<<<<<< HEAD
         m_intakeHopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
 
+=======
+>>>>>>> master
     }
 
     public void reverse()
@@ -58,7 +65,10 @@ public class HopperSubsystem extends SubsystemBase
         if (m_beamBreakTop.get() == false && m_beamBreakBot.get() == true)
         {
             intake();
+<<<<<<< HEAD
         
+=======
+>>>>>>> master
         }
         else
         {
