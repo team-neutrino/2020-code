@@ -23,29 +23,31 @@ public class HopperSubsystem extends SubsystemBase
      */
     private DigitalInput m_beamBreakTop = new DigitalInput(HopperConstants.HOPPER_TOP_BEAMBREAK);
     private DigitalInput m_beamBreakBot = new DigitalInput(HopperConstants.HOPPER_BOT_BEAMBREAK);
-    private TalonSRX m_hopperMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_TOWER);
+    private TalonSRX m_towerMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_TOWER);
     private TalonSRX m_intakeHopperMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_HOPPER);
 
     public HopperSubsystem()
     {
-
+        m_towerMotor.setInverted(true);
     }
 
     public void intake()
     {
-        m_hopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
+        m_towerMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
         m_intakeHopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
 
     }
 
     public void reverse()
     {
-        m_hopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER_REVERSE);
+        m_towerMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER_REVERSE);
     }
 
     public void stop()
     {
-        m_hopperMotor.set(ControlMode.PercentOutput, 0);
+        m_towerMotor.set(ControlMode.PercentOutput, 0);
+        m_intakeHopperMotor.set(ControlMode.PercentOutput, 0);
+
     }
 
     @Override
@@ -53,9 +55,8 @@ public class HopperSubsystem extends SubsystemBase
     {
         SmartDashboard.putBoolean("Beam Break 1", m_beamBreakBot.get());
         SmartDashboard.putBoolean("Beam Break 2", m_beamBreakTop.get());
-        SmartDashboard.putBoolean("Beam Break 3", m_beamBreakTop.get() == false && m_beamBreakBot.get() == true);
         // This method will be called once per scheduler run
-        if (m_beamBreakTop.get() == false && m_beamBreakBot.get() == true)
+        if (m_beamBreakTop.get() == true && m_beamBreakBot.get() == false)
         {
             intake();
         }
@@ -63,7 +64,6 @@ public class HopperSubsystem extends SubsystemBase
         {
             stop();
         }
-        System.out.print(ControlMode.PercentOutput);
 
     }
 
