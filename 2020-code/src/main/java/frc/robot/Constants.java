@@ -114,8 +114,7 @@ public final class Constants
     {
         public static final double HOPPER_MOTOR_POWER = 0.8;
         public static final double HOPPER_MOTOR_POWER_REVERSE = -0.5;
-        public static final int HOPPER_TOP_BEAMBREAK = 7;
-        public static final int HOPPER_BOT_BEAMBREAK = 6;
-
+        public static final int HOPPER_TOP_BEAMBREAK = 6;
+        public static final int HOPPER_BOT_BEAMBREAK = 9;
     }
 }
