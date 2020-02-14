@@ -13,61 +13,65 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeTogglePIDCommand extends CommandBase {
-  IntakeSubsystem m_Intake;
-  /**
-   * Creates a new IntakeTogglePIDCommand.
-   */
-  public IntakeTogglePIDCommand(IntakeSubsystem p_Intake) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(p_Intake);
-    m_Intake = p_Intake;
-  }
+public class IntakeTogglePIDCommand extends CommandBase
+{
+    IntakeSubsystem m_Intake;
+    /**
+     * Creates a new IntakeTogglePIDCommand.
+     */
+    public IntakeTogglePIDCommand(IntakeSubsystem p_Intake)
+    {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(p_Intake);
+        m_Intake = p_Intake;
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize()
+    {
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    new PIDCommand(
-      new PIDController(Constants.PIDConstants.PROPORTION_COEFFICIENT,
-                          Constants.PIDConstants.INTEGRAL_COEFFICIENT,
-                          Constants.PIDConstants.DERIVATIVE_COEFFICEINT),
-        // This should return the measurement
-        () -> m_Intake.getEncoderValue(),
-        // This should return the setpoint (can also be a constant)
-        () -> m_Intake.getSetpointDown(),
-        // This uses the output
-        output -> {
-          m_Intake.numberPut(output);
-        }
-    );
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute()
+    {
+        new PIDCommand(
+            new PIDController(Constants.PIDConstants.PROPORTION_COEFFICIENT,
+                Constants.PIDConstants.INTEGRAL_COEFFICIENT, Constants.PIDConstants.DERIVATIVE_COEFFICEINT),
+            // This should return the measurement
+            () -> m_Intake.getEncoderValue(),
+            // This should return the setpoint (can also be a constant)
+            () -> m_Intake.getSetpointDown(),
+            // This uses the output
+            output ->
+            {
+                m_Intake.numberPut(output);
+            });
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    new PIDCommand(
-      new PIDController(Constants.PIDConstants.PROPORTION_COEFFICIENT,
-                          Constants.PIDConstants.INTEGRAL_COEFFICIENT,
-                          Constants.PIDConstants.DERIVATIVE_COEFFICEINT),
-        // This should return the measurement
-        () -> m_Intake.getEncoderValue(),
-        // This should return the setpoint (can also be a constant)
-        () -> m_Intake.getSetpointUp(),
-        // This uses the output
-        output -> {
-          m_Intake.numberPut(output);
-        }
-    );
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted)
+    {
+        new PIDCommand(
+            new PIDController(Constants.PIDConstants.PROPORTION_COEFFICIENT,
+                Constants.PIDConstants.INTEGRAL_COEFFICIENT, Constants.PIDConstants.DERIVATIVE_COEFFICEINT),
+            // This should return the measurement
+            () -> m_Intake.getEncoderValue(),
+            // This should return the setpoint (can also be a constant)
+            () -> m_Intake.getSetpointUp(),
+            // This uses the output
+            output ->
+            {
+                m_Intake.numberPut(output);
+            });
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished()
+    {
+        return false;
+    }
 }

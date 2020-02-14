@@ -23,25 +23,25 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 public class IntakeSubsystem extends SubsystemBase
 {
-    /* //private AnalogPotentiometer m_adjustMotorPotentiometer = new AnalogPotentiometer(
-        Constants.IntakeConstants.ADJUST_MOTOR_ENCODER); */
+    /*
+     * //private AnalogPotentiometer m_adjustMotorPotentiometer = new AnalogPotentiometer(
+     * Constants.IntakeConstants.ADJUST_MOTOR_ENCODER);
+     */
     private TalonSRX m_intakeMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_FEED);
     private TalonSRX m_intakeAdjustMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_POSITION);
     private DutyCycleEncoder m_DutyCycleEncoder = new DutyCycleEncoder(8);
     /*
-    public int yButtonCounter = 0;
-    public boolean upOrDown = yButtonCounter % 2 == 0 ? 
-        true : false;
-    */
+     * public int yButtonCounter = 0; public boolean upOrDown = yButtonCounter % 2 == 0 ? true : false;
+     */
 
     public IntakeSubsystem()
     {
         /*
-        m_intakeAdjustMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
-        m_intakeAdjustMotor.config_kP(Constants.PIDConstants.PID_ID, Constants.PIDConstants.PROPORTION_COEFFICIENT);
-        m_intakeAdjustMotor.config_kD(Constants.PIDConstants.PID_ID, Constants.PIDConstants.DERIVATIVE_COEFFICEINT);
-        m_intakeAdjustMotor.config_kI(Constants.PIDConstants.PID_ID, Constants.PIDConstants.INTEGRAL_COEFFICIENT);
-        */
+         * m_intakeAdjustMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
+         * m_intakeAdjustMotor.config_kP(Constants.PIDConstants.PID_ID, Constants.PIDConstants.PROPORTION_COEFFICIENT);
+         * m_intakeAdjustMotor.config_kD(Constants.PIDConstants.PID_ID, Constants.PIDConstants.DERIVATIVE_COEFFICEINT);
+         * m_intakeAdjustMotor.config_kI(Constants.PIDConstants.PID_ID, Constants.PIDConstants.INTEGRAL_COEFFICIENT);
+         */
     }
 
     public void periodic()
@@ -51,9 +51,11 @@ public class IntakeSubsystem extends SubsystemBase
         SmartDashboard.putNumber("err: ", m_intakeAdjustMotor.getClosedLoopError());
         SmartDashboard.putNumber("Intake motor current: ", m_intakeMotor.getSupplyCurrent());
         SmartDashboard.putNumber("Arm motor current: ", m_intakeAdjustMotor.getSupplyCurrent());
-        SmartDashboard.putNumber("Encoder val.: ", m_DutyCycleEncoder.get());
-        SmartDashboard.putNumber("Encoder dist.: ", m_DutyCycleEncoder.getDistance());
-        SmartDashboard.putBoolean("isConnected: ", m_DutyCycleEncoder.isConnected());
+        /*
+         * SmartDashboard.putNumber("Encoder val.: ", m_DutyCycleEncoder.get());
+         * SmartDashboard.putNumber("Encoder dist.: ", m_DutyCycleEncoder.getDistance());
+         * SmartDashboard.putBoolean("isConnected: ", m_DutyCycleEncoder.isConnected());
+         */
     }
 
     public double getEncoderValue()
@@ -107,23 +109,13 @@ public class IntakeSubsystem extends SubsystemBase
     }
 
     /*
-    public void setArmDown()
-    {
-        double DOWN_DEMAND = Constants.IntakeConstants.ARM_DOWN_ANGLE
-                * Constants.IntakeConstants.ENCODER_PULSES_PER_REV;
-        m_intakeAdjustMotor.set(ControlMode.Position, DOWN_DEMAND);
-    }
-
-    public void setArmUp()
-    {
-        double UP_DEMAND = Constants.IntakeConstants.ARM_UP_ANGLE * Constants.IntakeConstants.ENCODER_PULSES_PER_REV;
-        m_intakeAdjustMotor.set(ControlMode.Position, UP_DEMAND);
-    }
-
-    
-    public void printCurrent() { SmartDashboard.putNumber("MOTOR_CONTROLLER_INTAKE: ", currentIntakeMotor); } public
-    void printPotentiometer() { //SmartDashboard.putNumber("Arm setpoint: ", PID.getSetpoint());
-    SmartDashboard.putNumber("Potentiometer reading: ", getPotentiometerReading()); }
-    */
+     * public void setArmDown() { double DOWN_DEMAND = Constants.IntakeConstants.ARM_DOWN_ANGLE
+     * Constants.IntakeConstants.ENCODER_PULSES_PER_REV; m_intakeAdjustMotor.set(ControlMode.Position, DOWN_DEMAND); }
+     * public void setArmUp() { double UP_DEMAND = Constants.IntakeConstants.ARM_UP_ANGLE *
+     * Constants.IntakeConstants.ENCODER_PULSES_PER_REV; m_intakeAdjustMotor.set(ControlMode.Position, UP_DEMAND); }
+     * public void printCurrent() { SmartDashboard.putNumber("MOTOR_CONTROLLER_INTAKE: ", currentIntakeMotor); } public
+     * void printPotentiometer() { //SmartDashboard.putNumber("Arm setpoint: ", PID.getSetpoint());
+     * SmartDashboard.putNumber("Potentiometer reading: ", getPotentiometerReading()); }
+     */
 
 }

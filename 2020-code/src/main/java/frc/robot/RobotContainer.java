@@ -9,6 +9,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController.Axis;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.commands.NeutrinoRamseteCommand;
@@ -45,8 +48,7 @@ public class RobotContainer
     private double k_DOWN_ANGLE = Constants.IntakeConstants.ARM_DOWN_ANGLE;
     private double k_UP_ANGLE = Constants.IntakeConstants.ARM_UP_ANGLE;
 
-
-    public final DriveSubsystem m_Drive = new DriveSubsystem();
+    //public final DriveSubsystem m_Drive = new DriveSubsystem();
     public final IntakePIDSubsystem m_Intake = new IntakePIDSubsystem();
     public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
     public final LEDSubsystem m_Led = new LEDSubsystem();
@@ -61,6 +63,8 @@ public class RobotContainer
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
     JoystickButton m_Y = new JoystickButton(m_OperatorController, Button.kY.value);
+    JoystickButton m_BumperLeft = new JoystickButton(m_OperatorController, Button.kBumperLeft.value);
+    JoystickButton m_TriggerLeft = new JoystickButton(m_OperatorController, Axis.kLeftTrigger.value);
 
     private Trajectory m_Trajectory;
     private NeutrinoRamseteCommand m_autoCommand;
@@ -70,7 +74,7 @@ public class RobotContainer
      */
     public RobotContainer()
     {
-        try
+       /* try
         {
             m_Trajectory = TrajectoryUtil.fromPathweaverJson(Paths.get("/home/lvuser/deploy/3BallAuton.wpilib.json"));
             m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
@@ -81,6 +85,7 @@ public class RobotContainer
         final Command tankDriveCommand = new RunCommand(() -> m_Drive.tankDrive(
             joystickProcessor(m_leftJoystick.getY()), joystickProcessor(m_rightJoystick.getY())), m_Drive);
         m_Drive.setDefaultCommand(tankDriveCommand);
+        */
         configureButtonBindings();
     }
 
@@ -91,18 +96,13 @@ public class RobotContainer
      */
     private void configureButtonBindings()
     {
-        m_X.whenPressed(new DriveDataCommand(m_Drive));
+        //m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
-        /*
-        m_B.whenHeld(new RunCommand(m_Intake::setIntakeOn));
-        m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
-        */
-        m_B.whenHeld(new RunCommand(m_Intake::setIntakeOn));
-        m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
-        
+
         //m_Y.whenPressed(new IntakePIDCommand(m_Intake));
-        m_Y.whenPressed(new InstantCommand(() -> m_Intake.setAngle(k_DOWN_ANGLE)));
-        
+        //m_Y.whenPressed(new InstantCommand(() -> m_Intake.setAngle(k_DOWN_ANGLE)));
+        m_BumperLeft.whenPressed(new InstantCommand(() -> m_Intake.setAngle(k_DOWN_ANGLE)));
+        //m_TriggerLeft.whenPressed(new InstantCommand(() -> m_Intake.setAngle(0)));
     }
 
     /**
