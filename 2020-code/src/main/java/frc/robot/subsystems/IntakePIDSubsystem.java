@@ -30,8 +30,6 @@ public class IntakePIDSubsystem extends PIDSubsystem
   private TalonSRX m_IntakeFeedMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_FEED);
   private TalonSRX m_IntakeArmMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_POSITION);
   private DutyCycleEncoder m_DutyCycleEncoder = new DutyCycleEncoder(Constants.IntakeConstants.ENCODER_PORT);
-  private XboxController intakeOperatorController = new XboxController(3);
-  JoystickButton m_TriggerLeft = new JoystickButton(intakeOperatorController, Axis.kLeftTrigger.value);
   private int counter = 0;
     /**
      * Creates a new IntakePIDSubsystem.
@@ -65,10 +63,10 @@ public class IntakePIDSubsystem extends PIDSubsystem
     {
         super.periodic();
         SmartDashboard.putNumber("Arm motor current: ", m_IntakeArmMotor.getSupplyCurrent());
-        SmartDashboard.putNumber("Encoder dist.: ", m_DutyCycleEncoder.getDistance());
+        SmartDashboard.putNumber("Arm motor power", m_IntakeArmMotor.getMotorOutputPercent());
+        SmartDashboard.putNumber("Encoder ang.: ", m_DutyCycleEncoder.getDistance());
         SmartDashboard.putNumber("Encoder val.: ", m_DutyCycleEncoder.get());
         SmartDashboard.putBoolean("isConnected: ", m_DutyCycleEncoder.isConnected());
-        SmartDashboard.putNumber("trigger left get: ", intakeOperatorController.getRawAxis(2));
 
         
         if (Math.abs(getMeasurement()) > 360)

@@ -45,7 +45,6 @@ import frc.robot.commands.ShooterDirectCurrentCommand;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    private double k_DOWN_ANGLE = Constants.IntakeConstants.ARM_DOWN_ANGLE;
     private double k_UP_ANGLE = Constants.IntakeConstants.ARM_UP_ANGLE;
 
     //public final DriveSubsystem m_Drive = new DriveSubsystem();
@@ -101,7 +100,7 @@ public class RobotContainer
 
         //m_Y.whenPressed(new IntakePIDCommand(m_Intake));
         //m_Y.whenPressed(new InstantCommand(() -> m_Intake.setAngle(k_DOWN_ANGLE)));
-        m_BumperLeft.whenPressed(new InstantCommand(() -> m_Intake.setAngle(k_DOWN_ANGLE)));
+        m_BumperLeft.whenPressed(new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_DOWN_ANGLE)));
         //m_TriggerLeft.whenPressed(new InstantCommand(() -> m_Intake.setAngle(0)));
     }
 
