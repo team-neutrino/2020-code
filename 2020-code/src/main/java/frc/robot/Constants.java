@@ -52,16 +52,17 @@ public final class Constants
 
     public static final class IntakeConstants
     {
-        public static final double INTAKE_MOTOR_POWER = 0.75;
-        public static final double ARM_DOWN_ANGLE = 230; // placeholder
-        public static final double ARM_UP_ANGLE = 290; // placeholder
+        public static final double INTAKE_MOTOR_POWER = -0.8;
+        public static final double ARM_DOWN_ANGLE = 162.5; // placeholder
+        public static final double ARM_UP_ANGLE = 99; // placeholder
         public static final int ENCODER_PORT = 8;
 
         public static final double PROPORTION_COEFFICIENT = 0.015;
         public static final double INTEGRAL_COEFFICIENT = 0.01;
-        public static final double DERIVATIVE_COEFFICEINT = 0;
+        public static final double DERIVATIVE_COEFFICEINT = 0.005;
         //public static final int TIMEOUT_MS = 20;
         public static final double POSITION_MULTIPLIER = 360;
+        public static final double LEFT_TRIGGER_THRESHOLD = 0.5;
     }
 
     public static final class ControllerPorts

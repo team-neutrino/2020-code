@@ -54,7 +54,7 @@ public class RobotContainer
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
     JoystickButton m_Y = new JoystickButton(m_OperatorController, Button.kY.value);
     JoystickButton m_BumperLeft = new JoystickButton(m_OperatorController, Button.kBumperLeft.value);
-    JoystickButton m_TriggerLeft = new JoystickButton(m_OperatorController, Axis.kLeftTrigger.value);
+    TriggerToBoolean m_TriggerLeft = new TriggerToBoolean(m_OperatorController, Axis.kLeftTrigger.value, Constants.IntakeConstants.LEFT_TRIGGER_THRESHOLD);
 
     private Trajectory m_Trajectory;
     private Trajectory auton_Trajectory;
@@ -95,9 +95,11 @@ public class RobotContainer
         m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
 
-        m_B.whenPressed(new InstantCommand(m_Intake::setIntakeOn)).whenReleased(m_Intake::setIntakeOff);
-        m_BumperLeft.whenPressed(new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_DOWN_ANGLE)));
-        m_TriggerLeft.whenPressed(new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE)));
+        m_TriggerLeft.whenActive(new InstantCommand(m_Intake::setIntakeOn,m_Intake)
+        .alongWith(new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_DOWN_ANGLE))));
+    m_TriggerLeft.whenInactive(new InstantCommand(m_Intake::setIntakeOff,m_Intake)
+        .alongWith(new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE))));
+        
     }
 
     /**
