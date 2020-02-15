@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 /**
  * Add your docs here.
  */
-public class TriggerToBoolean extends Trigger 
+public class TriggerToBoolean extends Trigger
 {
     GenericHID m_Joystick;
     int m_JoystickID;
@@ -28,7 +28,7 @@ public class TriggerToBoolean extends Trigger
 
     @Override
     public boolean get()
-    {  
+    {
         if (m_Joystick.getRawAxis(m_JoystickID) > m_Threshold)
             return true;
         else
