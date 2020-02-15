@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
@@ -39,6 +40,7 @@ public class ShooterSubsystem extends SubsystemBase
 
     public ShooterSubsystem()
     {
+        SmartDashboard.putNumber("ShooterZoom", 0);
         conifgSRX();
         m_wheelMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL);
         m_wheelMotor2 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
@@ -62,7 +64,7 @@ public class ShooterSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        // This method will be called once per scheduler run
+        SmartDashboard.putNumber("ShooterGo", m_wheelMotor.getSelectedSensorVelocity());
     }
 
     public double getVelocity()
@@ -91,6 +93,8 @@ public class ShooterSubsystem extends SubsystemBase
         wheelMasterConfig.slot0.kI = ShooterConstants.WHEEL_I;
         wheelMasterConfig.slot0.kD = ShooterConstants.WHEEL_D;
         wheelMasterConfig.slot0.kF = ShooterConstants.WHEEL_F;
+        wheelMasterConfig.openloopRamp = 0.25;
+        wheelFollowerConfig.openloopRamp = wheelMasterConfig.openloopRamp;
     }
 
 }

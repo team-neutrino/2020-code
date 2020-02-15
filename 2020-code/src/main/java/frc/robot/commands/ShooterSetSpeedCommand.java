@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -33,7 +34,7 @@ public class ShooterSetSpeedCommand extends CommandBase
     @Override
     public void execute()
     {
-        m_shooter.setVelocity(20000);
+        m_shooter.setVelocity(SmartDashboard.getNumber("ShooterZoom", 0));
     }
 
     // Called once the command ends or is interrupted.

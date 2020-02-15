@@ -94,7 +94,7 @@ public class RobotContainer
     {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
-        m_lBumper.whenHeld(new InstantCommand(m_Hopper::intake));
+        m_lBumper.whileHeld(new InstantCommand(m_Hopper::intake, m_Hopper), false);
         m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
         m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
     }
