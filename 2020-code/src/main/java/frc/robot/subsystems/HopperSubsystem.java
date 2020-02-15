@@ -57,36 +57,75 @@ public class HopperSubsystem extends SubsystemBase
 
     }
 
+    public double getTime()
+    {
+        return m_timer.get();
+    }
+
+    public void startTimer()
+    {
+        m_timer.start();
+    }
+
+    public void stopTimer()
+    {
+        m_timer.stop();
+    }
+
+    public void resetTimer()
+    {
+        m_timer.reset();
+    }
+
+    public void setPrevBotBeam(boolean beamStatus)
+    {
+        m_prevBotBeam = beamStatus;
+    }
+
+    public boolean getPrevBotBeam()
+    {
+        return m_prevBotBeam;
+    }
+
+    public boolean bottomBeamStatus()
+    {
+        return m_beamBreakBot.get();
+    }
+
+    public boolean topBeamStatus()
+    {
+        return m_beamBreakTop.get();
+    }
+
     @Override
     public void periodic()
     {
-        boolean bottomBeam = m_beamBreakBot.get();
-        boolean topBeam = m_beamBreakTop.get();
-        SmartDashboard.putBoolean("Beam Break 1", m_beamBreakBot.get());
-        SmartDashboard.putBoolean("Beam Break 2", m_beamBreakTop.get());
+        // boolean bottomBeam = m_beamBreakBot.get();
+        // boolean topBeam = m_beamBreakTop.get();
+        // SmartDashboard.putBoolean("Beam Break 1", m_beamBreakBot.get());
+        // SmartDashboard.putBoolean("Beam Break 2", m_beamBreakTop.get());
         // This method will be called once per scheduler run
         m_intakeHopperMotor.set(ControlMode.PercentOutput, 0.3);
 
-
-        if(topBeam == false || m_timer.get() >= 0.1)
-        {
-            stop();
-            System.out.println("stopped");
-            return;
-        }
-        if (bottomBeam == false)
-        {
-            System.out.println("intaking");
-            intake();
-            m_timer.stop();
-        }
-        else if(m_prevBotBeam == false && bottomBeam == true)
-        {
-            System.out.println("starting timer");
-            m_timer.reset();
-            m_timer.start();
-        }
-        m_prevBotBeam = bottomBeam;
+        //     if(topBeam == false || m_timer.get() >= 0.1)
+        //     {
+        //         stop();
+        //         System.out.println("stopped");
+        //         return;
+        //     }
+        //     if (bottomBeam == false)
+        //     {
+        //         System.out.println("intaking");
+        //         intake();
+        //         m_timer.stop();
+        //     }
+        //     else if(m_prevBotBeam == false && bottomBeam == true)
+        //     {
+        //         System.out.println("starting timer");
+        //         m_timer.reset();
+        //         m_timer.start();
+        //     }
+        //     m_prevBotBeam = bottomBeam;
     }
 
 }
