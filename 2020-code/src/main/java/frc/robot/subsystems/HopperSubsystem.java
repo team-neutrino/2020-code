@@ -54,7 +54,6 @@ public class HopperSubsystem extends SubsystemBase
         m_towerMotor.set(ControlMode.PercentOutput, 0);
         m_timer.stop();
         m_timer.reset();
-
     }
 
     public double getTime()
