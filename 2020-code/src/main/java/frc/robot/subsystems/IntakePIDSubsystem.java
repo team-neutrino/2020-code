@@ -11,26 +11,17 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.XboxController.Axis;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.CanId;
-
-
 
 public class IntakePIDSubsystem extends PIDSubsystem
 {
-  private TalonSRX m_IntakeFeedMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_FEED);
-  private TalonSRX m_IntakeArmMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_POSITION);
-  private DutyCycleEncoder m_DutyCycleEncoder = new DutyCycleEncoder(Constants.IntakeConstants.ENCODER_PORT);
-  private int counter = 0;
+    private TalonSRX m_IntakeFeedMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_FEED);
+    private TalonSRX m_IntakeArmMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_POSITION);
+    private DutyCycleEncoder m_DutyCycleEncoder = new DutyCycleEncoder(Constants.IntakeConstants.ENCODER_PORT);
     /**
      * Creates a new IntakePIDSubsystem.
      */
@@ -38,11 +29,10 @@ public class IntakePIDSubsystem extends PIDSubsystem
     {
         super(
             // The PIDController used by the subsystem
-            new PIDController(Constants.PIDConstants.PROPORTION_COEFFICIENT,
-                Constants.PIDConstants.INTEGRAL_COEFFICIENT, Constants.PIDConstants.DERIVATIVE_COEFFICEINT));
-        m_DutyCycleEncoder.setDistancePerRotation(360); //degrees
+            new PIDController(Constants.IntakeConstants.PROPORTION_COEFFICIENT,
+                Constants.IntakeConstants.INTEGRAL_COEFFICIENT, Constants.IntakeConstants.DERIVATIVE_COEFFICEINT));
+        m_DutyCycleEncoder.setDistancePerRotation(Constants.IntakeConstants.POSITION_MULTIPLIER); //degrees
     }
-    
 
     @Override
     public void useOutput(double output, double setpoint)
@@ -58,7 +48,6 @@ public class IntakePIDSubsystem extends PIDSubsystem
         return m_DutyCycleEncoder.getDistance();
     }
 
-    
     public void periodic()
     {
         super.periodic();
@@ -68,19 +57,17 @@ public class IntakePIDSubsystem extends PIDSubsystem
         SmartDashboard.putNumber("Encoder val.: ", m_DutyCycleEncoder.get());
         SmartDashboard.putBoolean("isConnected: ", m_DutyCycleEncoder.isConnected());
 
-        
         if (Math.abs(getMeasurement()) > 360)
         {
             m_DutyCycleEncoder.reset();
-        }   
+        }
     }
 
     public void setAngle(double angle)
     {
         setSetpoint(angle);
         enable();
-    } 
-    
+    }
 
     public void setIntakeOn()
     {
@@ -91,11 +78,4 @@ public class IntakePIDSubsystem extends PIDSubsystem
     {
         m_IntakeFeedMotor.set(ControlMode.PercentOutput, 0);
     }
-
-    public void testMethod()
-    {
-        counter++;
-        SmartDashboard.putNumber("counter2: ", counter);
-    }
-
 }

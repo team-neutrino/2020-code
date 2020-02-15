@@ -25,8 +25,8 @@ public class IntakePIDCommand extends PIDCommand
     {
         super(
             // The controller that the command will use
-            new PIDController(Constants.PIDConstants.PROPORTION_COEFFICIENT,
-                Constants.PIDConstants.INTEGRAL_COEFFICIENT, Constants.PIDConstants.DERIVATIVE_COEFFICEINT),
+            new PIDController(Constants.IntakeConstants.PROPORTION_COEFFICIENT,
+                Constants.IntakeConstants.INTEGRAL_COEFFICIENT, Constants.IntakeConstants.DERIVATIVE_COEFFICEINT),
             // This should return the measurement
             () -> m_Intake.getEncoderValue(),
             // This should return the setpoint (can also be a constant)
