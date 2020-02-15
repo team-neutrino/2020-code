@@ -54,7 +54,6 @@ public class HopperSubsystem extends SubsystemBase
         m_towerMotor.set(ControlMode.PercentOutput, 0);
         m_timer.stop();
         m_timer.reset();
-        //m_intakeHopperMotor.set(ControlMode.PercentOutput, 0);
 
     }
 
@@ -101,32 +100,9 @@ public class HopperSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        // boolean bottomBeam = m_beamBreakBot.get();
-        // boolean topBeam = m_beamBreakTop.get();
-        // SmartDashboard.putBoolean("Beam Break 1", m_beamBreakBot.get());
-        // SmartDashboard.putBoolean("Beam Break 2", m_beamBreakTop.get());
-        // This method will be called once per scheduler run
+        SmartDashboard.putBoolean("Beam Break 1", m_beamBreakBot.get());
+        SmartDashboard.putBoolean("Beam Break 2", m_beamBreakTop.get());
         m_intakeHopperMotor.set(ControlMode.PercentOutput, 0.3);
-
-        //     if(topBeam == false || m_timer.get() >= 0.1)
-        //     {
-        //         stop();
-        //         System.out.println("stopped");
-        //         return;
-        //     }
-        //     if (bottomBeam == false)
-        //     {
-        //         System.out.println("intaking");
-        //         intake();
-        //         m_timer.stop();
-        //     }
-        //     else if(m_prevBotBeam == false && bottomBeam == true)
-        //     {
-        //         System.out.println("starting timer");
-        //         m_timer.reset();
-        //         m_timer.start();
-        //     }
-        //     m_prevBotBeam = bottomBeam;
     }
 
 }
