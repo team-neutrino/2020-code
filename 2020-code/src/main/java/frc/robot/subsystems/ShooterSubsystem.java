@@ -39,8 +39,7 @@ public class ShooterSubsystem extends SubsystemBase
         m_wheelMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL);
         m_wheelEncoder = new Encoder(Constants.ShooterConstants.WHEEL_ENCODER_PORT_1,
             Constants.ShooterConstants.WHEEL_ENCODER_PORT_2);
-        m_wheelEncoder.setDistancePerPulse(12);
-        //m_wheelEncoder.setDistancePerPulse(Constants.ShooterConstants.WHEEL_ENCODER_DIST_PER_PULSE);
+        m_wheelEncoder.setDistancePerPulse(Constants.ShooterConstants.WHEEL_ENCODER_DIST_PER_PULSE);
     }
 
     @Override
