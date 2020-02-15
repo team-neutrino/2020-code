@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.commands.NeutrinoRamseteCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,7 +32,6 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakePIDSubsystem;
 import frc.robot.Trajectories.ExampleTrajectory;
 import frc.robot.commands.DriveDataCommand;
-import frc.robot.commands.IntakePIDCommand;
 import frc.robot.commands.ShooterSetSpeedPIDCommand;
 import frc.robot.commands.ShooterDirectCurrentCommand;
 
@@ -45,11 +43,9 @@ import frc.robot.commands.ShooterDirectCurrentCommand;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    private double k_UP_ANGLE = Constants.IntakeConstants.ARM_UP_ANGLE;
-
-    //public final DriveSubsystem m_Drive = new DriveSubsystem();
     public final IntakePIDSubsystem m_Intake = new IntakePIDSubsystem();
     public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
+    public final DriveSubsystem m_Drive = new DriveSubsystem();
     public final LEDSubsystem m_Led = new LEDSubsystem();
     public final ClimberSubsystem m_climber = new ClimberSubsystem();
 
@@ -90,13 +86,12 @@ public class RobotContainer
      */
     private void configureButtonBindings()
     {
-        //m_X.whenPressed(new DriveDataCommand(m_Drive));
+        m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterDirectCurrentCommand(m_Shooter));
 
-        //m_Y.whenPressed(new IntakePIDCommand(m_Intake));
-        //m_Y.whenPressed(new InstantCommand(() -> m_Intake.setAngle(k_DOWN_ANGLE)));
+        m_B.whenPressed(new InstantCommand(m_Intake::setIntakeOn)).whenReleased(m_Intake::setIntakeOff);
         m_BumperLeft.whenPressed(new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_DOWN_ANGLE)));
-        //m_TriggerLeft.whenPressed(new InstantCommand(() -> m_Intake.setAngle(0)));
+        m_TriggerLeft.whenPressed(new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE)));
     }
 
     /**
