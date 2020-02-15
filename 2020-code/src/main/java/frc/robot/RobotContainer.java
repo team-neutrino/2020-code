@@ -53,6 +53,7 @@ public class RobotContainer
     JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
+    JoystickButton m_lBumper = new JoystickButton(m_OperatorController, Button.kBumperLeft.value);
 
     private Trajectory m_Trajectory;
     private Trajectory auton_Trajectory;
@@ -93,6 +94,7 @@ public class RobotContainer
     {
         m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
+        m_lBumper.whenHeld(new InstantCommand(m_Hopper::intake));
         m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
         m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
     }
