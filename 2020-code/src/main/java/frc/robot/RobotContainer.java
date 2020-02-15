@@ -28,6 +28,7 @@ import frc.robot.subsystems.ClimberSubsystem;
 import java.nio.file.Paths;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
@@ -44,6 +45,7 @@ public class RobotContainer
     public final LEDSubsystem m_Led = new LEDSubsystem();
     public final ClimberSubsystem m_climber = new ClimberSubsystem();
     public final HopperSubsystem m_Hopper = new HopperSubsystem();
+    public final TurretSubsystem m_Turret = new TurretSubsystem();
 
     private Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
     private Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
@@ -54,6 +56,8 @@ public class RobotContainer
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
     JoystickButton m_lBumper = new JoystickButton(m_OperatorController, Button.kBumperLeft.value);
+    JoystickButton m_rightJoystickButton = new JoystickButton(m_OperatorController, Button.kStickRight.value);
+
 
     private Trajectory m_Trajectory;
     private Trajectory auton_Trajectory;
@@ -97,6 +101,7 @@ public class RobotContainer
         m_lBumper.whileHeld(new InstantCommand(m_Hopper::intake, m_Hopper), false);
         m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
         m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
+        m_rightJoystickButton.toggleWhenActive(new TurretOverrideCommand(m_Turret, () -> m_OperatorController.getX(Hand.kRight)));
     }
 
     /**
