@@ -50,7 +50,7 @@ public class DriveSubsystem extends SubsystemBase
         m_rightMotor1.restoreFactoryDefaults();
         m_rightMotor2.restoreFactoryDefaults();
 
-        m_rightMotors.setInverted(false);
+        m_rightMotors.setInverted(true);
         m_leftMotors.setInverted(false);
 
         m_leftMotor1.setIdleMode(IdleMode.kBrake);
@@ -98,8 +98,8 @@ public class DriveSubsystem extends SubsystemBase
 
     public void tankDrive(double leftPower, double rightPower)
     {
-        m_leftMotors.set(leftPower);
-        m_rightMotors.set(rightPower);
+        m_leftMotors.set(processJoystick(leftPower));
+        m_rightMotors.set(processJoystick(rightPower));
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts)
@@ -173,4 +173,34 @@ public class DriveSubsystem extends SubsystemBase
      * public ArrayList<Double> getCANTemp() { double tempLeftOne =
      * CANSparkMax.getMotorTempearture(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1); }
      */
+
+    /**
+     * Initalize the drive subsystem for Auton
+     */
+    public void initAuton()
+    {
+        m_navX.reset();
+        resetOdometry(m_odometry.getPoseMeters());
+    }
+
+    /**
+     * Applies deadzoning and curve to the joystick input
+     *
+     * @return A processed joystick input
+     */
+    private double processJoystick(double input)
+    {
+        if (Math.abs(input) > Constants.JoystickConstants.DEADZONE_SIZE)
+        {
+            double absoluteValue = Math.abs(input);
+            double deadzoneCorrectedAbsoluteValue = (1 / (1 - Constants.JoystickConstants.DEADZONE_SIZE))
+                    * (absoluteValue - 1.0) + 1.0;
+            return Math.pow(deadzoneCorrectedAbsoluteValue, Constants.JoystickConstants.JOYSTICK_CURVE)
+                    * (absoluteValue / input);
+        }
+        else
+        {
+            return 0.0;
+        }
+    }
 }
