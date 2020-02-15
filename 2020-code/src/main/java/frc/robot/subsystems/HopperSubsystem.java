@@ -33,6 +33,7 @@ public class HopperSubsystem extends SubsystemBase
     public HopperSubsystem()
     {
         m_towerMotor.setInverted(true);
+        m_intakeHopperMotor.setInverted(true);
         m_timer.reset();
     }
 
