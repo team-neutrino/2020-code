@@ -73,7 +73,7 @@ public class RobotContainer
         try
         {
             m_Trajectory = TrajectoryUtil.fromPathweaverJson(
-                Paths.get("/home/lvuser/deploy/output/DriveStraightTest.wpilib.json"));
+                Paths.get("/home/lvuser/deploy/output/DriveStraight15.wpilib.json"));
             Pose2d bOrigin = m_Drive.getPose();
             auton_Trajectory = m_Trajectory.relativeTo(bOrigin);
             m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);

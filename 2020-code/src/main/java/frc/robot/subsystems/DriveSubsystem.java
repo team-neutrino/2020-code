@@ -106,6 +106,8 @@ public class DriveSubsystem extends SubsystemBase
     {
         m_leftMotors.setVoltage(leftVolts);
         m_rightMotors.setVoltage(rightVolts);
+        System.out.println("left volts "+ leftVolts);
+        System.out.println("right volts "+ rightVolts);
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
