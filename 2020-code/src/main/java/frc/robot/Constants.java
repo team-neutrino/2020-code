@@ -57,10 +57,9 @@ public final class Constants
         public static final double ARM_UP_ANGLE = 99; // placeholder
         public static final int ENCODER_PORT = 8;
 
-        public static final double PROPORTION_COEFFICIENT = 0.015;
-        public static final double INTEGRAL_COEFFICIENT = 0.01;
-        public static final double DERIVATIVE_COEFFICEINT = 0.005;
-        //public static final int TIMEOUT_MS = 20;
+        public static final double KP = 0.01;
+        public static final double KI = 0.0;
+        public static final double KD = 0.0002;
         public static final double POSITION_MULTIPLIER = 360;
         public static final double LEFT_TRIGGER_THRESHOLD = 0.5;
     }

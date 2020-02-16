@@ -31,8 +31,8 @@ public class IntakePIDSubsystem extends PIDSubsystem
     {
         super(
             // The PIDController used by the subsystem
-            new PIDController(Constants.IntakeConstants.PROPORTION_COEFFICIENT,
-                Constants.IntakeConstants.INTEGRAL_COEFFICIENT, Constants.IntakeConstants.DERIVATIVE_COEFFICEINT));
+            new PIDController(Constants.IntakeConstants.KP,
+                Constants.IntakeConstants.KI, Constants.IntakeConstants.KD));
         m_DutyCycleEncoder.setDistancePerRotation(Constants.IntakeConstants.POSITION_MULTIPLIER); //degrees
     }
 
