@@ -52,12 +52,16 @@ public final class Constants
 
     public static final class IntakeConstants
     {
-        public static final int INTAKE_MOTOR_POWER = 1;
-        public static final double ARM_DOWN_ANGLE = 0; // placeholder
-        public static final double ARM_UP_ANGLE = 0; // placeholder
-        public static final int ADJUST_MOTOR_ENCODER = 0;
-        public static final double INTAKE_DISTANCE_PER_PULSE = 0;
-        public static final double ADJUST_DISTANCE_PER_PULSE = 0;
+        public static final double INTAKE_MOTOR_POWER = -0.8;
+        public static final double ARM_DOWN_ANGLE = 162.5; // placeholder
+        public static final double ARM_UP_ANGLE = 99; // placeholder
+        public static final int ENCODER_PORT = 8;
+
+        public static final double KP = 0.01;
+        public static final double KI = 0.0;
+        public static final double KD = 0.0002;
+        public static final double POSITION_MULTIPLIER = 360;
+        public static final double LEFT_TRIGGER_THRESHOLD = 0.5;
     }
 
     public static final class ControllerPorts
@@ -84,6 +88,7 @@ public final class Constants
 
     public static final class CanId
     {
+
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT1 = 1;
         public static final int MOTOR_CONTROLLER_DRIVER_LEFT2 = 2;
         public static final int MOTOR_CONTROLLER_DRIVER_RIGHT1 = 3;
@@ -94,21 +99,14 @@ public final class Constants
         public static final int MOTOR_CONTROLLER_TOWER = 10;
         public static final int MOTOR_CONTROLLER_SHOOTERWHEEL3 = 11;
         public static final int MOTOR_CONTROLLER_SHOOTERWHEEL2 = 12;
-        public static final int MOTOR_CONTROLLER_INTAKE_ADJUST = 13;
+        public static final int MOTOR_CONTROLLER_INTAKE_POSITION = 13;
         public static final int MOTOR_CONTROLLER_SHOOTERWHEEL = 14;
-        public static final int MOTOR_CONTROLLER_INTAKE = 15;
+        public static final int MOTOR_CONTROLLER_INTAKE_FEED = 15;
     }
 
     public static final class ClimberConstants
     {
         public static final double CLIMBER_MOTOR_POWER = 0.5;
-    }
-
-    public static final class PIDConstants
-    {
-        public static final double PROPORTION_COEFFICIENT = 0.1;
-        public static final double INTEGRAL_COEFFICIENT = 0;
-        public static final double DERIVATIVE_COEFFICEINT = 0;
     }
     public static final class HopperConstants
     {

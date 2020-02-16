@@ -44,18 +44,15 @@ public class HopperDefaultCommand extends CommandBase
         if (topBeam == false || m_HopperSubsystem.getTime() >= 0.1)
         {
             m_HopperSubsystem.stop();
-            System.out.println("stopped");
             return;
         }
         if (bottomBeam == false)
         {
-            System.out.println("intaking");
             m_HopperSubsystem.intake();
             m_HopperSubsystem.stopTimer();
         }
         else if (m_HopperSubsystem.getPrevBotBeam() == false && bottomBeam == true)
         {
-            System.out.println("starting timer");
             m_HopperSubsystem.resetTimer();
             m_HopperSubsystem.startTimer();
         }
