@@ -42,7 +42,7 @@ public final class Constants
         public static final double K_GEAR_RATIO = 33.0 / 340.0;
         public static final double K_WHEEL_CIRCUMFERENCE = Math.PI * 0.127;
         //convert NEO encoder RPM to wheel meters/second
-        public static final double K_DRIVE_ENCODER_CONVERSION = (K_GEAR_RATIO * K_WHEEL_CIRCUMFERENCE) / 60;
+        public static final double K_DRIVE_ENCODER_CONVERSION = (K_GEAR_RATIO * K_WHEEL_CIRCUMFERENCE);
 
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint = //this used to be type var, why?
             new DifferentialDriveVoltageConstraint(new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,

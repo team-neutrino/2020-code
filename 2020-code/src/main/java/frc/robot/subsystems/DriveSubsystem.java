@@ -50,8 +50,8 @@ public class DriveSubsystem extends SubsystemBase
         m_rightMotor1.restoreFactoryDefaults();
         m_rightMotor2.restoreFactoryDefaults();
 
-        m_rightMotors.setInverted(true);
-        m_leftMotors.setInverted(false);
+        m_leftMotor1.setInverted(true);
+        m_leftMotor2.setInverted(true);
 
         m_leftMotor1.setIdleMode(IdleMode.kBrake);
         m_leftMotor2.setIdleMode(IdleMode.kBrake);
@@ -62,10 +62,10 @@ public class DriveSubsystem extends SubsystemBase
         m_rEncoder = m_rightMotor1.getEncoder();
 
         // position and velocity are in RPM of the drive wheels
-        m_lEncoder.setPositionConversionFactor(DriveConstants.K_GEAR_RATIO);
-        m_rEncoder.setPositionConversionFactor(DriveConstants.K_GEAR_RATIO);
-        m_lEncoder.setVelocityConversionFactor(DriveConstants.K_GEAR_RATIO);
-        m_rEncoder.setVelocityConversionFactor(DriveConstants.K_GEAR_RATIO);
+        m_lEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
+        m_rEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
+        m_lEncoder.setVelocityConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION/60);
+        m_rEncoder.setVelocityConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION/60);
 
         m_lEncoder.setPosition(0);
         m_rEncoder.setPosition(0);
@@ -85,14 +85,14 @@ public class DriveSubsystem extends SubsystemBase
 
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), lmeters, rmeters);
 
-        SmartDashboard.putNumber("Left RPM", m_lrpm);
-        SmartDashboard.putNumber("Right RPM", m_rrpm);
-        SmartDashboard.putNumber("Left meters per second", rpm_to_mps(m_lrpm));
-        SmartDashboard.putNumber("Right meters per second", rpm_to_mps(m_rrpm));
-        SmartDashboard.putNumber("Left m", lmeters);
-        SmartDashboard.putNumber("Right m", rmeters);
-        SmartDashboard.putNumber("NavX Yaw", m_navX.getYaw());
-        SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
+        //SmartDashboard.putNumber("Left RPM", m_lrpm);
+        //SmartDashboard.putNumber("Right RPM", m_rrpm);
+        SmartDashboard.putNumber("Left meters per second", m_lEncoder.getVelocity());
+        SmartDashboard.putNumber("Right meters per second", m_rEncoder.getVelocity());
+        SmartDashboard.putNumber("Left m", m_lEncoder.getPosition());
+        SmartDashboard.putNumber("Right m", m_rEncoder.getPosition());
+        SmartDashboard.putNumber("GetHeading", getHeading());
+        //SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
         SmartDashboard.putNumber("Acceleration", getMaxAcceleration());
     }
 
@@ -110,7 +110,7 @@ public class DriveSubsystem extends SubsystemBase
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
     {
-        return new DifferentialDriveWheelSpeeds(rpm_to_mps(m_lrpm), rpm_to_mps(m_rrpm));
+        return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), m_rEncoder.getVelocity());
     }
 
     public double rpm_to_mps(double rpm)
