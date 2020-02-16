@@ -7,21 +7,23 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShooterSubsystem;
+import java.util.function.DoubleSupplier;
 
-public class ShooterSetSpeedCommand extends CommandBase
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.TurretSubsystem;
+
+public class TurretOverrideCommand extends CommandBase
 {
-    private ShooterSubsystem m_shooter;
+    private final TurretSubsystem m_turret;
+    private final DoubleSupplier m_overridePower;
     /**
-     * Creates a new ShooterSetSpeedCommand.
+     * Creates a new TurretOverrideCommand.
      */
-    public ShooterSetSpeedCommand(ShooterSubsystem p_shooter)
+    public TurretOverrideCommand(TurretSubsystem p_turret, DoubleSupplier p_overridePower)
     {
-        // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(p_shooter);
-        m_shooter = p_shooter;
+        addRequirements(p_turret);
+        m_turret = p_turret;
+        m_overridePower = p_overridePower;
     }
 
     // Called when the command is initially scheduled.
@@ -34,14 +36,14 @@ public class ShooterSetSpeedCommand extends CommandBase
     @Override
     public void execute()
     {
-        m_shooter.setVelocity(SmartDashboard.getNumber("ShooterZoom", 0));
+        m_turret.setPower(m_overridePower.getAsDouble());
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted)
     {
-        m_shooter.setPower(0);
+        m_turret.setPower(0);
     }
 
     // Returns true when the command should end.
