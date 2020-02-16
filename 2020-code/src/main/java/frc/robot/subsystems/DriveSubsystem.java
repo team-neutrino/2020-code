@@ -83,7 +83,7 @@ public class DriveSubsystem extends SubsystemBase
         double lmeters = rev_to_m(m_lrev);
         double rmeters = rev_to_m(m_rrev);
 
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()), lmeters, rmeters);
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_lEncoder.getPosition(), m_rEncoder.getPosition());
 
         //SmartDashboard.putNumber("Left RPM", m_lrpm);
         //SmartDashboard.putNumber("Right RPM", m_rrpm);
