@@ -43,7 +43,7 @@ public class TurretOverrideCommand extends CommandBase
     @Override
     public void end(boolean interrupted)
     {
-      m_turret.setPower(0);
+        m_turret.setPower(0);
     }
 
     // Returns true when the command should end.
