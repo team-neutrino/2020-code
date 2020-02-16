@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,8 +38,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-
-    public final IntakeSubsystem m_Intake = new IntakeSubsystem();
+    public final IntakePIDSubsystem m_Intake = new IntakePIDSubsystem();
     public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
     public final DriveSubsystem m_Drive = new DriveSubsystem();
     public final LEDSubsystem m_Led = new LEDSubsystem();
@@ -55,9 +54,11 @@ public class RobotContainer
     JoystickButton m_A = new JoystickButton(m_OperatorController, Button.kA.value);
     JoystickButton m_B = new JoystickButton(m_OperatorController, Button.kB.value);
     JoystickButton m_X = new JoystickButton(m_OperatorController, Button.kX.value);
-    JoystickButton m_lBumper = new JoystickButton(m_OperatorController, Button.kBumperLeft.value);
     JoystickButton m_rightJoystickButton = new JoystickButton(m_OperatorController, Button.kStickRight.value);
-
+    JoystickButton m_Y = new JoystickButton(m_OperatorController, Button.kY.value);
+    JoystickButton m_BumperLeft = new JoystickButton(m_OperatorController, Button.kBumperLeft.value);
+    TriggerToBoolean m_TriggerLeft = new TriggerToBoolean(m_OperatorController, Axis.kLeftTrigger.value,
+        Constants.IntakeConstants.LEFT_TRIGGER_THRESHOLD);
 
     private Trajectory m_Trajectory;
     private Trajectory auton_Trajectory;
@@ -99,9 +100,12 @@ public class RobotContainer
         m_X.whenPressed(new DriveDataCommand(m_Drive));
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
         m_lBumper.whileHeld(new InstantCommand(m_Hopper::intake, m_Hopper), false);
-        m_B.whenHeld(new IntakeBallDataCommand(m_Intake));
-        m_B.whenReleased(new InstantCommand(m_Intake::setIntakeOff));
         m_rightJoystickButton.toggleWhenActive(new TurretOverrideCommand(m_Turret, () -> m_OperatorController.getX(Hand.kRight)));
+        m_TriggerLeft.whenActive(new InstantCommand(m_Intake::setIntakeOn, m_Intake).alongWith(
+            new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_DOWN_ANGLE))));
+        m_TriggerLeft.whenInactive(new InstantCommand(m_Intake::setIntakeOff, m_Intake).alongWith(
+            new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE))));
+
     }
 
     /**
