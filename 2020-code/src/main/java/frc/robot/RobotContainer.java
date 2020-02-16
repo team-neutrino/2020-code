@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -59,10 +60,9 @@ public class RobotContainer
     JoystickButton m_BumperLeft = new JoystickButton(m_OperatorController, Button.kBumperLeft.value);
     TriggerToBoolean m_TriggerLeft = new TriggerToBoolean(m_OperatorController, Axis.kLeftTrigger.value,
         Constants.IntakeConstants.LEFT_TRIGGER_THRESHOLD);
-
     private Trajectory m_Trajectory;
     private Trajectory auton_Trajectory;
-    private NeutrinoRamseteCommand m_autoCommand;
+
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -74,9 +74,8 @@ public class RobotContainer
         {
             m_Trajectory = TrajectoryUtil.fromPathweaverJson(
                 Paths.get("/home/lvuser/deploy/output/DriveStraight15.wpilib.json"));
-            Pose2d bOrigin = m_Drive.getPose();
-            auton_Trajectory = m_Trajectory.relativeTo(bOrigin);
-            m_autoCommand = new NeutrinoRamseteCommand(m_Drive, m_Trajectory);
+            Transform2d transform = m_Drive.getPose().minus(m_Trajectory.getInitialPose());
+            auton_Trajectory = m_Trajectory.transformBy(transform);
         }
         catch (Exception e)
         {
