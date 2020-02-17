@@ -36,12 +36,19 @@ public class HopperSubsystem extends SubsystemBase
         m_intakeHopperMotor.setInverted(false);
         m_timer.reset();
     }
-
-    public void intake()
+    
+    //used when not shooting will run until ball is at top and ready
+    public void towerIndexing()
     {
         m_towerMotor.set(ControlMode.PercentOutput, 0.7);
         m_intakeHopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
+    }
 
+    //used when shooting
+    public void towerShoot()
+    {
+        m_towerMotor.set(ControlMode.PercentOutput, 1);
+        m_intakeHopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
     }
 
     public void reverse()
