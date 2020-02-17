@@ -36,7 +36,7 @@ public class HopperSubsystem extends SubsystemBase
         m_intakeHopperMotor.setInverted(false);
         m_timer.reset();
     }
-    
+
     //used when not shooting will run until ball is at top and ready
     public void towerIndexing()
     {
