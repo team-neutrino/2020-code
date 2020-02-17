@@ -48,7 +48,7 @@ public class HopperDefaultCommand extends CommandBase
         }
         if (bottomBeam == false)
         {
-            m_HopperSubsystem.intake();
+            m_HopperSubsystem.towerIndexing();
             m_HopperSubsystem.stopTimer();
         }
         else if (m_HopperSubsystem.getPrevBotBeam() == false && bottomBeam == true)
