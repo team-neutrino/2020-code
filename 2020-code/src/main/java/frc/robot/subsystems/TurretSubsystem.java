@@ -12,10 +12,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CanId;
+import frc.robot.util.Limelight;
 
 public class TurretSubsystem extends SubsystemBase
 {
     private TalonSRX m_turretMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_TURRET);
+    private Limelight m_limelight = new Limelight();
     /**
      * Creates a new TurretSubsystem.
      */
@@ -43,5 +45,10 @@ public class TurretSubsystem extends SubsystemBase
     public void setPower(double power)
     {
         m_turretMotor.set(ControlMode.PercentOutput, power);
+    }
+
+    public double getHeadingError()
+    {
+        return m_limelight.getXAngle();
     }
 }
