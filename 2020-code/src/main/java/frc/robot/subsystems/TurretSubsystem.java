@@ -51,4 +51,9 @@ public class TurretSubsystem extends SubsystemBase
     {
         return m_limelight.getXAngle();
     }
+
+    public double getValidTarget()
+    {
+        return m_limelight.hasTarget();
+    }
 }

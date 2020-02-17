@@ -33,7 +33,14 @@ public class TurretAimCommand extends CommandBase
     @Override
     public void execute()
     {
-      
+      if(m_turret.getValidTarget() == 0)
+      {
+        
+      }
+      else
+      {
+
+      }
     }
 
     // Called once the command ends or is interrupted.
