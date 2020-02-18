@@ -98,7 +98,12 @@ public class RobotContainer
      */
     private void configureButtonBindings()
     {
-        m_X.whenPressed(new DriveDataCommand(m_Drive));
+        m_start.whileHeld(new InstantCommand(m_climber::winchClimb, m_climber), true).whenReleased(m_climber::winchStop,
+            m_climber);
+        m_X.whileHeld(new InstantCommand(m_climber::elevatorDown, m_climber), true).whenReleased(
+            m_climber::elevatorStop, m_climber);
+        m_back.whileHeld(new InstantCommand(m_climber::elevatorUp, m_climber), true).whenReleased(
+            m_climber::elevatorStop, m_climber);
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false);
         m_rightJoystickButton.toggleWhenActive(
