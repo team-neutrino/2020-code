@@ -1,9 +1,7 @@
 
 package frc.robot.subsystems;
 
-import java.util.ArrayList;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
@@ -17,10 +15,8 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class DriveSubsystem extends SubsystemBase
 {
@@ -36,11 +32,6 @@ public class DriveSubsystem extends SubsystemBase
     private CANEncoder m_rEncoder;
     private AHRS m_navX = new AHRS(SPI.Port.kMXP);
     private final DifferentialDriveOdometry m_odometry;
-
-    private double m_lrpm;
-    private double m_rrpm;
-    private double m_lrev;
-    private double m_rrev;
 
     private double velocity = 0;
     public DriveSubsystem()
@@ -64,8 +55,8 @@ public class DriveSubsystem extends SubsystemBase
         // position and velocity are in RPM of the drive wheels
         m_lEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
         m_rEncoder.setPositionConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION);
-        m_lEncoder.setVelocityConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION/60);
-        m_rEncoder.setVelocityConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION/60);
+        m_lEncoder.setVelocityConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION / 60);
+        m_rEncoder.setVelocityConversionFactor(DriveConstants.K_DRIVE_ENCODER_CONVERSION / 60);
 
         m_lEncoder.setPosition(0);
         m_rEncoder.setPosition(0);
@@ -76,13 +67,6 @@ public class DriveSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        m_lrpm = -1 * m_lEncoder.getVelocity();
-        m_rrpm = m_rEncoder.getVelocity();
-        m_lrev = -1 * m_lEncoder.getPosition();
-        m_rrev = m_rEncoder.getPosition();
-        double lmeters = rev_to_m(m_lrev);
-        double rmeters = rev_to_m(m_rrev);
-
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_lEncoder.getPosition(), m_rEncoder.getPosition());
 
         //SmartDashboard.putNumber("Left RPM", m_lrpm);
@@ -94,6 +78,11 @@ public class DriveSubsystem extends SubsystemBase
         SmartDashboard.putNumber("GetHeading", getHeading());
         //SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
         SmartDashboard.putNumber("Acceleration", getMaxAcceleration());
+
+        var translation = m_odometry.getPoseMeters().getTranslation();
+
+        SmartDashboard.putNumber("odometry X", translation.getX());
+        SmartDashboard.putNumber("odometry Y", translation.getY());
     }
 
     public void tankDrive(double leftPower, double rightPower)
@@ -106,8 +95,8 @@ public class DriveSubsystem extends SubsystemBase
     {
         m_leftMotors.setVoltage(leftVolts);
         m_rightMotors.setVoltage(rightVolts);
-        System.out.println("left volts "+ leftVolts);
-        System.out.println("right volts "+ rightVolts);
+        System.out.println("left volts " + leftVolts);
+        System.out.println("right volts " + rightVolts);
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()

@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Transform2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -62,7 +64,6 @@ public class RobotContainer
         Constants.IntakeConstants.LEFT_TRIGGER_THRESHOLD);
     private Trajectory m_Trajectory;
     private Trajectory auton_Trajectory;
-
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -115,15 +116,38 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
+        RamseteController disabledRamsete = new RamseteController()
+        {
+            @Override
+            public ChassisSpeeds calculate(Pose2d currentPose, Pose2d poseRef, double linearVelocityRefMeters,
+                    double angularVelocityRefRadiansPerSecond)
+            {
+                return new ChassisSpeeds(linearVelocityRefMeters, 0.0, angularVelocityRefRadiansPerSecond);
+            }
+        };
+
+        PIDController leftController = new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0);
+        PIDController rightController = new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0);
 
         RamseteCommand ramseteCommand = new RamseteCommand(auton_Trajectory, m_Drive::getPose,
-            new RamseteController(DriveConstants.K_RAMSETE_B, DriveConstants.K_RAMSETE_ZETA),
+            // new RamseteController(DriveConstants.K_RAMSETE_B, DriveConstants.K_RAMSETE_ZETA),
+            disabledRamsete,
             new SimpleMotorFeedforward(DriveConstants.KS_VOLTS, DriveConstants.KV_VOLT_SECONDS_PER_METER,
                 DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
-            DriveConstants.K_DRIVE_KINEMATICS, m_Drive::getWheelSpeeds,
-            new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0), new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0),
+            DriveConstants.K_DRIVE_KINEMATICS, m_Drive::getWheelSpeeds, leftController, rightController,
             // RamseteCommand passes volts to the callback
-            m_Drive::tankDriveVolts, m_Drive);
+            (leftVolts, rightVolts) ->
+            {
+                m_Drive.tankDriveVolts(leftVolts, rightVolts);
+
+                SmartDashboard.putNumber("left actual m/s", m_Drive.getWheelSpeeds().leftMetersPerSecond);
+                SmartDashboard.putNumber("left desired m/s", leftController.getSetpoint());
+
+                SmartDashboard.putNumber("right actual m/s", m_Drive.getWheelSpeeds().rightMetersPerSecond);
+                SmartDashboard.putNumber("right desired m/s", rightController.getSetpoint());
+            },
+            // m_Drive::tankDriveVolts, m_Drive);
+            m_Drive);
 
         //TODO: transform coordinates
 
