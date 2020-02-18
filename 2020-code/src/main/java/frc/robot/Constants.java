@@ -96,6 +96,7 @@ public final class Constants
         public static final int MOTOR_CONTROLLER_CLIMBER = 5;
         public static final int MOTOR_CONTROLLER_HOPPER = 6;
         public static final int MOTOR_CONTROLLER_TURRET = 7;
+        public static final int MOTOR_CONTROLLER_CLIMBERWINCH = 8;
         public static final int MOTOR_CONTROLLER_TOWER = 10;
         public static final int MOTOR_CONTROLLER_SHOOTERWHEEL3 = 11;
         public static final int MOTOR_CONTROLLER_SHOOTERWHEEL2 = 12;
@@ -107,6 +108,7 @@ public final class Constants
     public static final class ClimberConstants
     {
         public static final double CLIMBER_MOTOR_POWER = 0.5;
+        public static final double CLIMBER_MOTOR_WINCHPOWER = 1;
     }
     public static final class HopperConstants
     {
