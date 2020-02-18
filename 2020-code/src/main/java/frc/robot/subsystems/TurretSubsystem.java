@@ -37,9 +37,9 @@ public class TurretSubsystem extends SubsystemBase
 
     }
 
-    public void getAngle()
+    public double getAngle()
     {
-
+        return 0.0;
     }
 
     public void setPower(double power)

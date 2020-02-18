@@ -115,4 +115,20 @@ public final class Constants
         public static final int HOPPER_TOP_BEAMBREAK = 6;
         public static final int HOPPER_BOT_BEAMBREAK = 9;
     }
+
+    public static final class VisionConstants
+    {
+        public static final double CAMERA_HEIGHT = 37.129;
+        public static final double CAMERA_ANGLE = 25.0;
+        public static final double TARGET_HEIGHT = 89.688;
+        public static final double SCAN_SPEED = 0.5;
+        public static final double TRACKING_SPEED = 0.1;
+        public static final double TRACKING_CONSTANT_OFFSET = 0.05;
+        public static final double SCAN_DIRECTION_SWITCH_RESET_THRESHOLD = 160.0;
+    }
+    
+    public static final class TurretConstants
+    {
+        public static final double DEGREE_BOUNDS = 180.0;
+    }
 }

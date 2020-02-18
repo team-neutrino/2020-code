@@ -8,12 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.TurretSubsystem;
+import frc.robot.util.Limelight;
 
 public class TurretAimCommand extends CommandBase
 {
 
   private TurretSubsystem m_turret;
+  private boolean scanDirection;
+  private boolean canFlipScanDirection;
     /**
      * Creates a new TurretAimCommand.
      */
@@ -27,6 +31,8 @@ public class TurretAimCommand extends CommandBase
     @Override
     public void initialize()
     {
+      scanDirection = false;
+      canFlipScanDirection = false;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -35,7 +41,14 @@ public class TurretAimCommand extends CommandBase
     {
       if(m_turret.getValidTarget() == 0)
       {
-        
+        m_turret.setPower(Constants.VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
+        if(Math.abs(m_turret.getAngle())<Constants.VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD && !canFlipScanDirection){
+          canFlipScanDirection = true;
+        }
+        if(canFlipScanDirection && Math.abs(m_turret.getAngle())<180){
+          canFlipScanDirection = false;
+          scanDirection = !scanDirection;
+        }
       }
       else
       {
