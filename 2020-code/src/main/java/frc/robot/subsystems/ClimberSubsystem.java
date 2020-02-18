@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CanId;
@@ -16,7 +18,8 @@ import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase
 {
-    private TalonSRX m_ClimbMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_CLIMBER);
+    private TalonSRX m_ClimbElevator = new TalonSRX(CanId.MOTOR_CONTROLLER_CLIMBER);
+    private CANSparkMax m_ClimbWinch = new CANSparkMax(CanId.MOTOR_CONTROLLER_CLIMBERWINCH, MotorType.kBrushless);
 
     /**
      * Creates a new ClimberSubsystem.
@@ -33,16 +36,26 @@ public class ClimberSubsystem extends SubsystemBase
 
     public void elevatorUp()
     {
-        m_ClimbMotor.set(ControlMode.PercentOutput, ClimberConstants.CLIMBER_MOTOR_POWER);
+        m_ClimbElevator.set(ControlMode.PercentOutput, ClimberConstants.CLIMBER_MOTOR_POWER);
     }
 
     public void elevatorDown()
     {
-        m_ClimbMotor.set(ControlMode.PercentOutput, -ClimberConstants.CLIMBER_MOTOR_POWER);
+        m_ClimbElevator.set(ControlMode.PercentOutput, -ClimberConstants.CLIMBER_MOTOR_POWER);
+    }
+
+    public void winchClimb()
+    {
+        m_ClimbWinch.set(ClimberConstants.CLIMBER_MOTOR_WINCHPOWER);
     }
 
     public void elevatorStop()
     {
-        m_ClimbMotor.set(ControlMode.PercentOutput, 0);
+        m_ClimbElevator.set(ControlMode.PercentOutput, 0);
+    }
+
+    public void winchStop()
+    {
+        m_ClimbWinch.set(0);
     }
 }
