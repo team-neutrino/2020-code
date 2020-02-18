@@ -13,7 +13,7 @@
     "rightMotorsInverted": [False, False],
     # The total gear reduction between the motor and the wheels, expressed as
     # a fraction [motor turns]/[wheel turns]
-    "gearing": (340/33),
+    "gearing": 10.30303030303,
     # Wheel diameter (in units of your choice - will dictate units of analysis)
     "wheelDiameter": 0.127,
     # Your gyro type (one of "NavX", "Pigeon", "ADXRS450", "AnalogGyro", or "None")
@@ -28,5 +28,10 @@
     # "" (NavX using default SPI, ADXRS450 using onboard CS0, or no gyro)
     "gyroPort": "SPI.Port.kMXP",
 }
+
+
+
+
+
 
 
