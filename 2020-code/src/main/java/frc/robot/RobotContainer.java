@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.*;
+import frc.robot.Trajectories.ExampleTrajectory;
 import static edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.ClimberSubsystem;
 import java.nio.file.Paths;
@@ -129,9 +130,10 @@ public class RobotContainer
         PIDController leftController = new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0);
         PIDController rightController = new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0);
 
-        RamseteCommand ramseteCommand = new RamseteCommand(auton_Trajectory, m_Drive::getPose,
-            // new RamseteController(DriveConstants.K_RAMSETE_B, DriveConstants.K_RAMSETE_ZETA),
-            disabledRamsete,
+        // RamseteCommand ramseteCommand = new RamseteCommand(auton_Trajectory, m_Drive::getPose,
+        RamseteCommand ramseteCommand = new RamseteCommand(ExampleTrajectory.exampleTraj, m_Drive::getPose,
+            new RamseteController(DriveConstants.K_RAMSETE_B, DriveConstants.K_RAMSETE_ZETA),
+            // disabledRamsete,
             new SimpleMotorFeedforward(DriveConstants.KS_VOLTS, DriveConstants.KV_VOLT_SECONDS_PER_METER,
                 DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
             DriveConstants.K_DRIVE_KINEMATICS, m_Drive::getWheelSpeeds, leftController, rightController,
@@ -146,7 +148,6 @@ public class RobotContainer
                 SmartDashboard.putNumber("right actual m/s", m_Drive.getWheelSpeeds().rightMetersPerSecond);
                 SmartDashboard.putNumber("right desired m/s", rightController.getSetpoint());
             },
-            // m_Drive::tankDriveVolts, m_Drive);
             m_Drive);
 
         //TODO: transform coordinates

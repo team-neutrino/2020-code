@@ -104,19 +104,6 @@ public class DriveSubsystem extends SubsystemBase
         return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), m_rEncoder.getVelocity());
     }
 
-    public double rpm_to_mps(double rpm)
-    {
-        final double METERS_PER_REV = DriveConstants.K_WHEEL_CIRCUMFERENCE;
-        final double SEC_PER_MIN = 60;
-        return rpm * METERS_PER_REV / SEC_PER_MIN;
-    }
-
-    public double rev_to_m(double rev)
-    {
-        final double METERS_PER_REV = DriveConstants.K_WHEEL_CIRCUMFERENCE;
-        return rev * METERS_PER_REV;
-    }
-
     //Returns robot angle in degrees from -180 to 180
     public double getHeading()
     {
