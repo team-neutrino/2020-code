@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.util.Limelight;
 
@@ -43,8 +43,8 @@ public class TurretAimCommand extends CommandBase
     {
         if (m_turret.getValidTarget() == 0)
         {
-            m_turret.setPower(Constants.VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
-            if (Math.abs(m_turret.getAngle()) < Constants.VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD
+            m_turret.setPower(VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
+            if (Math.abs(m_turret.getAngle()) < VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD
                     && !canFlipScanDirection)
             {
                 canFlipScanDirection = true;
@@ -58,15 +58,10 @@ public class TurretAimCommand extends CommandBase
         else
         {
             headingError = m_turret.getHeadingError();
-            if (headingError > Constants.VisionConstants.LOCKON_ANGLE_THRESHOLD)
+            if (Math.abs(headingError) > VisionConstants.TURRET_ANGLE_TOLERANCE)
             {
-                m_turret.setPower(Constants.VisionConstants.TRACKING_KP * headingError
-                        - Constants.VisionConstants.TRACKING_CONSTANT_OFFSET);
-            }
-            else if (headingError < -Constants.VisionConstants.LOCKON_ANGLE_THRESHOLD)
-            {
-                m_turret.setPower(Constants.VisionConstants.TRACKING_KP * headingError
-                        + Constants.VisionConstants.TRACKING_CONSTANT_OFFSET);
+                m_turret.setPower(
+                    VisionConstants.TRACKING_KP * headingError - VisionConstants.TRACKING_CONSTANT_OFFSET);
             }
             else
             {
