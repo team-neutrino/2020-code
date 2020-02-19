@@ -30,14 +30,13 @@ public class AutonomousCommander
         Trajectory trajectory = ExampleTrajectory.exampleTraj;
         m_Drive.resetOdometry(new Pose2d());
 
-        // create objects needed by the RamseteCommand
+        // objects needed by the RamseteCommand
         PIDController leftController = new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0);
         PIDController rightController = new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0);
         RamseteController controller = new RamseteController(DriveConstants.K_RAMSETE_B, DriveConstants.K_RAMSETE_ZETA);
         SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
             DriveConstants.KV_VOLT_SECONDS_PER_METER, DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER);
 
-        // create a RamseteCommand to be used
         RamseteCommand ramseteCommand = new RamseteCommand(trajectory, m_Drive::getPose, controller, feedforward,
             DriveConstants.K_DRIVE_KINEMATICS, m_Drive::getWheelSpeeds, leftController, rightController,
             m_Drive::tankDriveVolts, m_Drive);
