@@ -14,6 +14,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CanId;
+import frc.robot.Constants.VisionConstants;
+import frc.robot.Constants.TurretConstants;
 import frc.robot.util.Limelight;
 
 public class TurretSubsystem extends SubsystemBase
@@ -42,7 +44,7 @@ public class TurretSubsystem extends SubsystemBase
 
     public double getAngle()
     {
-        return m_turretMotor.getSelectedSensorPosition();
+        return m_turretMotor.getSelectedSensorPosition() * TurretConstants.ANGLE_SCALE;
     }
 
     public void setPower(double power)

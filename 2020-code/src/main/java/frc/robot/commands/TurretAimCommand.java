@@ -82,4 +82,34 @@ public class TurretAimCommand extends CommandBase
     {
         return false;
     }
+
+    private void setAngle(double p_angle)
+    {
+        double setpoint = p_angle;
+        double currentPosition = m_turret.getAngle
+        double clockWise;
+        double counterClockwise;
+
+        //pick shortest rotate direction, given that it doesn't twist the cable beyond [-190, 190]
+        if (setpoint > currentPosition)
+        {
+            counterClockwise = Math.abs(setpoint-currentPosition);
+            clockWise = Math.abs((360+setpoint)- currentPosition);
+            if(clockWise < counterClockwise && Math.abs(Math.abs(setpoint)-180) <= 20)
+            {
+                setpoint = setpoint - 360;
+            }
+        }
+        else
+        {
+            clockWise = Math.abs(setpoint-currentPosition);
+            counterClockwise = Math.abs(360+setpoint-currentPosition);
+            if(counterClockwise < clockWise && Math.abs(Math.abs(setpoint)-180) <= 20)
+            {
+                setpoint = 360 + setpoint;
+            }
+
+        }
+
+    }
 }
