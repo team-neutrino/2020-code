@@ -37,13 +37,15 @@ public class TurretSubsystem extends SubsystemBase
         // This method will be called once per scheduler run
     }
 
-    public void setAngle()
+    public void setAngle(double p_angle)
     {
-
+       //TODO: Ensure the talon position thing sets to degrees
+        m_turretMotor.set(ControlMode.Position, p_angle);
     }
 
-    public double getAngle()
+    public double getTurretAngle()
     {
+        //TODO: make sure this actually returns the correct angle
         return m_turretMotor.getSelectedSensorPosition() * TurretConstants.ANGLE_SCALE;
     }
 
