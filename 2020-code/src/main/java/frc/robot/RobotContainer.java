@@ -24,9 +24,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.*;
 import static edu.wpi.first.wpilibj.XboxController.Button;
-import frc.robot.subsystems.ClimberSubsystem;
 import java.nio.file.Paths;
 import frc.robot.subsystems.*;
+import frc.robot.util.TriggerToBoolean;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -97,7 +97,12 @@ public class RobotContainer
      */
     private void configureButtonBindings()
     {
-        m_X.whenPressed(new DriveDataCommand(m_Drive));
+        m_start.whileHeld(new InstantCommand(m_climber::winchClimb, m_climber), true).whenReleased(m_climber::winchStop,
+            m_climber);
+        m_X.whileHeld(new InstantCommand(m_climber::elevatorDown, m_climber), true).whenReleased(
+            m_climber::elevatorStop, m_climber);
+        m_back.whileHeld(new InstantCommand(m_climber::elevatorUp, m_climber), true).whenReleased(
+            m_climber::elevatorStop, m_climber);
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false);
         m_rightJoystickButton.toggleWhenActive(
