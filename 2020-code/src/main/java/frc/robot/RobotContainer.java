@@ -65,6 +65,7 @@ public class RobotContainer
         Constants.IntakeConstants.LEFT_TRIGGER_THRESHOLD);
     private Trajectory m_Trajectory;
     private Trajectory auton_Trajectory;
+    NeutrinoRamseteHandler m_ramsete_handler;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -122,43 +123,8 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        RamseteController disabledRamsete = new RamseteController()
-        {
-            @Override
-            public ChassisSpeeds calculate(Pose2d currentPose, Pose2d poseRef, double linearVelocityRefMeters,
-                    double angularVelocityRefRadiansPerSecond)
-            {
-                return new ChassisSpeeds(linearVelocityRefMeters, 0.0, angularVelocityRefRadiansPerSecond);
-            }
-        };
-
-        PIDController leftController = new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0);
-        PIDController rightController = new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0);
-
-        // RamseteCommand ramseteCommand = new RamseteCommand(auton_Trajectory, m_Drive::getPose,
-        RamseteCommand ramseteCommand = new RamseteCommand(ExampleTrajectory.exampleTraj, m_Drive::getPose,
-            new RamseteController(DriveConstants.K_RAMSETE_B, DriveConstants.K_RAMSETE_ZETA),
-            // disabledRamsete,
-            new SimpleMotorFeedforward(DriveConstants.KS_VOLTS, DriveConstants.KV_VOLT_SECONDS_PER_METER,
-                DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
-            DriveConstants.K_DRIVE_KINEMATICS, m_Drive::getWheelSpeeds, leftController, rightController,
-            // RamseteCommand passes volts to the callback
-            (leftVolts, rightVolts) ->
-            {
-                m_Drive.tankDriveVolts(leftVolts, rightVolts);
-
-                SmartDashboard.putNumber("left actual m/s", m_Drive.getWheelSpeeds().leftMetersPerSecond);
-                SmartDashboard.putNumber("left desired m/s", leftController.getSetpoint());
-
-                SmartDashboard.putNumber("right actual m/s", m_Drive.getWheelSpeeds().rightMetersPerSecond);
-                SmartDashboard.putNumber("right desired m/s", rightController.getSetpoint());
-            },
-            m_Drive);
-
-        //TODO: transform coordinates
-
-        // Run path following command, then stop at the end.
-        return ramseteCommand.andThen(() -> m_Drive.tankDriveVolts(0, 0));
+        m_ramsete_handler = new NeutrinoRamseteHandler(m_Drive);
+        return m_ramsete_handler.getCommand(ExampleTrajectory.exampleTraj).andThen(() -> m_Drive.tankDriveVolts(0, 0));
     }
 
 }
