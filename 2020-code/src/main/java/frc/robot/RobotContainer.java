@@ -31,6 +31,7 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 import java.nio.file.Paths;
 import frc.robot.subsystems.*;
 import frc.robot.util.TriggerToBoolean;
+import frc.robot.util.AutonomousCommander;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -42,13 +43,13 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    public final IntakePIDSubsystem m_Intake = new IntakePIDSubsystem();
-    public final ShooterSubsystem m_Shooter = new ShooterSubsystem();
-    public final DriveSubsystem m_Drive = new DriveSubsystem();
-    public final LEDSubsystem m_Led = new LEDSubsystem();
-    public final ClimberSubsystem m_climber = new ClimberSubsystem();
-    public final HopperSubsystem m_Hopper = new HopperSubsystem();
-    public final TurretSubsystem m_Turret = new TurretSubsystem();
+    private final IntakePIDSubsystem m_Intake = new IntakePIDSubsystem();
+    private final ShooterSubsystem m_Shooter = new ShooterSubsystem();
+    private final DriveSubsystem m_Drive = new DriveSubsystem();
+    private final LEDSubsystem m_Led = new LEDSubsystem();
+    private final ClimberSubsystem m_climber = new ClimberSubsystem();
+    private final HopperSubsystem m_Hopper = new HopperSubsystem();
+    private final TurretSubsystem m_Turret = new TurretSubsystem();
 
     private Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
     private Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
@@ -63,28 +64,12 @@ public class RobotContainer
     JoystickButton m_BumperLeft = new JoystickButton(m_OperatorController, Button.kBumperLeft.value);
     TriggerToBoolean m_TriggerLeft = new TriggerToBoolean(m_OperatorController, Axis.kLeftTrigger.value,
         Constants.IntakeConstants.LEFT_TRIGGER_THRESHOLD);
-    private Trajectory m_Trajectory;
-    private Trajectory auton_Trajectory;
-    NeutrinoRamseteHandler m_ramsete_handler;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer()
     {
-
-        try
-        {
-            m_Trajectory = TrajectoryUtil.fromPathweaverJson(
-                Paths.get("/home/lvuser/deploy/output/DriveStraight15.wpilib.json"));
-            Transform2d transform = m_Drive.getPose().minus(m_Trajectory.getInitialPose());
-            auton_Trajectory = m_Trajectory.transformBy(transform);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            System.out.println("This didnt work" + e);
-        }
         final Command tankDriveCommand = new RunCommand(
             () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
         m_Drive.setDefaultCommand(tankDriveCommand);
@@ -113,7 +98,6 @@ public class RobotContainer
             new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_DOWN_ANGLE))));
         m_TriggerLeft.whenInactive(new InstantCommand(m_Intake::setIntakeOff, m_Intake).alongWith(
             new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE))));
-
     }
 
     /**
@@ -123,8 +107,9 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        m_ramsete_handler = new NeutrinoRamseteHandler(m_Drive);
-        return m_ramsete_handler.getCommand(ExampleTrajectory.exampleTraj).andThen(() -> m_Drive.tankDriveVolts(0, 0));
+        m_Drive.initAuton();
+        AutonomousCommander m_auton = new AutonomousCommander(m_Drive);
+        return m_auton.getCommand();
     }
 
 }
