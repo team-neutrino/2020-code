@@ -1,9 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
 
 package frc.robot.util;
 
@@ -31,6 +25,8 @@ public class AutonomousCommander
     public Command getCommand()
     {
         System.out.println("## AutonomousCommander getCommand");
+
+        // TODO: maek a good trajectory or even a shuffleboard selector
         Trajectory trajectory = ExampleTrajectory.exampleTraj;
         m_Drive.resetOdometry(new Pose2d());
 
@@ -41,6 +37,7 @@ public class AutonomousCommander
         SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
             DriveConstants.KV_VOLT_SECONDS_PER_METER, DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER);
 
+        // create a RamseteCommand to be used
         RamseteCommand ramseteCommand = new RamseteCommand(trajectory, m_Drive::getPose, controller, feedforward,
             DriveConstants.K_DRIVE_KINEMATICS, m_Drive::getWheelSpeeds, leftController, rightController,
             m_Drive::tankDriveVolts, m_Drive);
