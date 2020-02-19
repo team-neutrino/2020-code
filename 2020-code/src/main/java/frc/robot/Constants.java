@@ -122,13 +122,15 @@ public final class Constants
         public static final double CAMERA_ANGLE = 25.0;
         public static final double TARGET_HEIGHT = 89.688;
         public static final double SCAN_SPEED = 0.5;
-        public static final double TRACKING_SPEED = 0.1;
+        public static final double TRACKING_KP = 0.1;
         public static final double TRACKING_CONSTANT_OFFSET = 0.05;
         public static final double SCAN_DIRECTION_SWITCH_RESET_THRESHOLD = 160.0;
+        public static final double LOCKON_ANGLE_THRESHOLD = 1.0;
     }
-    
+
     public static final class TurretConstants
     {
         public static final double DEGREE_BOUNDS = 180.0;
+        public static final double ANGLE_SCALE = (7.0 * 360.0) / (27.0 * 1024.0);
     }
 }

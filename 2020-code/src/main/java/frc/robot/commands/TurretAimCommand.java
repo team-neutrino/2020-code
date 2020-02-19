@@ -15,45 +15,64 @@ import frc.robot.util.Limelight;
 public class TurretAimCommand extends CommandBase
 {
 
-  private TurretSubsystem m_turret;
-  private boolean scanDirection;
-  private boolean canFlipScanDirection;
+    private TurretSubsystem m_turret;
+    private boolean scanDirection;
+    private boolean canFlipScanDirection;
+    private double headingError;
     /**
      * Creates a new TurretAimCommand.
      */
     public TurretAimCommand(TurretSubsystem p_turret)
     {
-      addRequirements(p_turret);
-      m_turret = p_turret;
+        addRequirements(p_turret);
+        m_turret = p_turret;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize()
     {
-      scanDirection = false;
-      canFlipScanDirection = false;
+        scanDirection = false;
+        canFlipScanDirection = false;
+        headingError = 0.0;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute()
     {
-      if(m_turret.getValidTarget() == 0)
-      {
-        m_turret.setPower(Constants.VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
-        if(Math.abs(m_turret.getAngle())<Constants.VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD && !canFlipScanDirection){
-          canFlipScanDirection = true;
+        if (m_turret.getValidTarget() == 0)
+        {
+            m_turret.setPower(Constants.VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
+            if (Math.abs(m_turret.getAngle()) < Constants.VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD
+                    && !canFlipScanDirection)
+            {
+                canFlipScanDirection = true;
+            }
+            if (canFlipScanDirection && Math.abs(m_turret.getAngle()) < 180)
+            {
+                canFlipScanDirection = false;
+                scanDirection = !scanDirection;
+            }
         }
-        if(canFlipScanDirection && Math.abs(m_turret.getAngle())<180){
-          canFlipScanDirection = false;
-          scanDirection = !scanDirection;
+        else
+        {
+            headingError = m_turret.getHeadingError();
+            if (headingError > Constants.VisionConstants.LOCKON_ANGLE_THRESHOLD)
+            {
+                m_turret.setPower(Constants.VisionConstants.TRACKING_KP * headingError
+                        - Constants.VisionConstants.TRACKING_CONSTANT_OFFSET);
+            }
+            else if (headingError < -Constants.VisionConstants.LOCKON_ANGLE_THRESHOLD)
+            {
+                m_turret.setPower(Constants.VisionConstants.TRACKING_KP * headingError
+                        + Constants.VisionConstants.TRACKING_CONSTANT_OFFSET);
+            }
+            else
+            {
+                //fire stuff
+            }
         }
-      }
-      else
-      {
-
-      }
     }
 
     // Called once the command ends or is interrupted.

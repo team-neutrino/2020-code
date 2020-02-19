@@ -8,6 +8,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,7 +26,8 @@ public class TurretSubsystem extends SubsystemBase
      */
     public TurretSubsystem()
     {
-
+        m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
+        m_turretMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     @Override
@@ -39,7 +43,7 @@ public class TurretSubsystem extends SubsystemBase
 
     public double getAngle()
     {
-        return 0.0;
+        return m_turretMotor.getSelectedSensorPosition();
     }
 
     public void setPower(double power)
