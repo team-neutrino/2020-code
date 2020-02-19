@@ -39,7 +39,7 @@ public class TurretSubsystem extends SubsystemBase
 
     public void setAngle(double p_angle)
     {
-       //TODO: Ensure the talon position thing sets to degrees
+        //TODO: Ensure the talon position thing sets to degrees
         m_turretMotor.set(ControlMode.Position, p_angle);
     }
 

@@ -84,9 +84,9 @@ public class TurretAimCommand extends CommandBase
     }
 
     /**
-     * Takes an angle setopint relative to robot and returns shortest distance setpoint to turn to 
-     * that wont break wires. Credit to team 3476 Code Orange for this logic.
-    **/
+     * Takes an angle setopint relative to robot and returns shortest distance setpoint to turn to that wont break
+     * wires. Credit to team 3476 Code Orange for this logic.
+     **/
     private double turretLimit(double p_angle)
     {
         double setpoint = p_angle;
@@ -94,11 +94,11 @@ public class TurretAimCommand extends CommandBase
         double counterClockwise;
 
         //normalize requested angle on [-180,180]
-        setpoint -= 360.0*Math.round(setpoint/360.0);
+        setpoint -= 360.0 * Math.round(setpoint / 360.0);
 
         //pick shortest rotate direction, given that it doesn't twist the cable beyond [-190, 190]
         if (setpoint > currentPosition)
-        {
+        { //setpoint is ahead of current
             counterClockwise = Math.abs(setpoint - currentPosition);
             clockWise = Math.abs((360 + setpoint) - currentPosition);
             if (clockWise < counterClockwise && Math.abs(Math.abs(setpoint) - 180) <= 20)
@@ -108,7 +108,7 @@ public class TurretAimCommand extends CommandBase
             }
         }
         else
-        {
+        { //setpoint is behind current
             clockWise = Math.abs(setpoint - currentPosition);
             counterClockwise = Math.abs(360 + setpoint - currentPosition);
             if (counterClockwise < clockWise && Math.abs(Math.abs(setpoint) - 180) <= 20)
