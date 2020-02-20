@@ -43,17 +43,17 @@ public class TurretAimCommand extends CommandBase
     {
         if (m_turret.getValidTarget() == 0)
         {
-            m_turret.setPower(VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
-            if (Math.abs(m_turret.getTurretAngle()) < VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD
-                    && !canFlipScanDirection)
-            {
-                canFlipScanDirection = true;
-            }
-            if (canFlipScanDirection && Math.abs(m_turret.getTurretAngle()) < 180)
-            {
-                canFlipScanDirection = false;
-                scanDirection = !scanDirection;
-            }
+            // m_turret.setPower(VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
+            // if (Math.abs(m_turret.getTurretAngle()) < VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD
+            //         && !canFlipScanDirection)
+            // {
+            //     canFlipScanDirection = true;
+            // }
+            // if (canFlipScanDirection && Math.abs(m_turret.getTurretAngle()) < 180)
+            // {
+            //     canFlipScanDirection = false;
+            //     scanDirection = !scanDirection;
+            // }
         }
         else
         {
@@ -61,7 +61,7 @@ public class TurretAimCommand extends CommandBase
             currentPosition = m_turret.getTurretAngle();
             if (Math.abs(headingError) > VisionConstants.TURRET_ANGLE_TOLERANCE)
             {
-                m_turret.setAngle(turretLimit(headingError + currentPosition));
+                m_turret.setAngle(turretLimit(currentPosition - headingError));
             }
             else
             {
@@ -90,32 +90,15 @@ public class TurretAimCommand extends CommandBase
     private double turretLimit(double p_angle)
     {
         double setpoint = p_angle;
-        double clockWise;
-        double counterClockwise;
-
-        //normalize requested angle on [-180,180]
-        setpoint -= 360.0 * Math.round(setpoint / 360.0);
-
-        //pick shortest rotate direction, given that it doesn't twist the cable beyond [-190, 190]
-        if (setpoint > currentPosition)
-        { //setpoint is ahead of current
-            counterClockwise = Math.abs(setpoint - currentPosition);
-            clockWise = Math.abs((360 + setpoint) - currentPosition);
-            if (clockWise < counterClockwise && Math.abs(Math.abs(setpoint) - 180) <= 20)
-            {
-                setpoint = setpoint - 360;
-                return setpoint;
-            }
+        double rotationLimit = 90;
+        double rotationOverlap = 20;
+        if (setpoint > rotationLimit + rotationOverlap)
+        {
+            setpoint -= 360;
         }
-        else
-        { //setpoint is behind current
-            clockWise = Math.abs(setpoint - currentPosition);
-            counterClockwise = Math.abs(360 + setpoint - currentPosition);
-            if (counterClockwise < clockWise && Math.abs(Math.abs(setpoint) - 180) <= 20)
-            {
-                setpoint = 360 + setpoint;
-                return setpoint;
-            }
+        if (setpoint < -rotationLimit - rotationOverlap)
+        {
+            setpoint += 360;
         }
         return setpoint;
     }
