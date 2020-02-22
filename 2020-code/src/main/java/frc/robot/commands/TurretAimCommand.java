@@ -17,7 +17,7 @@ public class TurretAimCommand extends CommandBase
     private TurretSubsystem m_turret;
     private boolean scanDirection;
     private boolean canFlipScanDirection;
-    private double headingError;
+    private double m_headingError;
     private double currentPosition;
     /**
      * Creates a new TurretAimCommand.
@@ -34,7 +34,7 @@ public class TurretAimCommand extends CommandBase
     {
         scanDirection = false;
         canFlipScanDirection = false;
-        headingError = 0.0;
+        m_headingError = 0.0;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -57,11 +57,11 @@ public class TurretAimCommand extends CommandBase
         }
         else
         {
-            headingError = m_turret.getHeadingError();
+            m_headingError = m_turret.getHeadingError();
             currentPosition = m_turret.getTurretAngle();
-            double angleSet = currentPosition + headingError;
+            double angleSet = currentPosition + m_headingError;
             System.out.println("trying to set angle to " + angleSet );
-            m_turret.setAngle(turretLimit(currentPosition + headingError));
+            m_turret.setAngle(turretLimit(currentPosition + m_headingError));
             System.out.println("actually set angle to"  + turretLimit(angleSet));
         }
 
