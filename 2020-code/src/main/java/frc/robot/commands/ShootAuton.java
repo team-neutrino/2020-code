@@ -39,7 +39,7 @@ public class ShootAuton extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_Shooter.getVelocity() > 70000)
+    if(m_Timer.get() > 1)
     {
       m_Hopper.towerShoot();
     }
