@@ -26,11 +26,11 @@ public final class Constants
     public static final class DriveConstants
     {
         //TODO get actual constants
-        public static final double KS_VOLTS = 0.18;
-        public static final double KV_VOLT_SECONDS_PER_METER = 3.21;
-        public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.479;
-        public static final double KP_DRIVE_VEL = 0.168;
-        public static final double K_TRACK_WIDTH_METERS = 0;
+        public static final double KS_VOLTS = 0.188;
+        public static final double KV_VOLT_SECONDS_PER_METER = 3.24;
+        public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.53;
+        public static final double KP_DRIVE_VEL = 2;
+        public static final double K_TRACK_WIDTH_METERS = 0.7;
         public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = new DifferentialDriveKinematics(
             K_TRACK_WIDTH_METERS);
 
@@ -42,12 +42,7 @@ public final class Constants
         public static final double K_GEAR_RATIO = 33.0 / 340.0;
         public static final double K_WHEEL_CIRCUMFERENCE = Math.PI * 0.127;
         //convert NEO encoder RPM to wheel meters/second
-        public static final double K_DRIVE_ENCODER_CONVERSION = (K_GEAR_RATIO * K_WHEEL_CIRCUMFERENCE) / 60;
-
-        public static final DifferentialDriveVoltageConstraint autoVoltageConstraint = //this used to be type var, why?
-            new DifferentialDriveVoltageConstraint(new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
-                DriveConstants.KV_VOLT_SECONDS_PER_METER, DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER),
-                DriveConstants.K_DRIVE_KINEMATICS, 10);
+        public static final double K_DRIVE_ENCODER_CONVERSION = (K_GEAR_RATIO * K_WHEEL_CIRCUMFERENCE);
     }
 
     public static final class IntakeConstants
