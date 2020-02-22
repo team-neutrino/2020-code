@@ -34,7 +34,12 @@ public class TurretSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        // This method will be called once per scheduler run
+        double turretAngle = m_turretMotor.getSelectedSensorPosition();
+        double kP = 0.02;
+        double error = 30-turretAngle;
+        System.out.println("Error " + error + "turretAngle " + turretAngle );
+
+        m_turretMotor.set(ControlMode.PercentOutput, kP*error);
     }
 
     public void setAngle(double p_angle)

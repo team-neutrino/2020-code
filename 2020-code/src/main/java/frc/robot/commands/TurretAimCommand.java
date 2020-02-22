@@ -41,33 +41,35 @@ public class TurretAimCommand extends CommandBase
     @Override
     public void execute()
     {
-        if (m_turret.getValidTarget() == 0)
-        {
-            // m_turret.setPower(VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
-            // if (Math.abs(m_turret.getTurretAngle()) < VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD
-            //         && !canFlipScanDirection)
-            // {
-            //     canFlipScanDirection = true;
-            // }
-            // if (canFlipScanDirection && Math.abs(m_turret.getTurretAngle()) < 180)
-            // {
-            //     canFlipScanDirection = false;
-            //     scanDirection = !scanDirection;
-            // }
-        }
-        else
-        {
-            headingError = m_turret.getHeadingError();
-            currentPosition = m_turret.getTurretAngle();
-            if (Math.abs(headingError) > VisionConstants.TURRET_ANGLE_TOLERANCE)
-            {
-                m_turret.setAngle(turretLimit(currentPosition - headingError));
-            }
-            else
-            {
-                //fire stuff
-            }
-        }
+        // if (m_turret.getValidTarget() == 0)
+        // {
+        //     // m_turret.setPower(VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
+        //     // if (Math.abs(m_turret.getTurretAngle()) < VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD
+        //     //         && !canFlipScanDirection)
+        //     // {
+        //     //     canFlipScanDirection = true;
+        //     // }
+        //     // if (canFlipScanDirection && Math.abs(m_turret.getTurretAngle()) < 180)
+        //     // {
+        //     //     canFlipScanDirection = false;
+        //     //     scanDirection = !scanDirection;
+        //     // }
+        // }
+        // else
+        // {
+        //     headingError = m_turret.getHeadingError();
+        //     currentPosition = m_turret.getTurretAngle();
+        //     if (Math.abs(headingError) > VisionConstants.TURRET_ANGLE_TOLERANCE)
+        //     {
+        //         m_turret.setAngle(turretLimit(currentPosition - headingError));
+        //     }
+        //     else
+        //     {
+        //         //fire stuff
+        //     }
+        // }
+
+        m_turret.setAngle(30);
     }
 
     // Called once the command ends or is interrupted.
