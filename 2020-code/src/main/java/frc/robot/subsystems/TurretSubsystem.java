@@ -24,8 +24,11 @@ import frc.robot.util.Limelight;
 public class TurretSubsystem extends SubsystemBase
 {
     private TalonSRX m_turretMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_TURRET);
-    private Limelight m_limelight; //new Limelight();
     private NetworkTableEntry tX;
+    private NetworkTableEntry tV;
+    private double m_turretAngle;
+    private double m_headingError;
+    private double m_getValidTarget;
     /**
      * Creates a new TurretSubsystem.
      */
@@ -33,8 +36,7 @@ public class TurretSubsystem extends SubsystemBase
     {
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         tX = table.getEntry("tx");
-        
-
+        tV = table.getEntry("tv");
         m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
         m_turretMotor.setNeutralMode(NeutralMode.Brake);
     }
@@ -42,28 +44,24 @@ public class TurretSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        
-        double turretAngle = m_turretMotor.getSelectedSensorPosition();
-        double kP = 0.07;
-        double limelightAngle = tX.getDouble(0.0);
-        // System.out.println(limelightAngle);
-        double setpoint = turretAngle -limelightAngle;
-        System.out.println("Setpoint " + setpoint + "turretAngle " + turretAngle );
-        double error = limelightAngle;
-
-        m_turretMotor.set(ControlMode.PercentOutput, kP*error);
+        m_turretAngle = m_turretMotor.getSelectedSensorPosition();
+        m_headingError = tX.getDouble(0.0);
+        m_getValidTarget = tV.getDouble(0.0);
     }
 
     public void setAngle(double p_angle)
     {
-        //TODO: Ensure the talon position thing sets to degrees
-        m_turretMotor.set(ControlMode.Position, p_angle);
+        double currentAngle = getTurretAngle();
+        double kP = 0.07;
+        double setpoint = p_angle;
+        double error = setpoint + currentAngle;
+        m_turretMotor.set(ControlMode.PercentOutput, kP*error);
     }
 
     public double getTurretAngle()
     {
-        //TODO: make sure this actually returns the correct angle
-        return m_turretMotor.getSelectedSensorPosition() * TurretConstants.ANGLE_SCALE;
+        
+        return m_turretAngle;
     }
 
     public void setPower(double power)
@@ -71,13 +69,21 @@ public class TurretSubsystem extends SubsystemBase
         m_turretMotor.set(ControlMode.PercentOutput, power);
     }
 
+    /**
+     * 
+     * @return returns horizontal heading error in degrees
+     */
     public double getHeadingError()
     {
-        return m_limelight.getXAngle();
+        return m_headingError;
     }
 
+    /**
+     * 
+     * @return 1 if valid target, 0 if no valid target
+     */
     public double getValidTarget()
     {
-        return m_limelight.hasTarget();
+        return m_getValidTarget;
     }
 }
