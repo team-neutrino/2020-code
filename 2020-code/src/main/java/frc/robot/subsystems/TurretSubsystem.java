@@ -54,7 +54,7 @@ public class TurretSubsystem extends SubsystemBase
         double currentAngle = getTurretAngle();
         double kP = 0.07;
         double setpoint = p_angle;
-        double error = setpoint + currentAngle;
+        double error = setpoint - currentAngle;
         m_turretMotor.set(ControlMode.PercentOutput, kP*error);
     }
 
