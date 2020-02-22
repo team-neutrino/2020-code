@@ -107,7 +107,7 @@ public final class Constants
 
     public static final class ClimberConstants
     {
-        public static final double CLIMBER_MOTOR_POWER = 0.5;
+        public static final double CLIMBER_MOTOR_POWER = 0.2;
         public static final double CLIMBER_MOTOR_WINCHPOWER = 1;
     }
     public static final class HopperConstants
