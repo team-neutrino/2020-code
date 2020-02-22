@@ -59,7 +59,10 @@ public class TurretAimCommand extends CommandBase
         {
             headingError = m_turret.getHeadingError();
             currentPosition = m_turret.getTurretAngle();
+            double angleSet = currentPosition + headingError;
+            System.out.println("trying to set angle to " + angleSet );
             m_turret.setAngle(turretLimit(currentPosition + headingError));
+            System.out.println("actually set angle to"  + turretLimit(angleSet));
         }
 
     }
