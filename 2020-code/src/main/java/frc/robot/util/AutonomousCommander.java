@@ -37,10 +37,10 @@ public class AutonomousCommander
         SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
             DriveConstants.KV_VOLT_SECONDS_PER_METER, DriveConstants.KA_VOLT_SECONDS_SQUARED_PER_METER);
 
-        RamseteCommand ramseteCommand = new RamseteCommand(trajectory, m_Drive::getPose, controller, feedforward,
+        RamseteCommand sixBallTraj0 = new RamseteCommand(trajectory, m_Drive::getPose, controller, feedforward,
             DriveConstants.K_DRIVE_KINEMATICS, m_Drive::getWheelSpeeds, leftController, rightController,
             m_Drive::tankDriveVolts, m_Drive);
 
-        return ramseteCommand.andThen(() -> m_Drive.tankDriveVolts(0, 0));
+        return sixBallTraj0.andThen(() -> m_Drive.tankDriveVolts(0, 0));
     }
 }
