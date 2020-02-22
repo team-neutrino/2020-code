@@ -57,6 +57,7 @@ public class RobotContainer
     JoystickButton m_rightJoystickButton = new JoystickButton(m_OperatorController, Button.kStickRight.value);
     JoystickButton m_Y = new JoystickButton(m_OperatorController, Button.kY.value);
     JoystickButton m_BumperLeft = new JoystickButton(m_OperatorController, Button.kBumperLeft.value);
+    JoystickButton m_BumperRight = new JoystickButton(m_OperatorController, Button.kBumperRight.value);
     TriggerToBoolean m_TriggerLeft = new TriggerToBoolean(m_OperatorController, Axis.kLeftTrigger.value,
         Constants.IntakeConstants.LEFT_TRIGGER_THRESHOLD);
 
@@ -99,12 +100,13 @@ public class RobotContainer
     {
         m_start.whileHeld(new InstantCommand(m_climber::winchClimb, m_climber), true).whenReleased(m_climber::winchStop,
             m_climber);
-        m_X.whileHeld(new InstantCommand(m_climber::elevatorDown, m_climber), true).whenReleased(
-            m_climber::elevatorStop, m_climber);
+        // m_X.whileHeld(new InstantCommand(m_climber::elevatorDown, m_climber), true).whenReleased(
+            // m_climber::elevatorStop, m_climber);
         m_back.whileHeld(new InstantCommand(m_climber::elevatorUp, m_climber), true).whenReleased(
             m_climber::elevatorStop, m_climber);
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false);
+        m_BumperRight.whileHeld(new InstantCommand(m_Hopper::reverse, m_Hopper), false);
         m_rightJoystickButton.toggleWhenActive(
             new TurretOverrideCommand(m_Turret, () -> m_OperatorController.getX(Hand.kRight)));
         m_TriggerLeft.whenActive(new InstantCommand(m_Intake::setIntakeOn, m_Intake).alongWith(
@@ -112,6 +114,8 @@ public class RobotContainer
         m_TriggerLeft.whenInactive(new InstantCommand(m_Intake::setIntakeOff, m_Intake).alongWith(
             new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE))));
         m_Y.whenHeld(new TurretAimCommand(m_Turret));
+        
+
 
     }
 
@@ -135,7 +139,7 @@ public class RobotContainer
         //TODO: transform coordinates
 
         // Run path following command, then stop at the end.
-        return ramseteCommand.andThen(() -> m_Drive.tankDriveVolts(0, 0));
+        return (new InstantCommand(() -> m_Drive.tankDriveVolts(0, 0)));
     }
 
 }
