@@ -12,6 +12,9 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CanId;
 import frc.robot.Constants.VisionConstants;
@@ -21,12 +24,17 @@ import frc.robot.util.Limelight;
 public class TurretSubsystem extends SubsystemBase
 {
     private TalonSRX m_turretMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_TURRET);
-    private Limelight m_limelight = new Limelight();
+    private Limelight m_limelight; //new Limelight();
+    private NetworkTableEntry tX;
     /**
      * Creates a new TurretSubsystem.
      */
     public TurretSubsystem()
     {
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        tX = table.getEntry("tx");
+        
+
         m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
         m_turretMotor.setNeutralMode(NeutralMode.Brake);
     }
@@ -34,10 +42,14 @@ public class TurretSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
+        
         double turretAngle = m_turretMotor.getSelectedSensorPosition();
-        double kP = 0.02;
-        double error = 30-turretAngle;
-        System.out.println("Error " + error + "turretAngle " + turretAngle );
+        double kP = 0.07;
+        double limelightAngle = tX.getDouble(0.0);
+        // System.out.println(limelightAngle);
+        double setpoint = turretAngle -limelightAngle;
+        System.out.println("Setpoint " + setpoint + "turretAngle " + turretAngle );
+        double error = limelightAngle;
 
         m_turretMotor.set(ControlMode.PercentOutput, kP*error);
     }
