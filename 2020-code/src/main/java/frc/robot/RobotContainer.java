@@ -54,6 +54,7 @@ public class RobotContainer
     private TriggerToBoolean m_TriggerLeft = new TriggerToBoolean(m_OperatorController, Axis.kLeftTrigger.value,
         Constants.IntakeConstants.LEFT_TRIGGER_THRESHOLD);
     private AutonomousCommander m_auton;
+    private SixBallAuto m_SixBallAuto;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -66,6 +67,7 @@ public class RobotContainer
         m_Hopper.setDefaultCommand(new HopperDefaultCommand(m_Hopper));
         configureButtonBindings();
         m_auton = new AutonomousCommander(m_Drive);
+        m_SixBallAuto = new SixBallAuto(m_Shooter, m_Hopper, m_Intake, m_Drive);
     }
 
     /**
@@ -104,7 +106,7 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         m_Drive.initAuton();
-        return m_auton.getCommand();
+        return m_SixBallAuto;
     }
 
 }
