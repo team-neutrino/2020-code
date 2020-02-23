@@ -87,8 +87,8 @@ public class DriveSubsystem extends SubsystemBase
 
     public void tankDrive(double leftPower, double rightPower)
     {
-        m_leftMotors.set(processJoystick(leftPower));
-        m_rightMotors.set(processJoystick(rightPower));
+        m_leftMotors.set(-leftPower);
+        m_rightMotors.set(-rightPower);
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts)
