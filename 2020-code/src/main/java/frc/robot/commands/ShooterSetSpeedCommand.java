@@ -34,7 +34,7 @@ public class ShooterSetSpeedCommand extends CommandBase
     @Override
     public void execute()
     {
-        m_shooter.setVelocity(SmartDashboard.getNumber("ShooterZoom", 0));
+        m_shooter.setVelocity(80000);
     }
 
     // Called once the command ends or is interrupted.

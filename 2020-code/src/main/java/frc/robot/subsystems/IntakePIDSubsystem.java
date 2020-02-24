@@ -75,6 +75,10 @@ public class IntakePIDSubsystem extends PIDSubsystem
     {
         m_IntakeFeedMotor.set(ControlMode.PercentOutput, Constants.IntakeConstants.INTAKE_MOTOR_POWER);
     }
+    public void setIntakeReverse()
+    {
+        m_IntakeFeedMotor.set(ControlMode.PercentOutput, -Constants.IntakeConstants.INTAKE_MOTOR_POWER);
+    }
 
     public void setIntakeOff()
     {
