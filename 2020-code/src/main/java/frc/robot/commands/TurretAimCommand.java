@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.TurretSubsystem;
@@ -59,6 +60,7 @@ public class TurretAimCommand extends CommandBase
         {
             m_headingError = m_turret.getHeadingError();
             currentPosition = m_turret.getTurretAngle();
+            SmartDashboard.putNumber("Turretangle", currentPosition);
             double angleSet = currentPosition + m_headingError;
             System.out.println("trying to set angle to " + angleSet );
             m_turret.setAngle(turretLimit(currentPosition + m_headingError));
@@ -88,15 +90,18 @@ public class TurretAimCommand extends CommandBase
     private double turretLimit(double p_angle)
     {
         double setpoint = p_angle;
-        double rotationLimit = 180;
-        double rotationOverlap = 20;
-        if (setpoint > rotationLimit + rotationOverlap)
+        // double rotationLimit = 180;
+        // double rotationOverlap = 20;
+        double forwardRotationLimit = 135;
+        double backwardRotationLimit = -150;
+
+        if (setpoint > forwardRotationLimit )
         {
-            setpoint -= 360;
+            setpoint = forwardRotationLimit;
         }
-        if (setpoint < -rotationLimit - rotationOverlap)
+        if (setpoint < backwardRotationLimit)
         {
-            setpoint += 360;
+            setpoint = backwardRotationLimit;
         }
         return setpoint;
     }

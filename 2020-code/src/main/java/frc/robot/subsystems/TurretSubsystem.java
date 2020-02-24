@@ -17,6 +17,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CanId;
+
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.TurretConstants;
 import frc.robot.util.Limelight;
@@ -44,7 +45,7 @@ public class TurretSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        m_turretAngle = m_turretMotor.getSelectedSensorPosition();
+        m_turretAngle = m_turretMotor.getSelectedSensorPosition() + TurretConstants.TURRET_OFFSET_ANGLE;
         m_headingError = tX.getDouble(0.0);
         m_getValidTarget = tV.getDouble(0.0);
     }
