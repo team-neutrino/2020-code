@@ -40,7 +40,7 @@ public class ShooterSetSpeedCommand extends CommandBase
     @Override
     public void execute()
     {
-        m_shooter.setVelocity(velocity);
+        m_shooter.setVelocity(velocity.getDouble(80000));
     }
 
     // Called once the command ends or is interrupted.
