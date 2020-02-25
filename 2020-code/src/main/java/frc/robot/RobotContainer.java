@@ -59,6 +59,7 @@ public class RobotContainer
     private POVButton m_DownPovButton = new POVButton(m_OperatorController, 180);
     private AutonomousCommander m_auton;
     private SixBallAuto m_SixBallAuto;
+    private ThreeAuton m_ThreeAuton;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -72,6 +73,7 @@ public class RobotContainer
         configureButtonBindings();
         m_auton = new AutonomousCommander(m_Drive);
         m_SixBallAuto = new SixBallAuto(m_Shooter, m_Hopper, m_Intake, m_Drive);
+        m_ThreeAuton = new ThreeAuton(m_Shooter, m_Hopper, 10);
     }
 
     /**
@@ -115,7 +117,8 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         m_Drive.initAuton();
-        return m_SixBallAuto;
+        //return m_SixBallAuto;
+        return m_ThreeAuton;
     }
 
 }
