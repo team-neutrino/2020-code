@@ -62,9 +62,9 @@ public class TurretAimCommand extends CommandBase
             currentPosition = m_turret.getTurretAngle();
             SmartDashboard.putNumber("Turretangle", currentPosition);
             double angleSet = currentPosition + m_headingError;
-            System.out.println("trying to set angle to " + angleSet );
+            System.out.println("trying to set angle to " + angleSet);
             m_turret.setAngle(turretLimit(currentPosition + m_headingError));
-            System.out.println("actually set angle to"  + turretLimit(angleSet));
+            System.out.println("actually set angle to" + turretLimit(angleSet));
         }
 
     }
@@ -95,7 +95,7 @@ public class TurretAimCommand extends CommandBase
         double forwardRotationLimit = 135;
         double backwardRotationLimit = -150;
 
-        if (setpoint > forwardRotationLimit )
+        if (setpoint > forwardRotationLimit)
         {
             setpoint = forwardRotationLimit;
         }
