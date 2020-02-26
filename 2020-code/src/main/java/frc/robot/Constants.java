@@ -32,7 +32,7 @@ public final class Constants
         public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = new DifferentialDriveKinematics(
             K_TRACK_WIDTH_METERS);
 
-        public static final double K_MAX_SPEED_METERS_PER_SECOND = 3;
+        public static final double K_MAX_SPEED_METERS_PER_SECOND = 1.5;
         public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 2;
         public static final double K_RAMSETE_B = 2;
         public static final double K_RAMSETE_ZETA = 0.7;

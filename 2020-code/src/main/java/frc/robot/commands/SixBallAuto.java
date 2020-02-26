@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Trajectories.ExampleTrajectory;
@@ -54,8 +55,10 @@ public class SixBallAuto extends SequentialCommandGroup
             DriveConstants.K_DRIVE_KINEMATICS, p_Drive::getWheelSpeeds, leftController, rightController,
             p_Drive::tankDriveVolts, p_Drive);
 
-        addCommands(new ShootAuton(p_Shooter, p_Hopper, 3),
-            new InstantCommand(p_Intake::setIntakeOn, p_Intake).alongWith(new InstantCommand(p_Intake::setArmDown)),
-            sixBallTraj0, sixBallTraj1, new ShootAuton(p_Shooter, p_Hopper, 3));
+        addCommands(new InstantCommand(p_Intake::setArmDown),new WaitCommand(.75), new ShootAuton(p_Shooter, p_Hopper, 3),
+            new InstantCommand(p_Intake::setIntakeOn, p_Intake),
+            sixBallTraj0, new InstantCommand(() -> p_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE)), 
+            new InstantCommand(p_Hopper::towerShoot),
+             new ShootAuton(p_Shooter, p_Hopper, 7));
     }
 }

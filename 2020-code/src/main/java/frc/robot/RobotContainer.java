@@ -70,9 +70,10 @@ public class RobotContainer
             () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
         m_Drive.setDefaultCommand(tankDriveCommand);
         m_Hopper.setDefaultCommand(new HopperDefaultCommand(m_Hopper));
+        m_Turret.setDefaultCommand(new TurretAimCommand(m_Turret));
         configureButtonBindings();
         m_SixBallAuto = new SixBallAuto(m_Shooter, m_Hopper, m_Intake, m_Drive);
-        m_ThreeAuton = new ThreeAuton(m_Shooter, m_Hopper, 10);
+        m_ThreeAuton = new ThreeAuton(m_Shooter, m_Hopper, m_Drive, 10);
     }
 
     /**
@@ -106,12 +107,12 @@ public class RobotContainer
             new InstantCommand(m_Intake::setIntakeOn, m_Intake).alongWith(new InstantCommand(m_Intake::setArmDown)));
         m_TriggerLeft.whenInactive(new InstantCommand(m_Intake::setIntakeOff, m_Intake).alongWith(
             new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE))));
-        m_Y.whenHeld(new TurretAimCommand(m_Turret));
-        m_UpPovButton.whenHeld(new InstantCommand(() -> m_Turret.setAngle(-90), m_Turret)).whenReleased(
+       // m_Y.whenHeld(new TurretAimCommand(m_Turret));
+        m_UpPovButton.whileHeld(new InstantCommand(() -> m_Turret.setAngle(-90), m_Turret)).whenReleased(
             new InstantCommand(() -> m_Turret.setPower(0), m_Turret));
-        m_RightPovButton.whenHeld(new InstantCommand(() -> m_Turret.setAngle(0), m_Turret)).whenReleased(
+        m_RightPovButton.whileHeld(new InstantCommand(() -> m_Turret.setAngle(0), m_Turret)).whenReleased(
             new InstantCommand(() -> m_Turret.setPower(0), m_Turret));
-        m_DownPovButton.whenHeld(new InstantCommand(() -> m_Turret.setAngle(90), m_Turret)).whenReleased(
+        m_DownPovButton.whileHeld(new InstantCommand(() -> m_Turret.setAngle(90), m_Turret)).whenReleased(
             new InstantCommand(() -> m_Turret.setPower(0), m_Turret));
 
     }
@@ -124,8 +125,8 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         m_Drive.initAuton();
-        //return m_SixBallAuto;
-        return m_ThreeAuton;
+        return m_SixBallAuto;
+        //return m_ThreeAuton;
     }
 
 }

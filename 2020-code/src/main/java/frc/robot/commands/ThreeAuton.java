@@ -39,19 +39,20 @@ public class ThreeAuton extends CommandBase
     public void initialize()
     {
         m_Timer.start();
-        m_Shooter.setVelocity(80000);
+        m_Shooter.setVelocity(78000);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute()
     {
-        if (m_Timer.get() > 2)
+        if (m_Timer.get() > 2.5)
         {
             m_Hopper.towerShoot();
         }
         if (m_Timer.get() >= 5)
         {
+            m_Shooter.setPower(0);
             m_Drive.tankDrive(.25, .25);
         }
 
@@ -61,7 +62,6 @@ public class ThreeAuton extends CommandBase
     @Override
     public void end(boolean interrupted)
     {
-        m_Shooter.setPower(0);
         m_Hopper.stop();
     }
 

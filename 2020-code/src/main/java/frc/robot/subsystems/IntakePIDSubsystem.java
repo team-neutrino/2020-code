@@ -92,6 +92,6 @@ public class IntakePIDSubsystem extends PIDSubsystem
     public void setArmDown()
     {
         disable();
-        m_IntakeArmMotor.set(ControlMode.PercentOutput, 0.1);
+        m_IntakeArmMotor.set(ControlMode.PercentOutput, 0.3);
     }
 }
