@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.SPI;
 
 public class DriveSubsystem extends SubsystemBase
 {
-    //private PowerDistributionPanel PDP = new PowerDistributionPanel();
     private CANSparkMax m_leftMotor1 = new CANSparkMax(CanId.MOTOR_CONTROLLER_DRIVER_LEFT1, MotorType.kBrushless);
     private CANSparkMax m_leftMotor2 = new CANSparkMax(CanId.MOTOR_CONTROLLER_DRIVER_LEFT2, MotorType.kBrushless);
     private CANSparkMax m_rightMotor1 = new CANSparkMax(CanId.MOTOR_CONTROLLER_DRIVER_RIGHT1, MotorType.kBrushless);
@@ -34,6 +33,11 @@ public class DriveSubsystem extends SubsystemBase
     private final DifferentialDriveOdometry m_odometry;
 
     private double velocity = 0;
+    private double m_left_velocity = 0;
+    private double m_left_position = 0;
+    private double m_right_velocity = 0;
+    private double m_right_position = 0;
+
     public DriveSubsystem()
     {
         m_leftMotor1.restoreFactoryDefaults();
@@ -67,22 +71,18 @@ public class DriveSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_lEncoder.getPosition(), m_rEncoder.getPosition());
+        m_left_velocity = m_lEncoder.getVelocity();
+        m_left_position = m_lEncoder.getPosition();
+        m_right_velocity = m_rEncoder.getVelocity();
+        m_right_position = m_rEncoder.getPosition();
+        m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_left_position, m_right_position);
 
-        //SmartDashboard.putNumber("Left RPM", m_lrpm);
-        //SmartDashboard.putNumber("Right RPM", m_rrpm);
-        SmartDashboard.putNumber("Left meters per second", m_lEncoder.getVelocity());
-        SmartDashboard.putNumber("Right meters per second", m_rEncoder.getVelocity());
-        SmartDashboard.putNumber("Left m", m_lEncoder.getPosition());
-        SmartDashboard.putNumber("Right m", m_rEncoder.getPosition());
+        SmartDashboard.putNumber("Left m/s", m_left_velocity);
+        SmartDashboard.putNumber("Right m/s", m_right_velocity);
+        SmartDashboard.putNumber("Left m", m_left_position);
+        SmartDashboard.putNumber("Right m", m_right_position);
         SmartDashboard.putNumber("GetHeading", getHeading());
-        //SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
         SmartDashboard.putNumber("Acceleration", getMaxAcceleration());
-
-        var translation = m_odometry.getPoseMeters().getTranslation();
-
-        SmartDashboard.putNumber("odometry X", translation.getX());
-        SmartDashboard.putNumber("odometry Y", translation.getY());
     }
 
     public void tankDrive(double leftPower, double rightPower)
@@ -101,7 +101,7 @@ public class DriveSubsystem extends SubsystemBase
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
     {
-        return new DifferentialDriveWheelSpeeds(m_lEncoder.getVelocity(), m_rEncoder.getVelocity());
+        return new DifferentialDriveWheelSpeeds(m_left_velocity, m_right_velocity);
     }
 
     //Returns robot angle in degrees from -180 to 180
@@ -122,35 +122,13 @@ public class DriveSubsystem extends SubsystemBase
         m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
     }
 
-    public void getPDPCurrent()
-    {
-        //double currentLeftOne = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_LEFT1);
-        //double currentLeftTwo = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_LEFT2);
-        //double currentRightOne = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_RIGHT1);
-        //double currentRightTwo = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_RIGHT2);
-        // ArrayList<Double> currents = new ArrayList<Double>();
-        //currents.add(currentLeftOne);
-        //currents.add(currentLeftTwo);
-        //currents.add(currentRightOne);
-        //currents.add(currentRightTwo);
-        // System.out.println("MOTOR_CONTROLLER_DRIVER_LEFT1: " + currents.get(0));
-        // System.out.println("MOTOR_CONTROLLER_DRIVER_LEFT2: " + currents.get(1));
-        // System.out.println("MOTOR_CONTROLLER_DRIVER_RIGHT1: " + currents.get(2));
-        // System.out.println("MOTOR_CONTROLLER_DRIVER_RIGHT2: " + currents.get(3));
-
-    }
-
     public double getMaxAcceleration()
     {
         double oldVelocity = velocity;
-        velocity = m_lEncoder.getVelocity() * Constants.DriveConstants.K_DRIVE_ENCODER_CONVERSION;
+        velocity = m_left_velocity * Constants.DriveConstants.K_DRIVE_ENCODER_CONVERSION;
 
         return (velocity - oldVelocity) / 2;
     }
-    /*
-     * public ArrayList<Double> getCANTemp() { double tempLeftOne =
-     * CANSparkMax.getMotorTempearture(DriveConstants.MOTOR_CONTROLLER_DRIVER_LEFT1); }
-     */
 
     /**
      * Initalize the drive subsystem for Auton
