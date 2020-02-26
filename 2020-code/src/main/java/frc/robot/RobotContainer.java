@@ -50,15 +50,16 @@ public class RobotContainer
     private JoystickButton m_Y = new JoystickButton(m_OperatorController, Button.kY.value);
     private JoystickButton m_BumperLeft = new JoystickButton(m_OperatorController, Button.kBumperLeft.value);
     private JoystickButton m_BumperRight = new JoystickButton(m_OperatorController, Button.kBumperRight.value);
+    private JoystickButton m_LJoy8 = new JoystickButton(m_leftJoystick, 8);
     private TriggerToBoolean m_TriggerLeft = new TriggerToBoolean(m_OperatorController, Axis.kLeftTrigger.value,
         Constants.IntakeConstants.LEFT_TRIGGER_THRESHOLD);
+    private TriggerToBoolean m_TriggerRight = new TriggerToBoolean(m_OperatorController, Axis.kRightTrigger.value,
+        Constants.IntakeConstants.RIGHT_TRIGGER_THRESHOLD);
     private POVButton m_UpPovButton = new POVButton(m_OperatorController, 0);
     private POVButton m_RightPovButton = new POVButton(m_OperatorController, 90);
     private POVButton m_DownPovButton = new POVButton(m_OperatorController, 180);
     private SixBallAuto m_SixBallAuto;
     private ThreeAuton m_ThreeAuton;
-    TriggerToBoolean m_TriggerRight = new TriggerToBoolean(m_OperatorController, Axis.kRightTrigger.value,
-        Constants.IntakeConstants.RIGHT_TRIGGER_THRESHOLD);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -81,14 +82,17 @@ public class RobotContainer
      */
     private void configureButtonBindings()
     {
-        m_start.whileHeld(new InstantCommand(m_climber::winchClimb, m_climber), true).whenReleased(m_climber::winchStop,
-            m_climber);
+        m_start.whileHeld(new InstantCommand(m_climber::elevatorUp, m_climber), true).whenReleased(
+            m_climber::elevatorStop, m_climber);
 
         m_X.whileHeld(new InstantCommand(m_climber::elevatorDown, m_climber), true).whenReleased(
             m_climber::elevatorStop, m_climber);
 
-        m_back.whileHeld(new InstantCommand(m_climber::elevatorUp, m_climber), true).whenReleased(
-            m_climber::elevatorStop, m_climber);
+        m_back.whileHeld(new InstantCommand(m_climber::winchClimb, m_climber), true).whenReleased(m_climber::winchStop,
+            m_climber);
+
+        m_LJoy8.whenHeld(new InstantCommand(m_climber::winchReverse, m_climber)).whenReleased(m_climber::winchStop,
+            m_climber);
 
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false).whenReleased(
@@ -98,8 +102,8 @@ public class RobotContainer
         m_rightJoystickButton.toggleWhenActive(
             new TurretOverrideCommand(m_Turret, () -> m_OperatorController.getX(Hand.kRight)));
 
-        m_TriggerLeft.whenActive(new InstantCommand(m_Intake::setIntakeOn, m_Intake).alongWith(
-            new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_DOWN_ANGLE))));
+        m_TriggerLeft.whenActive(
+            new InstantCommand(m_Intake::setIntakeOn, m_Intake).alongWith(new InstantCommand(m_Intake::setArmDown)));
         m_TriggerLeft.whenInactive(new InstantCommand(m_Intake::setIntakeOff, m_Intake).alongWith(
             new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE))));
         m_Y.whenHeld(new TurretAimCommand(m_Turret));
@@ -109,6 +113,7 @@ public class RobotContainer
             new InstantCommand(() -> m_Turret.setPower(0), m_Turret));
         m_DownPovButton.whenHeld(new InstantCommand(() -> m_Turret.setAngle(90), m_Turret)).whenReleased(
             new InstantCommand(() -> m_Turret.setPower(0), m_Turret));
+
     }
 
     /**

@@ -47,13 +47,12 @@ public final class Constants
     {
         public static final double INTAKE_MOTOR_POWER = -0.8;
         public static final double OUTTAKE_MOTOR_POWER = 1;
-        public static final double ARM_DOWN_ANGLE = 30.5; // placeholder
-        public static final double ARM_UP_ANGLE = -32.5; // placeholder
+        public static final double ARM_UP_ANGLE = -75;
         public static final int ENCODER_PORT = 8;
 
-        public static final double KP = 0.01;
+        public static final double KP = 0.02;
         public static final double KI = 0.0;
-        public static final double KD = 0.0002;
+        public static final double KD = 0.0001;
         public static final double POSITION_MULTIPLIER = 360;
         public static final double LEFT_TRIGGER_THRESHOLD = 0.5;
         public static final double RIGHT_TRIGGER_THRESHOLD = 0.5;
