@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -16,17 +17,20 @@ public class ThreeAuton extends CommandBase
 {
     private ShooterSubsystem m_Shooter;
     private HopperSubsystem m_Hopper;
+    private DriveSubsystem m_Drive;
     private double m_Duration;
     private Timer m_Timer = new Timer();
 
     /**
      * Creates a new ShootAuton.
      */
-    public ThreeAuton(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, double p_Duration)
+    public ThreeAuton(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, DriveSubsystem p_Drive, double p_Duration)
     {
-        addRequirements(p_Shooter, p_Hopper);
+        addRequirements(p_Shooter, p_Hopper, p_Drive);
         m_Shooter = p_Shooter;
         m_Hopper = p_Hopper;
+        m_Drive = p_Drive;
+
         m_Duration = p_Duration;
     }
 
@@ -42,9 +46,13 @@ public class ThreeAuton extends CommandBase
     @Override
     public void execute()
     {
-        if (m_Timer.get() > 3)
+        if (m_Timer.get() > 2)
         {
             m_Hopper.towerShoot();
+        }
+        if (m_Timer.get() >= 5)
+        {
+            m_Drive.tankDrive(.25, .25);
         }
 
     }
@@ -61,6 +69,6 @@ public class ThreeAuton extends CommandBase
     @Override
     public boolean isFinished()
     {
-        return m_Timer.get() >= m_Duration;
+        return m_Timer.get() >= 6;
     }
 }
