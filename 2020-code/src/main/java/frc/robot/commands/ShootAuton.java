@@ -7,46 +7,61 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterSetSpeedCommand extends CommandBase
+public class ShootAuton extends CommandBase
 {
-    private ShooterSubsystem m_shooter;
+    private ShooterSubsystem m_Shooter;
+    private HopperSubsystem m_Hopper;
+    private double m_Duration;
+    private Timer m_Timer = new Timer();
+
     /**
-     * Creates a new ShooterSetSpeedCommand.
+     * Creates a new ShootAuton.
      */
-    public ShooterSetSpeedCommand(ShooterSubsystem p_shooter)
+    public ShootAuton(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, double p_Duration)
     {
-        // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(p_shooter);
-        m_shooter = p_shooter;
+        addRequirements(p_Shooter, p_Hopper);
+        m_Shooter = p_Shooter;
+        m_Hopper = p_Hopper;
+        m_Duration = p_Duration;
+
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize()
     {
+        m_Timer.start();
+        m_Shooter.setVelocity(80000);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute()
     {
-        m_shooter.setVelocity(80000);
+        if (m_Timer.get() > 1)
+        {
+            m_Hopper.towerShoot();
+        }
+
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted)
     {
-        m_shooter.setPower(0);
+        m_Shooter.setPower(0);
+        m_Hopper.stop();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished()
     {
-        return false;
+        return m_Timer.get() >= m_Duration;
     }
 }
