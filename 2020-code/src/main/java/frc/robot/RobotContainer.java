@@ -21,7 +21,6 @@ import frc.robot.Constants.*;
 import static edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.*;
 import frc.robot.util.TriggerToBoolean;
-import frc.robot.util.AutonomousCommander;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -58,7 +57,6 @@ public class RobotContainer
     private POVButton m_UpPovButton = new POVButton(m_OperatorController, 0);
     private POVButton m_RightPovButton = new POVButton(m_OperatorController, 90);
     private POVButton m_DownPovButton = new POVButton(m_OperatorController, 180);
-    private AutonomousCommander m_auton;
     private SixBallAuto m_SixBallAuto;
     TriggerToBoolean m_TriggerRight = new TriggerToBoolean(m_OperatorController, Axis.kRightTrigger.value,
         Constants.IntakeConstants.RIGHT_TRIGGER_THRESHOLD);
@@ -73,7 +71,6 @@ public class RobotContainer
         m_Drive.setDefaultCommand(tankDriveCommand);
         m_Hopper.setDefaultCommand(new HopperDefaultCommand(m_Hopper));
         configureButtonBindings();
-        m_auton = new AutonomousCommander(m_Drive);
         m_SixBallAuto = new SixBallAuto(m_Shooter, m_Hopper, m_Intake, m_Drive);
     }
 
