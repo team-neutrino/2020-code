@@ -11,11 +11,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import edu.wpi.first.wpilibj2.command.button.Button;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.Constants;
 import frc.robot.Constants.CanId;
 
@@ -84,5 +82,10 @@ public class IntakePIDSubsystem extends PIDSubsystem
     public void setIntakeOff()
     {
         m_IntakeFeedMotor.set(ControlMode.PercentOutput, 0);
+    }
+
+    public void setOuttakeOn()
+    {
+        m_IntakeFeedMotor.set(ControlMode.PercentOutput, Constants.IntakeConstants.OUTTAKE_MOTOR_POWER);
     }
 }

@@ -20,7 +20,6 @@ import frc.robot.Constants.*;
 import static edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.subsystems.*;
 import frc.robot.util.TriggerToBoolean;
-import frc.robot.util.AutonomousCommander;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -35,7 +34,6 @@ public class RobotContainer
     private final IntakePIDSubsystem m_Intake = new IntakePIDSubsystem();
     private final ShooterSubsystem m_Shooter = new ShooterSubsystem();
     private final DriveSubsystem m_Drive = new DriveSubsystem();
-    private final LEDSubsystem m_Led = new LEDSubsystem();
     private final ClimberSubsystem m_climber = new ClimberSubsystem();
     private final HopperSubsystem m_Hopper = new HopperSubsystem();
     private final TurretSubsystem m_Turret = new TurretSubsystem();
@@ -57,9 +55,10 @@ public class RobotContainer
     private POVButton m_UpPovButton = new POVButton(m_OperatorController, 0);
     private POVButton m_RightPovButton = new POVButton(m_OperatorController, 90);
     private POVButton m_DownPovButton = new POVButton(m_OperatorController, 180);
-    private AutonomousCommander m_auton;
     private SixBallAuto m_SixBallAuto;
     private ThreeAuton m_ThreeAuton;
+    TriggerToBoolean m_TriggerRight = new TriggerToBoolean(m_OperatorController, Axis.kRightTrigger.value,
+        Constants.IntakeConstants.RIGHT_TRIGGER_THRESHOLD);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -71,7 +70,6 @@ public class RobotContainer
         m_Drive.setDefaultCommand(tankDriveCommand);
         m_Hopper.setDefaultCommand(new HopperDefaultCommand(m_Hopper));
         configureButtonBindings();
-        m_auton = new AutonomousCommander(m_Drive);
         m_SixBallAuto = new SixBallAuto(m_Shooter, m_Hopper, m_Intake, m_Drive);
         m_ThreeAuton = new ThreeAuton(m_Shooter, m_Hopper, 10);
     }
@@ -85,10 +83,13 @@ public class RobotContainer
     {
         m_start.whileHeld(new InstantCommand(m_climber::winchClimb, m_climber), true).whenReleased(m_climber::winchStop,
             m_climber);
-        // m_X.whileHeld(new InstantCommand(m_climber::elevatorDown, m_climber), true).whenReleased(
-        // m_climber::elevatorStop, m_climber);
+
+        m_X.whileHeld(new InstantCommand(m_climber::elevatorDown, m_climber), true).whenReleased(
+            m_climber::elevatorStop, m_climber);
+
         m_back.whileHeld(new InstantCommand(m_climber::elevatorUp, m_climber), true).whenReleased(
             m_climber::elevatorStop, m_climber);
+
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false).whenReleased(
             (new InstantCommand(m_Hopper::stop, m_Hopper)));
@@ -96,6 +97,7 @@ public class RobotContainer
             (new InstantCommand(m_Hopper::stop, m_Hopper)));
         m_rightJoystickButton.toggleWhenActive(
             new TurretOverrideCommand(m_Turret, () -> m_OperatorController.getX(Hand.kRight)));
+
         m_TriggerLeft.whenActive(new InstantCommand(m_Intake::setIntakeOn, m_Intake).alongWith(
             new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_DOWN_ANGLE))));
         m_TriggerLeft.whenInactive(new InstantCommand(m_Intake::setIntakeOff, m_Intake).alongWith(

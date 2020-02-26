@@ -18,9 +18,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CanId;
 
-import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.TurretConstants;
-import frc.robot.util.Limelight;
 
 public class TurretSubsystem extends SubsystemBase
 {
