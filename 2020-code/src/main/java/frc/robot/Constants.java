@@ -48,14 +48,9 @@ public final class Constants
     public static final class IntakeConstants
     {
         public static final double INTAKE_MOTOR_POWER = -0.8;
-<<<<<<< HEAD
-        public static final double ARM_DOWN_ANGLE = 30.5;
-        public static final double ARM_UP_ANGLE = -32.5;
-=======
         public static final double OUTTAKE_MOTOR_POWER = 1;
         public static final double ARM_DOWN_ANGLE = 30.5; // placeholder
         public static final double ARM_UP_ANGLE = -32.5; // placeholder
->>>>>>> master
         public static final int ENCODER_PORT = 8;
 
         public static final double KP = 0.01;
