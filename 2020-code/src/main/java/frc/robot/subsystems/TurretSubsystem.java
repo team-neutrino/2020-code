@@ -91,11 +91,17 @@ public class TurretSubsystem extends SubsystemBase
         Number mode = ledMode.getNumber(0);
         if (mode.intValue() ==  0 || mode.intValue() == 3)
         {
-           ledMode.setNumber(1);
+            ledMode.setNumber(1);
+
         }
         else if (mode.intValue() == 1)
         {
             ledMode.setNumber(3);
         }
+    }
+
+    public int getLightValue()
+    {
+        return ledMode.getNumber(0).intValue();
     }
 }

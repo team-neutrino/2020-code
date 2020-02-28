@@ -42,7 +42,7 @@ public class TurretAimCommand extends CommandBase
     @Override
     public void execute()
     {
-        if (m_turret.getValidTarget() == 0)
+        if (m_turret.getValidTarget() == 0 || m_turret.getLightValue() == 1)
         {
             // m_turret.setPower(VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
             // if (Math.abs(m_turret.getTurretAngle()) < VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD
@@ -93,7 +93,7 @@ public class TurretAimCommand extends CommandBase
         // double rotationLimit = 180;
         // double rotationOverlap = 20;
         double forwardRotationLimit = 135;
-        double backwardRotationLimit = -150;
+        double backwardRotationLimit = -135;
 
         if (setpoint > forwardRotationLimit)
         {
