@@ -78,11 +78,6 @@ public class DriveSubsystem extends SubsystemBase
         SmartDashboard.putNumber("GetHeading", getHeading());
         //SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
         SmartDashboard.putNumber("Acceleration", getMaxAcceleration());
-
-        var translation = m_odometry.getPoseMeters().getTranslation();
-
-        SmartDashboard.putNumber("odometry X", translation.getX());
-        SmartDashboard.putNumber("odometry Y", translation.getY());
     }
 
     public void tankDrive(double leftPower, double rightPower)

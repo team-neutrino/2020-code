@@ -74,6 +74,7 @@ public class RobotContainer
         configureButtonBindings();
         m_SixBallAuto = new SixBallAuto(m_Shooter, m_Hopper, m_Intake, m_Drive);
         m_ThreeAuton = new ThreeAuton(m_Shooter, m_Hopper, m_Drive, 10);
+        //limelightFeed = new HttpCamera("limeight", "http://limelight.local:5800/stream.mjpg");
     }
 
     /**
@@ -128,8 +129,8 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         m_Drive.initAuton();
-        return m_SixBallAuto;
-        //return m_ThreeAuton;
+        //return m_SixBallAuto;
+        return m_ThreeAuton;
     }
 
 }
