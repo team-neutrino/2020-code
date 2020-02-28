@@ -96,8 +96,9 @@ public class RobotContainer
             m_climber);
 
         m_B.whenPressed(new InstantCommand(m_Turret::toggleLight, m_Turret));
-        m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
-        
+        m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 80000));
+        m_Y.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 95000));
+
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false).whenReleased(
             (new InstantCommand(m_Hopper::stop, m_Hopper)));
         m_BumperRight.whileHeld(new InstantCommand(m_Hopper::reverse, m_Hopper), false).whenReleased(
