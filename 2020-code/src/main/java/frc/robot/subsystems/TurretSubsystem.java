@@ -25,6 +25,7 @@ public class TurretSubsystem extends SubsystemBase
     private TalonSRX m_turretMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_TURRET);
     private NetworkTableEntry tX;
     private NetworkTableEntry tV;
+    private NetworkTableEntry ledMode;
     private double m_turretAngle;
     private double m_headingError;
     private double m_getValidTarget;
@@ -36,6 +37,7 @@ public class TurretSubsystem extends SubsystemBase
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         tX = table.getEntry("tx");
         tV = table.getEntry("tv");
+        ledMode = table.getEntry("ledMode");
         m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
         m_turretMotor.setNeutralMode(NeutralMode.Brake);
     }
@@ -82,5 +84,18 @@ public class TurretSubsystem extends SubsystemBase
     public double getValidTarget()
     {
         return m_getValidTarget;
+    }
+
+    public void toggleLight()
+    {
+        Number mode = ledMode.getNumber(0);
+        if (mode.intValue() ==  0 || mode.intValue() == 3)
+        {
+           ledMode.setNumber(1);
+        }
+        else if (mode.intValue() == 1)
+        {
+            ledMode.setNumber(3);
+        }
     }
 }
