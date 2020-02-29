@@ -47,7 +47,7 @@ public class TurretSetAngleCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_Timer.get() > 1)
+    if(m_Timer.get() > 0.625)
     {
       return false;
     }

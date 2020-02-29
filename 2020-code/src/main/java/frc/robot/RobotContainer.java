@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -90,8 +91,11 @@ public class RobotContainer
         m_X.whileHeld(new InstantCommand(m_climber::elevatorDown, m_climber), true).whenReleased(
             m_climber::elevatorStop, m_climber);
 
-        m_back.whileHeld(new InstantCommand(m_climber::winchClimb, m_climber).alongWith(new InstantCommand(() -> m_Turret.setPointSetAngle(0), m_Turret)), true).whenReleased(m_climber::winchStop,
-            m_climber);
+        m_back.whileHeld(
+            new ParallelCommandGroup(
+                new InstantCommand(m_climber::winchClimb, m_climber),
+                new InstantCommand(() -> m_Turret.setPointSetAngle(0), m_Turret),
+                new InstantCommand(m_Turret::setLightOff, m_Turret)));
 
         m_LJoy8.whenHeld(new InstantCommand(m_climber::winchReverse, m_climber)).whenReleased(m_climber::winchStop,
             m_climber);

@@ -116,4 +116,13 @@ public class TurretSubsystem extends SubsystemBase
     {
         return ledMode.getNumber(0).intValue();
     }
+
+    public void setLightOn()
+    {
+        ledMode.setNumber(3);
+    }
+    public void setLightOff()
+    {
+        ledMode.setNumber(1);
+    }
 }
