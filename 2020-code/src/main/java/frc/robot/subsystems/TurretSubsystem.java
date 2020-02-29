@@ -52,7 +52,7 @@ public class TurretSubsystem extends SubsystemBase
         m_getValidTarget = tV.getDouble(0.0);
     }
 
-    public void setAngle(double p_angle)
+    public void autoSetAngle(double p_angle)
     {
         double currentAngle = getTurretAngle();
         double kP = 0.07;
@@ -60,6 +60,16 @@ public class TurretSubsystem extends SubsystemBase
         double error = setpoint - currentAngle;
         m_turretMotor.set(ControlMode.PercentOutput, kP * error);
     }
+
+    public void setPointSetAngle(double p_angle)
+    {
+        double currentAngle = getTurretAngle();
+        double kP = 0.12;
+        double setpoint = p_angle;
+        double error = setpoint - currentAngle;
+        m_turretMotor.set(ControlMode.PercentOutput, kP * error);
+    }
+
 
     public double getTurretAngle()
     {

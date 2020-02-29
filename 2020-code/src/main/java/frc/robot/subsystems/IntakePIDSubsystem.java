@@ -53,8 +53,8 @@ public class IntakePIDSubsystem extends PIDSubsystem
         super.periodic();
         SmartDashboard.putNumber("Arm motor current: ", m_IntakeArmMotor.getSupplyCurrent());
         SmartDashboard.putNumber("Arm motor power", m_IntakeArmMotor.getMotorOutputPercent());
-        SmartDashboard.putNumber("Encoder ang.: ", m_DutyCycleEncoder.getDistance());
-        SmartDashboard.putNumber("Encoder val.: ", m_DutyCycleEncoder.get());
+        SmartDashboard.putNumber("Intake ang.: ", m_DutyCycleEncoder.getDistance());
+        SmartDashboard.putNumber("Intake encoder val.: ", m_DutyCycleEncoder.get());
         SmartDashboard.putBoolean("isConnected: ", m_DutyCycleEncoder.isConnected());
 
         if (Math.abs(getMeasurement()) > 360)

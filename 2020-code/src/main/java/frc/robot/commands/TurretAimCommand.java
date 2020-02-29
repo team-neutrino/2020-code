@@ -62,9 +62,7 @@ public class TurretAimCommand extends CommandBase
             currentPosition = m_turret.getTurretAngle();
             SmartDashboard.putNumber("Turretangle", currentPosition);
             double angleSet = currentPosition + m_headingError;
-            System.out.println("trying to set angle to " + angleSet);
-            m_turret.setAngle(turretLimit(currentPosition + m_headingError));
-            System.out.println("actually set angle to" + turretLimit(angleSet));
+            m_turret.autoSetAngle(turretLimit(currentPosition + m_headingError));
         }
 
     }

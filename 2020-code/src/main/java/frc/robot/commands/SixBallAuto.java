@@ -22,6 +22,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakePIDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -32,7 +33,7 @@ public class SixBallAuto extends SequentialCommandGroup
      * Creates a new SixBallAuto.
      */
     public SixBallAuto(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, IntakePIDSubsystem p_Intake,
-            DriveSubsystem p_Drive)
+            DriveSubsystem p_Drive, TurretSubsystem p_TurretSubsystem)
     {
         // Add your commands in the super() call, e.g.
         // super(new FooCommand(), new BarCommand());
@@ -54,9 +55,9 @@ public class SixBallAuto extends SequentialCommandGroup
         RamseteCommand sixBallTraj1 = new RamseteCommand(trajectory1, p_Drive::getPose, controller, feedforward,
             DriveConstants.K_DRIVE_KINEMATICS, p_Drive::getWheelSpeeds, leftController, rightController,
             p_Drive::tankDriveVolts, p_Drive);
-
-        addCommands(new InstantCommand(p_Intake::setArmDown),new WaitCommand(.75), new ShootAuton(p_Shooter, p_Hopper, 3),
-            new InstantCommand(p_Intake::setIntakeOn, p_Intake),
+ 
+        addCommands(/*new TurretSetAngleCommand(p_TurretSubsystem, 45.0),*/ new InstantCommand(p_Intake::setArmDown), new WaitCommand(.75), new ShootAuton(p_Shooter, p_Hopper, 3),
+            /*new TurretSetAngleCommand(p_Turret, 0)*/new  InstantCommand(p_Intake::setIntakeOn, p_Intake),
             sixBallTraj0, new InstantCommand(() -> p_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE)), 
             new InstantCommand(p_Hopper::towerShoot),
              new ShootAuton(p_Shooter, p_Hopper, 7));
