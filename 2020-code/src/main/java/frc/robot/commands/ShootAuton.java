@@ -29,6 +29,7 @@ public class ShootAuton extends CommandBase
         m_Shooter = p_Shooter;
         m_Hopper = p_Hopper;
         m_Duration = p_Duration;
+        //TODO: add a velocity parameter
 
     }
 
