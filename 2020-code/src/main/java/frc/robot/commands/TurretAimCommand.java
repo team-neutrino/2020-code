@@ -21,7 +21,7 @@ public class TurretAimCommand extends CommandBase
     private boolean canFlipScanDirection;
     private double m_headingError;
     private double currentPosition;
-    private Timer m_Timer = new Timer(); /*add*/
+    private Timer m_Timer = new Timer(); /* add */
     /**
      * Creates a new TurretAimCommand.
      */
@@ -38,13 +38,14 @@ public class TurretAimCommand extends CommandBase
         scanDirection = false;
         canFlipScanDirection = false;
         m_headingError = 0.0;
+        m_turret.setLightOn();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute()
     {
-        if (m_turret.getValidTarget() == 0 || m_turret.getLightValue() == 1)
+        if (m_turret.getValidTarget() == 0)
         {
             // m_turret.setPower(VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
             // if (Math.abs(m_turret.getTurretAngle()) < VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD
@@ -61,6 +62,7 @@ public class TurretAimCommand extends CommandBase
         }
         else
         {
+            
             m_headingError = m_turret.getHeadingError();
             currentPosition = m_turret.getTurretAngle();
             SmartDashboard.putNumber("Turretangle", currentPosition);
@@ -81,18 +83,11 @@ public class TurretAimCommand extends CommandBase
     @Override
     public boolean isFinished()
     {
-        /*add*/
-        /* 
-        if (m_Timer.get() > 0.3)
-        {
-            return true;
-        } 
-        else
-        {
-            return false;
-        }
-        */
-        /*add*/
+        /* add */
+        /*
+         * if (m_Timer.get() > 0.3) { return true; } else { return false; }
+         */
+        /* add */
         return false;
     }
 

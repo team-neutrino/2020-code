@@ -71,7 +71,7 @@ public class RobotContainer
             () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
         m_Drive.setDefaultCommand(tankDriveCommand);
         m_Hopper.setDefaultCommand(new HopperDefaultCommand(m_Hopper));
-        m_Turret.setDefaultCommand(new TurretAimCommand(m_Turret));
+        //m_Turret.setDefaultCommand(new TurretAimCommand(m_Turret));
         configureButtonBindings();
         m_SixBallAuto = new SixBallAuto(m_Shooter, m_Hopper, m_Intake, m_Drive, m_Turret);
         m_ThreeAuton = new ThreeAuton(m_Shooter, m_Hopper, m_Drive, 10);
@@ -92,16 +92,17 @@ public class RobotContainer
             m_climber::elevatorStop, m_climber);
 
         m_back.whileHeld(new ParallelCommandGroup(new InstantCommand(m_climber::winchClimb, m_climber),
-            new InstantCommand(() -> m_Turret.setPointSetAngle(0), m_Turret))).whenReleased(new InstantCommand(m_climber::winchStop, m_climber));
+            new InstantCommand(() -> m_Turret.setPointSetAngle(0), m_Turret))).whenReleased(
+                new InstantCommand(m_climber::winchStop, m_climber));
 
         m_LJoy8.whenHeld(new InstantCommand(m_climber::winchReverse, m_climber)).whenReleased(m_climber::winchStop,
             m_climber);
-        m_B.whenHeld(new InstantCommand(m_Turret::toggleLight));
+        //m_B.whenHeld(new TurretAimCommand(m_Turret));
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 80000).alongWith(
-            new InstantCommand(m_Turret::setLightOn, m_Turret))).whenReleased(
+            new TurretAimCommand(m_Turret))).whenReleased(
                 new InstantCommand(m_Turret::setLightOff, m_Turret));
         m_Y.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 95000).alongWith(
-            new InstantCommand(m_Turret::setLightOn, m_Turret))).whenReleased(
+            new TurretAimCommand(m_Turret))).whenReleased(
                 new InstantCommand(m_Turret::setLightOff, m_Turret)); //TODO: set light on and off properly
 
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false).whenReleased(
@@ -133,8 +134,8 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         m_Drive.initAuton();
-        //return m_SixBallAuto;
-        return m_ThreeAuton;
+        return m_SixBallAuto;
+        // return m_ThreeAuton;
     }
 
 }

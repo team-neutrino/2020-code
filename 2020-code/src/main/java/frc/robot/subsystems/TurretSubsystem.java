@@ -138,4 +138,21 @@ public class TurretSubsystem extends SubsystemBase
     {
         camMode.setNumber(0);
     }
+
+    public double turretLimit(double p_angle)
+    {   
+        double setpoint = p_angle;
+        double forwardRotationLimit = 135;
+        double backwardRotationLimit = -135;
+
+        if (setpoint > forwardRotationLimit)
+        {
+            setpoint = forwardRotationLimit;
+        }
+        if (setpoint < backwardRotationLimit)
+        {
+            setpoint = backwardRotationLimit;
+        }
+        return setpoint;
+    }
 }

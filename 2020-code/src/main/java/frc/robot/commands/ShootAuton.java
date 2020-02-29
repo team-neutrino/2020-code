@@ -24,6 +24,7 @@ public class ShootAuton extends CommandBase
      */
     public ShootAuton(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, double p_Duration)
     {
+        System.out.println("**** shootAuton");
         addRequirements(p_Shooter, p_Hopper);
         m_Shooter = p_Shooter;
         m_Hopper = p_Hopper;

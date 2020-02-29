@@ -16,6 +16,8 @@ public class TurretSetAngleCommand extends CommandBase
     private double m_Angle;
     private TurretSubsystem m_Turret;
     private Timer m_Timer = new Timer();
+    private double m_headingError;
+    private double currentPosition;
     /**
      * Creates a new Turret.
      */
@@ -38,7 +40,20 @@ public class TurretSetAngleCommand extends CommandBase
     @Override
     public void execute()
     {
+      if(m_Timer.get() < 0.5)
+      {
         m_Turret.autoSetAngle(m_Angle);
+      }
+      else
+      {
+
+        m_headingError = m_Turret.getHeadingError();
+            currentPosition = m_Turret.getTurretAngle();
+            m_Turret.autoSetAngle(m_Turret.turretLimit(currentPosition + m_headingError));
+
+      }
+        
+
 
     }
 
@@ -47,15 +62,17 @@ public class TurretSetAngleCommand extends CommandBase
     public void end(boolean interrupted)
     {
         m_Turret.setPower(0);
-        new TurretAimCommand(m_Turret).schedule();
+        // new TurretAimCommand(m_Turret).schedule();
+        System.out.println("***** end TurretSetAngleCommand");
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished()
     {
-        if (m_Timer.get() > 0.625)
+        if (m_Timer.get() > 15)
         {
+            System.out.println("***** finished TurretSetAngleCommand");
             return true;
         }
         else

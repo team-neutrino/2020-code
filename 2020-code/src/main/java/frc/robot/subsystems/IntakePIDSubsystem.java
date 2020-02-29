@@ -93,5 +93,7 @@ public class IntakePIDSubsystem extends PIDSubsystem
     {
         disable();
         m_IntakeArmMotor.set(ControlMode.PercentOutput, 0.3);
+
+        System.out.println("***** setArmDown");
     }
 }

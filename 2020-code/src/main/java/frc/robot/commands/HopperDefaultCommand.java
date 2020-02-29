@@ -58,7 +58,7 @@ public class HopperDefaultCommand extends CommandBase
             m_HopperSubsystem.startTimer();
         }
         m_HopperSubsystem.setPrevBotBeam(bottomBeam);
-        
+
     }
 
     // Called once the command ends or is interrupted.
