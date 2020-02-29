@@ -28,12 +28,14 @@ public class HopperSubsystem extends SubsystemBase
     private TalonSRX m_intakeHopperMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_HOPPER);
     private Timer m_timer = new Timer();
     private boolean m_prevBotBeam;
+    private ShooterSubsystem m_Shooter;
 
-    public HopperSubsystem()
+    public HopperSubsystem(ShooterSubsystem p_Shooter)
     {
         m_towerMotor.setInverted(true);
         m_intakeHopperMotor.setInverted(false);
         m_timer.reset();
+        m_Shooter = p_Shooter;
     }
 
     //used when not shooting will run until ball is at top and ready
@@ -48,6 +50,18 @@ public class HopperSubsystem extends SubsystemBase
     {
         m_towerMotor.set(ControlMode.PercentOutput, 1);
         m_intakeHopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
+    }
+
+    public void conditionalTowerShoot()
+    {
+        if (m_Shooter.getVelocity() > 60000)
+        {
+            m_towerMotor.set(ControlMode.PercentOutput, 1);
+        }
+        else
+        {
+            m_towerMotor.set(ControlMode.PercentOutput, 0);
+        }
     }
 
     public void reverse()

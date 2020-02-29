@@ -36,7 +36,7 @@ public class RobotContainer
     private final ShooterSubsystem m_Shooter = new ShooterSubsystem();
     private final DriveSubsystem m_Drive = new DriveSubsystem();
     private final ClimberSubsystem m_climber = new ClimberSubsystem();
-    private final HopperSubsystem m_Hopper = new HopperSubsystem();
+    private final HopperSubsystem m_Hopper = new HopperSubsystem(m_Shooter);
     private final TurretSubsystem m_Turret = new TurretSubsystem();
 
     private Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
@@ -92,24 +92,24 @@ public class RobotContainer
             m_climber::elevatorStop, m_climber);
 
         m_back.whileHeld(new ParallelCommandGroup(new InstantCommand(m_climber::winchClimb, m_climber),
-            new InstantCommand(() -> m_Turret.setPointSetAngle(0), m_Turret),
-            new InstantCommand(m_Turret::setLightOff, m_Turret)));
+            new InstantCommand(() -> m_Turret.setPointSetAngle(0), m_Turret))).whenReleased(new InstantCommand(m_climber::winchStop, m_climber));
 
         m_LJoy8.whenHeld(new InstantCommand(m_climber::winchReverse, m_climber)).whenReleased(m_climber::winchStop,
             m_climber);
-
+        m_B.whenHeld(new InstantCommand(m_Turret::toggleLight));
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 80000).alongWith(
-            new InstantCommand(m_Turret::toggleLight, m_Turret)));
+            new InstantCommand(m_Turret::setLightOn, m_Turret))).whenReleased(
+                new InstantCommand(m_Turret::setLightOff, m_Turret));
         m_Y.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 95000).alongWith(
-            new InstantCommand(m_Turret::toggleLight, m_Turret))); //TODO: set light on and off properly
+            new InstantCommand(m_Turret::setLightOn, m_Turret))).whenReleased(
+                new InstantCommand(m_Turret::setLightOff, m_Turret)); //TODO: set light on and off properly
 
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false).whenReleased(
             (new InstantCommand(m_Hopper::stop, m_Hopper)));
         m_BumperRight.whileHeld(new InstantCommand(m_Hopper::reverse, m_Hopper), false).whenReleased(
             (new InstantCommand(m_Hopper::stop, m_Hopper)));
         m_rightJoystickButton.toggleWhenActive(
-            new TurretOverrideCommand(m_Turret, () -> m_OperatorController.getX(Hand.kRight)).alongWith(
-                new CamModeToggleCommand(m_Turret)));
+            new TurretOverrideCommand(m_Turret, () -> m_OperatorController.getX(Hand.kRight)));
 
         m_TriggerLeft.whenActive(
             new InstantCommand(m_Intake::setIntakeOn, m_Intake).alongWith(new InstantCommand(m_Intake::setArmDown)));
@@ -133,8 +133,8 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         m_Drive.initAuton();
-        return m_SixBallAuto;
-        //return m_ThreeAuton;
+        //return m_SixBallAuto;
+        return m_ThreeAuton;
     }
 
 }

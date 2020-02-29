@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.VisionConstants;
@@ -20,6 +21,7 @@ public class TurretAimCommand extends CommandBase
     private boolean canFlipScanDirection;
     private double m_headingError;
     private double currentPosition;
+    private Timer m_Timer = new Timer(); /*add*/
     /**
      * Creates a new TurretAimCommand.
      */
@@ -55,6 +57,7 @@ public class TurretAimCommand extends CommandBase
             //     canFlipScanDirection = false;
             //     scanDirection = !scanDirection;
             // }
+            m_turret.setPower(0);
         }
         else
         {
@@ -78,6 +81,18 @@ public class TurretAimCommand extends CommandBase
     @Override
     public boolean isFinished()
     {
+        /*add*/
+        /* 
+        if (m_Timer.get() > 0.3)
+        {
+            return true;
+        } 
+        else
+        {
+            return false;
+        }
+        */
+        /*add*/
         return false;
     }
 

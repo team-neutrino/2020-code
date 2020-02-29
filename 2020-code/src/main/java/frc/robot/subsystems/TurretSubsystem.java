@@ -31,6 +31,7 @@ public class TurretSubsystem extends SubsystemBase
     private double m_turretAngle;
     private double m_headingError;
     private double m_getValidTarget;
+    private double m_dynamicOffset;
     /**
      * Creates a new TurretSubsystem.
      */
@@ -43,13 +44,14 @@ public class TurretSubsystem extends SubsystemBase
         camMode = table.getEntry("camMode");
         m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
         m_turretMotor.setNeutralMode(NeutralMode.Brake);
+        m_dynamicOffset = m_turretMotor.getSelectedSensorPosition();
     }
 
     @Override
     public void periodic()
     {
         SmartDashboard.putNumber("Turret Angle", getTurretAngle());
-        m_turretAngle = m_turretMotor.getSelectedSensorPosition();
+        m_turretAngle = m_turretMotor.getSelectedSensorPosition() - m_dynamicOffset;
         m_headingError = tX.getDouble(0.0);
         m_getValidTarget = tV.getDouble(0.0);
     }
@@ -66,7 +68,7 @@ public class TurretSubsystem extends SubsystemBase
     public void setPointSetAngle(double p_angle)
     {
         double currentAngle = getTurretAngle();
-        double kP = 0.12;
+        double kP = 0.07;
         double setpoint = p_angle;
         double error = setpoint - currentAngle;
         m_turretMotor.set(ControlMode.PercentOutput, kP * error);
@@ -74,7 +76,6 @@ public class TurretSubsystem extends SubsystemBase
 
     public double getTurretAngle()
     {
-
         return m_turretAngle;
     }
 

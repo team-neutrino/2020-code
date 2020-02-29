@@ -47,6 +47,7 @@ public class TurretSetAngleCommand extends CommandBase
     public void end(boolean interrupted)
     {
         m_Turret.setPower(0);
+        new TurretAimCommand(m_Turret).schedule();
     }
 
     // Returns true when the command should end.
@@ -55,11 +56,11 @@ public class TurretSetAngleCommand extends CommandBase
     {
         if (m_Timer.get() > 0.625)
         {
-            return false;
+            return true;
         }
         else
         {
-            return true;
+            return false;
         }
     }
 }
