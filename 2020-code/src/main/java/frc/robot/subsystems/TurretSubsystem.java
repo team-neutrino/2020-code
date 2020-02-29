@@ -70,7 +70,6 @@ public class TurretSubsystem extends SubsystemBase
         m_turretMotor.set(ControlMode.PercentOutput, kP * error);
     }
 
-
     public double getTurretAngle()
     {
 
@@ -101,7 +100,7 @@ public class TurretSubsystem extends SubsystemBase
     public void toggleLight()
     {
         Number mode = ledMode.getNumber(0);
-        if (mode.intValue() ==  0 || mode.intValue() == 3)
+        if (mode.intValue() == 0 || mode.intValue() == 3)
         {
             ledMode.setNumber(1);
 
@@ -121,6 +120,7 @@ public class TurretSubsystem extends SubsystemBase
     {
         ledMode.setNumber(3);
     }
+
     public void setLightOff()
     {
         ledMode.setNumber(1);

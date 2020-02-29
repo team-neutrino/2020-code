@@ -91,21 +91,17 @@ public class RobotContainer
         m_X.whileHeld(new InstantCommand(m_climber::elevatorDown, m_climber), true).whenReleased(
             m_climber::elevatorStop, m_climber);
 
-        m_back.whileHeld(
-            new ParallelCommandGroup(
-                new InstantCommand(m_climber::winchClimb, m_climber),
-                new InstantCommand(() -> m_Turret.setPointSetAngle(0), m_Turret),
-                new InstantCommand(m_Turret::setLightOff, m_Turret)));
+        m_back.whileHeld(new ParallelCommandGroup(new InstantCommand(m_climber::winchClimb, m_climber),
+            new InstantCommand(() -> m_Turret.setPointSetAngle(0), m_Turret),
+            new InstantCommand(m_Turret::setLightOff, m_Turret)));
 
         m_LJoy8.whenHeld(new InstantCommand(m_climber::winchReverse, m_climber)).whenReleased(m_climber::winchStop,
             m_climber);
 
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 80000).alongWith(
-            new InstantCommand(m_Turret::toggleLight, m_Turret)
-        ));
+            new InstantCommand(m_Turret::toggleLight, m_Turret)));
         m_Y.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 95000).alongWith(
-            new InstantCommand(m_Turret::toggleLight, m_Turret)
-        ));
+            new InstantCommand(m_Turret::toggleLight, m_Turret)));
 
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false).whenReleased(
             (new InstantCommand(m_Hopper::stop, m_Hopper)));
@@ -118,7 +114,7 @@ public class RobotContainer
             new InstantCommand(m_Intake::setIntakeOn, m_Intake).alongWith(new InstantCommand(m_Intake::setArmDown)));
         m_TriggerLeft.whenInactive(new InstantCommand(m_Intake::setIntakeOff, m_Intake).alongWith(
             new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE))));
-       // m_Y.whenHeld(new TurretAimCommand(m_Turret));
+        // m_Y.whenHeld(new TurretAimCommand(m_Turret));
         m_UpPovButton.whileHeld(new InstantCommand(() -> m_Turret.setPointSetAngle(-90), m_Turret)).whenReleased(
             new InstantCommand(() -> m_Turret.setPower(0), m_Turret));
         m_RightPovButton.whileHeld(new InstantCommand(() -> m_Turret.setPointSetAngle(0), m_Turret)).whenReleased(

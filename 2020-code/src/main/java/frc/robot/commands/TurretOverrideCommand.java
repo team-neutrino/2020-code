@@ -36,7 +36,7 @@ public class TurretOverrideCommand extends CommandBase
     @Override
     public void execute()
     {
-        m_turret.setPower(0.5*m_overridePower.getAsDouble());
+        m_turret.setPower(0.5 * m_overridePower.getAsDouble());
     }
 
     // Called once the command ends or is interrupted.

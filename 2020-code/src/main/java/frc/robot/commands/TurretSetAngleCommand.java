@@ -11,48 +11,55 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class TurretSetAngleCommand extends CommandBase {
-  private double m_Angle;
-  private TurretSubsystem m_Turret;
-  private Timer m_Timer = new Timer();
-  /**
-   * Creates a new Turret.
-   */
-  public TurretSetAngleCommand(TurretSubsystem p_Turret, double p_Angle) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_Angle = p_Angle;
-    m_Turret = p_Turret;
-    addRequirements(p_Turret);
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    m_Timer.start();
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    m_Turret.autoSetAngle(m_Angle);
-
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    m_Turret.setPower(0);
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    if(m_Timer.get() > 0.625)
+public class TurretSetAngleCommand extends CommandBase
+{
+    private double m_Angle;
+    private TurretSubsystem m_Turret;
+    private Timer m_Timer = new Timer();
+    /**
+     * Creates a new Turret.
+     */
+    public TurretSetAngleCommand(TurretSubsystem p_Turret, double p_Angle)
     {
-      return false;
+        // Use addRequirements() here to declare subsystem dependencies.
+        m_Angle = p_Angle;
+        m_Turret = p_Turret;
+        addRequirements(p_Turret);
     }
-    else{
-    return true;
+
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize()
+    {
+        m_Timer.start();
     }
-  }
+
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute()
+    {
+        m_Turret.autoSetAngle(m_Angle);
+
+    }
+
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted)
+    {
+        m_Turret.setPower(0);
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished()
+    {
+        if (m_Timer.get() > 0.625)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 }
