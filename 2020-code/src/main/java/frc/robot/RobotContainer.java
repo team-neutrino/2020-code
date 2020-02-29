@@ -101,14 +101,15 @@ public class RobotContainer
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 80000).alongWith(
             new InstantCommand(m_Turret::toggleLight, m_Turret)));
         m_Y.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 95000).alongWith(
-            new InstantCommand(m_Turret::toggleLight, m_Turret)));
+            new InstantCommand(m_Turret::toggleLight, m_Turret))); //TODO: set light on and off properly
 
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false).whenReleased(
             (new InstantCommand(m_Hopper::stop, m_Hopper)));
         m_BumperRight.whileHeld(new InstantCommand(m_Hopper::reverse, m_Hopper), false).whenReleased(
             (new InstantCommand(m_Hopper::stop, m_Hopper)));
         m_rightJoystickButton.toggleWhenActive(
-            new TurretOverrideCommand(m_Turret, () -> m_OperatorController.getX(Hand.kRight)));
+            new TurretOverrideCommand(m_Turret, () -> m_OperatorController.getX(Hand.kRight)).alongWith(
+                new CamModeToggleCommand(m_Turret)));
 
         m_TriggerLeft.whenActive(
             new InstantCommand(m_Intake::setIntakeOn, m_Intake).alongWith(new InstantCommand(m_Intake::setArmDown)));

@@ -23,7 +23,7 @@ public final class Constants
 
     public static final class DriveConstants
     {
-        //TODO get actual constants
+
         public static final double KS_VOLTS = 0.188;
         public static final double KV_VOLT_SECONDS_PER_METER = 3.24;
         public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.53;
@@ -73,7 +73,7 @@ public final class Constants
 
     public static final class ShooterConstants
     {
-        //TODO add RPM conversion
+
         public static final double WHEEL_P = 0.04;
         public static final double WHEEL_I = 0;
         public static final double WHEEL_D = 2;

@@ -27,6 +27,7 @@ public class TurretSubsystem extends SubsystemBase
     private NetworkTableEntry tX;
     private NetworkTableEntry tV;
     private NetworkTableEntry ledMode;
+    private NetworkTableEntry camMode;
     private double m_turretAngle;
     private double m_headingError;
     private double m_getValidTarget;
@@ -39,6 +40,7 @@ public class TurretSubsystem extends SubsystemBase
         tX = table.getEntry("tx");
         tV = table.getEntry("tv");
         ledMode = table.getEntry("ledMode");
+        camMode = table.getEntry("camMode");
         m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
         m_turretMotor.setNeutralMode(NeutralMode.Brake);
     }
@@ -124,5 +126,15 @@ public class TurretSubsystem extends SubsystemBase
     public void setLightOff()
     {
         ledMode.setNumber(1);
+    }
+
+    public void setDriverCamMode()
+    {
+        camMode.setNumber(1);
+    }
+
+    public void setVisionCamMode()
+    {
+        camMode.setNumber(0);
     }
 }
