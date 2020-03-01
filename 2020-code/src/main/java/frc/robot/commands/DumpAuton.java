@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -58,7 +59,7 @@ public class DumpAuton extends SequentialCommandGroup
                   new WaitCommand(1),
                   new InstantCommand(p_Intake::setArmDown),
                     new ShootAuton(p_Shooter, p_Hopper, 10, 80000),
-                    new InstantCommand(() -> p_Drive.tankDrive(0.25, 0.25))
+                    new RunCommand(() -> p_Drive.tankDrive(0.25, 0.25), p_Drive)
                     )));
     }
 }

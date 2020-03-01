@@ -61,6 +61,7 @@ public class RobotContainer
     private POVButton m_DownPovButton = new POVButton(m_OperatorController, 180);
     private SixBallAuto m_SixBallAuto;
     private ThreeAuton m_ThreeAuton;
+    private DumpAuton m_DumpAuton;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -74,6 +75,7 @@ public class RobotContainer
         //m_Turret.setDefaultCommand(new TurretAimCommand(m_Turret));
         configureButtonBindings();
         m_SixBallAuto = new SixBallAuto(m_Shooter, m_Hopper, m_Intake, m_Drive, m_Turret);
+        m_DumpAuton = new DumpAuton(m_Shooter, m_Hopper, m_Intake, m_Drive, m_Turret);
         m_ThreeAuton = new ThreeAuton(m_Shooter, m_Hopper, m_Drive, 10);
         //limelightFeed = new HttpCamera("limeight", "http://limelight.local:5800/stream.mjpg");
     }
@@ -134,8 +136,9 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         m_Drive.initAuton();
-        //return m_SixBallAuto;
-        return m_ThreeAuton;
+        // return m_SixBallAuto;
+        // return m_ThreeAuton;
+        return m_DumpAuton;
     }
 
 }

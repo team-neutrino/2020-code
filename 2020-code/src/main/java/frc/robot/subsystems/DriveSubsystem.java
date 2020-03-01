@@ -81,7 +81,7 @@ public class DriveSubsystem extends SubsystemBase
     }
 
     public void tankDrive(double leftPower, double rightPower)
-    {
+    {   System.out.println("Driving");
         m_leftMotors.set(-leftPower);
         m_rightMotors.set(-rightPower);
     }
