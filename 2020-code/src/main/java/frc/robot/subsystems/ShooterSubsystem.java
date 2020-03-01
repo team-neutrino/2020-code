@@ -40,7 +40,7 @@ public class ShooterSubsystem extends SubsystemBase
 
     public ShooterSubsystem()
     {
-        SmartDashboard.putNumber("ShooterZoom", 0);
+        SmartDashboard.putNumber("ShooterGo", 0);
         conifgSRX();
         m_wheelMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL);
         m_wheelMotor2 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
