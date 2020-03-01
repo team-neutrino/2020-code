@@ -133,6 +133,7 @@ public class HopperSubsystem extends SubsystemBase
     {
         SmartDashboard.putBoolean("Beam Break 1", m_beamBreakBot.get());
         SmartDashboard.putBoolean("Beam Break 2", m_beamBreakTop.get());
+        rollerTowardsIntake();
         /*
         if (m_rollerTimer.get() < 1)
         {

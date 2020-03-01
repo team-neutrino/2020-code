@@ -63,6 +63,7 @@ public class SixBallAuto extends SequentialCommandGroup
             new WaitCommand(.75),
             new ShootAuton(p_Shooter, p_Hopper, 3),
             new InstantCommand(p_Intake::setIntakeOn, p_Intake), sixBallTraj0,
+            new InstantCommand(() -> p_Drive.tankDrive(0, 0)),
             new InstantCommand(() -> p_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE)),
             new ShootAuton(p_Shooter, p_Hopper, 7))
             ));
