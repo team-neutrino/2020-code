@@ -135,20 +135,9 @@ public class HopperSubsystem extends SubsystemBase
         SmartDashboard.putBoolean("Beam Break 2", m_beamBreakTop.get());
         rollerTowardsIntake();
         /*
-        if (m_rollerTimer.get() < 1)
-        {
-            rollerTowardsIntake();
-        }
-        else 
-        {
-            rollerTowardsTower();
-        }
-
-        if (m_rollerTimer.get() > 2)
-        {
-            m_rollerTimer.reset();
-        }
-        */
+         * if (m_rollerTimer.get() < 1) { rollerTowardsIntake(); } else { rollerTowardsTower(); } if
+         * (m_rollerTimer.get() > 2) { m_rollerTimer.reset(); }
+         */
     }
 
 }

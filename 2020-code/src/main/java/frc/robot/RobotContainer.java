@@ -98,11 +98,11 @@ public class RobotContainer
         m_LJoy8.whenHeld(new InstantCommand(m_climber::winchReverse, m_climber)).whenReleased(m_climber::winchStop,
             m_climber);
         //m_B.whenHeld(new TurretAimCommand(m_Turret));
-        m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 80000).alongWith(
-            new TurretAimCommand(m_Turret))).whenReleased(
+        m_A.whenHeld(
+            new ShooterSetSpeedCommand(m_Shooter, 80000).alongWith(new TurretAimCommand(m_Turret))).whenReleased(
                 new InstantCommand(m_Turret::setLightOff, m_Turret));
-        m_Y.whenHeld(new ShooterSetSpeedCommand(m_Shooter, 95000).alongWith(
-            new TurretAimCommand(m_Turret))).whenReleased(
+        m_Y.whenHeld(
+            new ShooterSetSpeedCommand(m_Shooter, 95000).alongWith(new TurretAimCommand(m_Turret))).whenReleased(
                 new InstantCommand(m_Turret::setLightOff, m_Turret)); //TODO: set light on and off properly
 
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false).whenReleased(

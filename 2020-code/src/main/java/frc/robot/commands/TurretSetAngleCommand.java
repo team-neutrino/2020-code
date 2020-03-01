@@ -40,26 +40,24 @@ public class TurretSetAngleCommand extends CommandBase
     @Override
     public void execute()
     {
-      if(m_Timer.get() < 0.5)
-      {
-        m_Turret.autoSetAngle(m_Angle);
-      }
-      else
-      {
+        if (m_Timer.get() < 0.5)
+        {
+            m_Turret.autoSetAngle(m_Angle);
+        }
+        else
+        {
 
-        m_headingError = m_Turret.getHeadingError();
+            m_headingError = m_Turret.getHeadingError();
             currentPosition = m_Turret.getTurretAngle();
-            if(currentPosition < 90)
+            if (currentPosition < 90)
             {
-            m_Turret.autoSetAngle(m_Turret.turretLimit(currentPosition + m_headingError));
+                m_Turret.autoSetAngle(m_Turret.turretLimit(currentPosition + m_headingError));
             }
             else
             {
                 m_Turret.setPower(0);
             }
-      }
-        
-
+        }
 
     }
 

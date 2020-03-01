@@ -18,17 +18,19 @@ public class ShootAuton extends CommandBase
     private HopperSubsystem m_Hopper;
     private double m_Duration;
     private Timer m_Timer = new Timer();
+    private double m_Velocity;
 
     /**
      * Creates a new ShootAuton.
      */
-    public ShootAuton(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, double p_Duration)
+    public ShootAuton(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, double p_Duration, double p_Velocity)
     {
         System.out.println("**** shootAuton");
         addRequirements(p_Shooter, p_Hopper);
         m_Shooter = p_Shooter;
         m_Hopper = p_Hopper;
         m_Duration = p_Duration;
+        m_Velocity = p_Velocity;
         //TODO: add a velocity parameter
 
     }
@@ -38,14 +40,14 @@ public class ShootAuton extends CommandBase
     public void initialize()
     {
         m_Timer.start();
-        m_Shooter.setVelocity(80000);
+        m_Shooter.setVelocity(m_Velocity);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute()
     {
-        if (m_Timer.get() > 1)
+        if (m_Timer.get() > 1.2)
         {
             m_Hopper.towerShoot();
         }
