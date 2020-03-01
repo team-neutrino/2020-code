@@ -27,11 +27,13 @@ public class HopperSubsystem extends SubsystemBase
     private TalonSRX m_towerMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_TOWER);
     private TalonSRX m_intakeHopperMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_HOPPER);
     private Timer m_timer = new Timer();
+    private Timer m_rollerTimer = new Timer();
     private boolean m_prevBotBeam;
     private ShooterSubsystem m_Shooter;
 
     public HopperSubsystem(ShooterSubsystem p_Shooter)
     {
+        m_rollerTimer.start();
         m_towerMotor.setInverted(true);
         m_intakeHopperMotor.setInverted(false);
         m_timer.reset();
@@ -116,12 +118,36 @@ public class HopperSubsystem extends SubsystemBase
         return m_beamBreakTop.get();
     }
 
+    public void rollerTowardsIntake()
+    {
+        m_intakeHopperMotor.set(ControlMode.PercentOutput, 0.3);
+    }
+
+    public void rollerTowardsTower()
+    {
+        m_intakeHopperMotor.set(ControlMode.PercentOutput, -0.3);
+    }
+
     @Override
     public void periodic()
     {
         SmartDashboard.putBoolean("Beam Break 1", m_beamBreakBot.get());
         SmartDashboard.putBoolean("Beam Break 2", m_beamBreakTop.get());
-        m_intakeHopperMotor.set(ControlMode.PercentOutput, 0.3);
+        /*
+        if (m_rollerTimer.get() < 1)
+        {
+            rollerTowardsIntake();
+        }
+        else 
+        {
+            rollerTowardsTower();
+        }
+
+        if (m_rollerTimer.get() > 2)
+        {
+            m_rollerTimer.reset();
+        }
+        */
     }
 
 }
