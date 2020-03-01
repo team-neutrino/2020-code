@@ -13,6 +13,11 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
+/**
+ * Implement in replacement of SixBallAuto, 
+ * in the case that SixBallAuto is ineffective 
+ * due to match specifics.
+ */
 public class ThreeAuton extends CommandBase
 {
     private ShooterSubsystem m_Shooter;
@@ -34,7 +39,9 @@ public class ThreeAuton extends CommandBase
         m_Duration = p_Duration;
     }
 
-    // Called when the command is initially scheduled.
+    /**
+     * Called when the command is initially scheduled.
+     */
     @Override
     public void initialize()
     {
@@ -42,7 +49,9 @@ public class ThreeAuton extends CommandBase
         m_Shooter.setVelocity(78000);
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
+    /**
+     * Called every time the scheduler runs while the command is scheduled.
+     */
     @Override
     public void execute()
     {
@@ -53,19 +62,23 @@ public class ThreeAuton extends CommandBase
         if (m_Timer.get() >= 5)
         {
             m_Shooter.setPower(0);
-            m_Drive.tankDrive(.25, .25);
+            m_Drive.tankDrive(-0.25, -0.25);
         }
 
     }
 
-    // Called once the command ends or is interrupted.
+    /**
+     * Called once the command ends or is interrupted.
+     */
     @Override
     public void end(boolean interrupted)
     {
         m_Hopper.stop();
     }
 
-    // Returns true when the command should end.
+/**
+ * @return true when command should
+ */
     @Override
     public boolean isFinished()
     {

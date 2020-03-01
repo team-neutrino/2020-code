@@ -134,8 +134,8 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         m_Drive.initAuton();
-        return m_SixBallAuto;
-        // return m_ThreeAuton;
+        //return m_SixBallAuto;
+        return m_ThreeAuton;
     }
 
 }

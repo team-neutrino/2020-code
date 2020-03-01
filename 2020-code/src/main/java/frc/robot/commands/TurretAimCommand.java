@@ -21,7 +21,7 @@ public class TurretAimCommand extends CommandBase
     private boolean canFlipScanDirection;
     private double m_headingError;
     private double currentPosition;
-    private Timer m_Timer = new Timer(); /* add */
+
     /**
      * Creates a new TurretAimCommand.
      */
@@ -45,28 +45,17 @@ public class TurretAimCommand extends CommandBase
     @Override
     public void execute()
     {
+        // If there is no valid target, sets power to 0
         if (m_turret.getValidTarget() == 0)
         {
-            // m_turret.setPower(VisionConstants.SCAN_SPEED * (scanDirection ? 1.0 : -1.0));
-            // if (Math.abs(m_turret.getTurretAngle()) < VisionConstants.SCAN_DIRECTION_SWITCH_RESET_THRESHOLD
-            //         && !canFlipScanDirection)
-            // {
-            //     canFlipScanDirection = true;
-            // }
-            // if (canFlipScanDirection && Math.abs(m_turret.getTurretAngle()) < 180)
-            // {
-            //     canFlipScanDirection = false;
-            //     scanDirection = !scanDirection;
-            // }
             m_turret.setPower(0);
         }
         else
         {
-
+            // Sets angle to desired turret angle plus error if there is a target
             m_headingError = m_turret.getHeadingError();
             currentPosition = m_turret.getTurretAngle();
             SmartDashboard.putNumber("Turretangle", currentPosition);
-            double angleSet = currentPosition + m_headingError;
             m_turret.autoSetAngle(turretLimit(currentPosition + m_headingError));
         }
 
@@ -76,6 +65,7 @@ public class TurretAimCommand extends CommandBase
     @Override
     public void end(boolean interrupted)
     {
+        // Stops turret when command ends
         m_turret.setPower(0);
     }
 
@@ -83,23 +73,15 @@ public class TurretAimCommand extends CommandBase
     @Override
     public boolean isFinished()
     {
-        /* add */
-        /*
-         * if (m_Timer.get() > 0.3) { return true; } else { return false; }
-         */
-        /* add */
         return false;
     }
 
     /**
-     * Takes an angle setopint relative to robot and returns shortest distance setpoint to turn to that wont break
-     * wires.
+     * @return Shortest distance setpoint to turn to that wont break wires
      **/
     private double turretLimit(double p_angle)
     {
         double setpoint = p_angle;
-        // double rotationLimit = 180;
-        // double rotationOverlap = 20;
         double forwardRotationLimit = 135;
         double backwardRotationLimit = -135;
 
