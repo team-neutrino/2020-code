@@ -14,9 +14,7 @@ import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 /**
- * Implement in replacement of SixBallAuto, 
- * in the case that SixBallAuto is ineffective 
- * due to match specifics.
+ * Implement in replacement of SixBallAuto, in the case that SixBallAuto is ineffective due to match specifics.
  */
 public class ThreeAuton extends CommandBase
 {
@@ -76,9 +74,9 @@ public class ThreeAuton extends CommandBase
         m_Hopper.stop();
     }
 
-/**
- * @return true when command should
- */
+    /**
+     * @return true when command should
+     */
     @Override
     public boolean isFinished()
     {

@@ -54,12 +54,8 @@ public class DumpAuton extends SequentialCommandGroup
         addCommands(
             // TurretSetAngleCommand coexists with the default TurretAimCommand
             // as a ParallelCommandGroup
-            new TurretSetAngleCommand(p_TurretSubsystem, -90.0).alongWith(
-                new SequentialCommandGroup(
-                  new WaitCommand(1),
-                  new InstantCommand(p_Intake::setArmDown),
-                    new ShootAuton(p_Shooter, p_Hopper, 10, 80000),
-                    new RunCommand(() -> p_Drive.tankDrive(0.25, 0.25), p_Drive)
-                    )));
+            new TurretSetAngleCommand(p_TurretSubsystem, -90.0).alongWith(new SequentialCommandGroup(new WaitCommand(1),
+                new InstantCommand(p_Intake::setArmDown), new ShootAuton(p_Shooter, p_Hopper, 10, 80000),
+                new RunCommand(() -> p_Drive.tankDrive(0.25, 0.25), p_Drive))));
     }
 }
