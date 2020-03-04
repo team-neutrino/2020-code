@@ -13,14 +13,16 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterSetSpeedCommand extends CommandBase
 {
     private ShooterSubsystem m_shooter;
+    private double m_speed;
     /**
      * Creates a new ShooterSetSpeedCommand.
      */
-    public ShooterSetSpeedCommand(ShooterSubsystem p_shooter)
+    public ShooterSetSpeedCommand(ShooterSubsystem p_shooter, double p_speed)
     {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(p_shooter);
         m_shooter = p_shooter;
+        m_speed = p_speed;
     }
 
     // Called when the command is initially scheduled.
@@ -33,7 +35,7 @@ public class ShooterSetSpeedCommand extends CommandBase
     @Override
     public void execute()
     {
-        m_shooter.setVelocity(80000);
+        m_shooter.setVelocity(m_speed);
     }
 
     // Called once the command ends or is interrupted.

@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -26,6 +27,7 @@ public class ClimberSubsystem extends SubsystemBase
      */
     public ClimberSubsystem()
     {
+        m_ClimbElevator.setNeutralMode(NeutralMode.Brake);
     }
 
     @Override
@@ -57,5 +59,10 @@ public class ClimberSubsystem extends SubsystemBase
     public void winchStop()
     {
         m_ClimbWinch.set(0);
+    }
+
+    public void winchReverse()
+    {
+        m_ClimbWinch.set(-ClimberConstants.CLIMBER_MOTOR_WINCHPOWER);
     }
 }

@@ -7,65 +7,46 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.HopperSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 
-public class ShootAuton extends CommandBase
+public class CamModeToggleCommand extends CommandBase
 {
-    private ShooterSubsystem m_Shooter;
-    private HopperSubsystem m_Hopper;
-    private double m_Duration;
-    private Timer m_Timer = new Timer();
-    private double m_Velocity;
-
     /**
-     * Creates a new ShootAuton.
+     * Creates a new CamModeToggleCommand. When initalized, sets limelight to driver mode. When cancelled, sets limeight
+     * to vision processing mode.
      */
-    public ShootAuton(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, double p_Duration, double p_Velocity)
+    private TurretSubsystem m_Turret;
+    public CamModeToggleCommand(TurretSubsystem p_Turret)
     {
-        System.out.println("**** shootAuton");
-        addRequirements(p_Shooter, p_Hopper);
-        m_Shooter = p_Shooter;
-        m_Hopper = p_Hopper;
-        m_Duration = p_Duration;
-        m_Velocity = p_Velocity;
-        //TODO: add a velocity parameter
-
+        m_Turret = p_Turret;
+        addRequirements(p_Turret);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize()
     {
-        m_Timer.start();
-        m_Shooter.setVelocity(m_Velocity);
+        m_Turret.setDriverCamMode();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute()
     {
-        if (m_Timer.get() > 1.2)
-        {
-            m_Hopper.towerShoot();
-        }
-
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted)
     {
-        m_Shooter.setPower(0);
-        m_Hopper.stop();
+        m_Turret.setVisionCamMode();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished()
     {
-        return m_Timer.get() >= m_Duration;
+        return false;
     }
 }
