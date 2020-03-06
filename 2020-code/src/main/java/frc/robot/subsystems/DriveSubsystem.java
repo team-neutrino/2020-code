@@ -182,7 +182,7 @@ public class DriveSubsystem extends SubsystemBase
 
     private double deadzone(double input)
     {
-        if (Math.abs(input) > JoystickConstants.DEADZONE_SIZE)
+        if (Math.abs(input) < JoystickConstants.DEADZONE_SIZE)
         {
             return 0;
         }
