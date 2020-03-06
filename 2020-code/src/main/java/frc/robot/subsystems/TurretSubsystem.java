@@ -17,13 +17,17 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.CanId;
 
-import frc.robot.Constants.TurretConstants;
+import edu.wpi.first.wpilibj.Timer;
+
 
 public class TurretSubsystem extends SubsystemBase
 {
     private TalonSRX m_turretMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_TURRET);
+    private Timer m_Timer1 = new Timer();
+    
     private NetworkTableEntry tX;
     private NetworkTableEntry tV;
     private NetworkTableEntry ledMode;
@@ -32,6 +36,8 @@ public class TurretSubsystem extends SubsystemBase
     private double m_headingError;
     private double m_getValidTarget;
     private double m_dynamicOffset;
+    private double currentPosition;
+
     /**
      * Creates a new TurretSubsystem.
      */
@@ -45,6 +51,7 @@ public class TurretSubsystem extends SubsystemBase
         m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
         m_turretMotor.setNeutralMode(NeutralMode.Brake);
         m_dynamicOffset = m_turretMotor.getSelectedSensorPosition();
+        m_Timer1.start();
     }
 
     @Override
@@ -56,22 +63,34 @@ public class TurretSubsystem extends SubsystemBase
         m_getValidTarget = tV.getDouble(0.0);
     }
 
-    public void autoSetAngle(double p_angle)
+    public void ctmSetAngle(double angle)
     {
-        double currentAngle = getTurretAngle();
-        double kP = 0.07;
-        double setpoint = p_angle;
-        double error = setpoint - currentAngle;
-        m_turretMotor.set(ControlMode.PercentOutput, kP * error);
+        if (m_Timer1.get() < 0.5)
+        {
+            setpointSetAngle(angle);
+        }
+        else
+        {
+
+            m_headingError = getHeadingError();
+            currentPosition = getTurretAngle();
+            if (currentPosition < 90)
+            {
+                setpointSetAngle(turretLimit(currentPosition + m_headingError));
+            }
+            else
+            {
+                setPower(0);
+            }
+        }
     }
 
-    public void setPointSetAngle(double p_angle)
+    public void setpointSetAngle(double p_angle)
     {
         double currentAngle = getTurretAngle();
-        double kP = 0.07;
         double setpoint = p_angle;
         double error = setpoint - currentAngle;
-        m_turretMotor.set(ControlMode.PercentOutput, kP * error);
+        m_turretMotor.set(ControlMode.PercentOutput, Constants.TurretConstants.kP * error);
     }
 
     public double getTurretAngle()

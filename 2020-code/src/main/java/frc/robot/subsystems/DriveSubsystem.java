@@ -34,6 +34,7 @@ public class DriveSubsystem extends SubsystemBase
     private final DifferentialDriveOdometry m_odometry;
 
     private double velocity = 0;
+    
     public DriveSubsystem()
     {
         m_leftMotor1.restoreFactoryDefaults();
