@@ -100,10 +100,8 @@ public class TurretSubsystem extends SubsystemBase
         else
         {
             // Sets angle to desired turret angle plus error if there is a target
-            m_headingError = getHeadingError();
-            currentPosition = getTurretAngle();
             SmartDashboard.putNumber("Turretangle", currentPosition);
-            setpointSetAngle(turretLimit(currentPosition + m_headingError));
+            setpointSetAngle(turretLimit(getTurretAngle() + getHeadingError()));
         }
     }
 
