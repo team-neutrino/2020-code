@@ -4,7 +4,6 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -44,8 +43,9 @@ public class TurretSetAngleCommand extends CommandBase
     public void end(boolean interrupted)
     {
         m_Turret.setPower(0);
-         new TurretAimCommand(m_Turret).schedule();
+        new TurretAimCommand(m_Turret).schedule();
         System.out.println("***** end TurretSetAngleCommand");
+        m_Turret.stopTimer();
     }
 
     // Returns true when the command should end.
@@ -61,5 +61,6 @@ public class TurretSetAngleCommand extends CommandBase
         {
             return false;
         }
+
     }
 }

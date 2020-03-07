@@ -6,13 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TurretSubsystem;
+
 public class TurretAimCommand extends CommandBase
 {
 
     private TurretSubsystem m_turret;
-  
 
     /**
      * Creates a new TurretAimCommand.
@@ -56,5 +57,5 @@ public class TurretAimCommand extends CommandBase
     /**
      * @return Shortest distance setpoint to turn to that wont break wires
      **/
-    
+
 }
