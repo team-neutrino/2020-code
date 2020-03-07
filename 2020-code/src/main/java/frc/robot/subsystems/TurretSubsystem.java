@@ -22,11 +22,12 @@ import frc.robot.Constants.CanId;
 
 import edu.wpi.first.wpilibj.Timer;
 
+
 public class TurretSubsystem extends SubsystemBase
 {
     private TalonSRX m_turretMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_TURRET);
     private Timer m_Timer1 = new Timer();
-
+    
     private NetworkTableEntry tX;
     private NetworkTableEntry tV;
     private NetworkTableEntry ledMode;
@@ -50,9 +51,8 @@ public class TurretSubsystem extends SubsystemBase
         m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
         m_turretMotor.setNeutralMode(NeutralMode.Brake);
         m_dynamicOffset = m_turretMotor.getSelectedSensorPosition();
-
+       
     }
-
     public void startTimer()
     {
         m_Timer1.start();
@@ -195,4 +195,10 @@ public class TurretSubsystem extends SubsystemBase
         return setpoint;
     }
 
+    public void stopTimer()
+    {
+        m_Timer1.stop();
+    }
+
+    
 }
