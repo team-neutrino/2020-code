@@ -22,12 +22,11 @@ import frc.robot.Constants.CanId;
 
 import edu.wpi.first.wpilibj.Timer;
 
-
 public class TurretSubsystem extends SubsystemBase
 {
     private TalonSRX m_turretMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_TURRET);
     private Timer m_Timer1 = new Timer();
-    
+
     private NetworkTableEntry tX;
     private NetworkTableEntry tV;
     private NetworkTableEntry ledMode;
@@ -51,8 +50,18 @@ public class TurretSubsystem extends SubsystemBase
         m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
         m_turretMotor.setNeutralMode(NeutralMode.Brake);
         m_dynamicOffset = m_turretMotor.getSelectedSensorPosition();
-       
+
     }
+
+    @Override
+    public void periodic()
+    {
+        SmartDashboard.putNumber("Turret Angle", getTurretAngle());
+        m_turretAngle = m_turretMotor.getSelectedSensorPosition() - m_dynamicOffset;
+        m_headingError = tX.getDouble(0.0);
+        m_getValidTarget = tV.getDouble(0.0);
+    }
+
     public void startTimer()
     {
         m_Timer1.start();
@@ -63,13 +72,9 @@ public class TurretSubsystem extends SubsystemBase
         return m_Timer1.get();
     }
 
-    @Override
-    public void periodic()
+    public void stopTimer()
     {
-        SmartDashboard.putNumber("Turret Angle", getTurretAngle());
-        m_turretAngle = m_turretMotor.getSelectedSensorPosition() - m_dynamicOffset;
-        m_headingError = tX.getDouble(0.0);
-        m_getValidTarget = tV.getDouble(0.0);
+        m_Timer1.stop();
     }
 
     public void setAngle(double angle)
@@ -116,11 +121,6 @@ public class TurretSubsystem extends SubsystemBase
     public double getTurretAngle()
     {
         return m_turretAngle;
-    }
-
-    public void setPower(double power)
-    {
-        m_turretMotor.set(ControlMode.PercentOutput, power);
     }
 
     /**
@@ -178,6 +178,11 @@ public class TurretSubsystem extends SubsystemBase
         camMode.setNumber(0);
     }
 
+    public void setPower(double power)
+    {
+        m_turretMotor.set(ControlMode.PercentOutput, power);
+    }
+
     public double turretLimit(double p_angle)
     {
         double setpoint = p_angle;
@@ -195,10 +200,4 @@ public class TurretSubsystem extends SubsystemBase
         return setpoint;
     }
 
-    public void stopTimer()
-    {
-        m_Timer1.stop();
-    }
-
-    
 }
