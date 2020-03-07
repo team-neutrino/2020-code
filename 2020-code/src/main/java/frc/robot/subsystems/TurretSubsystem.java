@@ -56,12 +56,12 @@ public class TurretSubsystem extends SubsystemBase
         double kP = 0.07;
         double setpoint = p_angle;
         double error = setpoint - currentAngle;
-        m_turretMotor.set(ControlMode.PercentOutput, kP*error);
+        m_turretMotor.set(ControlMode.PercentOutput, kP * error);
     }
 
     public double getTurretAngle()
     {
-        
+
         return m_turretAngle;
     }
 
@@ -71,7 +71,6 @@ public class TurretSubsystem extends SubsystemBase
     }
 
     /**
-     * 
      * @return returns horizontal heading error in degrees
      */
     public double getHeadingError()
@@ -80,7 +79,6 @@ public class TurretSubsystem extends SubsystemBase
     }
 
     /**
-     * 
      * @return 1 if valid target, 0 if no valid target
      */
     public double getValidTarget()

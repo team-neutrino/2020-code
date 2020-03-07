@@ -25,20 +25,23 @@ import frc.robot.subsystems.ShooterSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class SixBallAuto extends SequentialCommandGroup {
-  /**
-   * Creates a new SixBallAuto.
-   */
-  public SixBallAuto(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, IntakePIDSubsystem p_Intake, DriveSubsystem p_Drive) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(
+public class SixBallAuto extends SequentialCommandGroup
+{
+    /**
+     * Creates a new SixBallAuto.
+     */
+    public SixBallAuto(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, IntakePIDSubsystem p_Intake,
+            DriveSubsystem p_Drive)
+    {
+        // Add your commands in the super() call, e.g.
+        // super(new FooCommand(), new BarCommand());
+        super(
 
-    );
-    Trajectory trajectory = ExampleTrajectory.sixBall0;
-    Trajectory trajectory1 = ExampleTrajectory.sixBall1;
+        );
+        Trajectory trajectory = ExampleTrajectory.sixBall0;
+        Trajectory trajectory1 = ExampleTrajectory.sixBall1;
 
-    PIDController leftController = new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0);
+        PIDController leftController = new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0);
         PIDController rightController = new PIDController(DriveConstants.KP_DRIVE_VEL, 0, 0);
         RamseteController controller = new RamseteController(DriveConstants.K_RAMSETE_B, DriveConstants.K_RAMSETE_ZETA);
         SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(DriveConstants.KS_VOLTS,
@@ -51,14 +54,9 @@ public class SixBallAuto extends SequentialCommandGroup {
             DriveConstants.K_DRIVE_KINEMATICS, p_Drive::getWheelSpeeds, leftController, rightController,
             p_Drive::tankDriveVolts, p_Drive);
 
-    addCommands
-    (
-      new ShootAuton(p_Shooter, p_Hopper, 3),
-      new InstantCommand(p_Intake::setIntakeOn, p_Intake).alongWith(
-            new InstantCommand(() -> p_Intake.setAngle(Constants.IntakeConstants.ARM_DOWN_ANGLE))),
-      sixBallTraj0,
-      sixBallTraj1,
-      new ShootAuton(p_Shooter, p_Hopper, 3)
-    );
-  }
+        addCommands(new ShootAuton(p_Shooter, p_Hopper, 3),
+            new InstantCommand(p_Intake::setIntakeOn, p_Intake).alongWith(
+                new InstantCommand(() -> p_Intake.setAngle(Constants.IntakeConstants.ARM_DOWN_ANGLE))),
+            sixBallTraj0, sixBallTraj1, new ShootAuton(p_Shooter, p_Hopper, 3));
+    }
 }

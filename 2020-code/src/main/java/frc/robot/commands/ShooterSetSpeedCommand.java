@@ -18,8 +18,7 @@ public class ShooterSetSpeedCommand extends CommandBase
 {
     private ShooterSubsystem m_shooter;
     private ShuffleboardTab smartdashboard = Shuffleboard.getTab("SmartDashboard");
-    private NetworkTableEntry velocity =
-        smartdashboard.add("Shooter Velocity", 80000).getEntry();
+    private NetworkTableEntry velocity = smartdashboard.add("Shooter Velocity", 80000).getEntry();
     /**
      * Creates a new ShooterSetSpeedCommand.
      */

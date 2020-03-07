@@ -32,23 +32,23 @@ public class ExampleTrajectory
         // Pass config
         NeutrinoTrajectoryConfigs.m_DefaultConfig);
 
-        public static final Trajectory sixBall0 = TrajectoryGenerator.generateTrajectory(
-            // Start at the origin facing the +X direction
-            new Pose2d(0, 0, new Rotation2d(0)),
-            // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
-            // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(4.6, 0, new Rotation2d(0)),
-            // Pass config
-            NeutrinoTrajectoryConfigs.m_DefaultConfig);
+    public static final Trajectory sixBall0 = TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(0, 0, new Rotation2d(0)),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(4.6, 0, new Rotation2d(0)),
+        // Pass config
+        NeutrinoTrajectoryConfigs.m_DefaultConfig);
 
-            public static final Trajectory sixBall1 = TrajectoryGenerator.generateTrajectory(
-                // Start at the origin facing the +X direction
-                new Pose2d(4.6, 0, new Rotation2d(0)),
-                // Pass through these two interior waypoints, making an 's' curve path
-                List.of(new Translation2d(2, 0), new Translation2d(1, 0)),
-                // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(0, 0, new Rotation2d(0)),
-                // Pass config
-                NeutrinoTrajectoryConfigs.m_ReverseConfig);
+    public static final Trajectory sixBall1 = TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(4.6, 0, new Rotation2d(0)),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(new Translation2d(2, 0), new Translation2d(1, 0)),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(0, 0, new Rotation2d(0)),
+        // Pass config
+        NeutrinoTrajectoryConfigs.m_ReverseConfig);
 }

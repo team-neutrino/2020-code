@@ -38,6 +38,7 @@ public class RobotContainer
     private final ClimberSubsystem m_climber = new ClimberSubsystem();
     private final HopperSubsystem m_Hopper = new HopperSubsystem();
     private final TurretSubsystem m_Turret = new TurretSubsystem();
+    private final DriverViewSubsystem m_DriverView = new DriverViewSubsystem(m_Shooter, m_Turret, m_Hopper);
 
     private Joystick m_leftJoystick = new Joystick(Constants.JoystickConstants.LEFT_JOYSTICK_PORT);
     private Joystick m_rightJoystick = new Joystick(Constants.JoystickConstants.RIGHT_JOYSTICK__PORT);
@@ -80,7 +81,7 @@ public class RobotContainer
         m_start.whileHeld(new InstantCommand(m_climber::winchClimb, m_climber), true).whenReleased(m_climber::winchStop,
             m_climber);
         // m_X.whileHeld(new InstantCommand(m_climber::elevatorDown, m_climber), true).whenReleased(
-            // m_climber::elevatorStop, m_climber);
+        // m_climber::elevatorStop, m_climber);
         m_back.whileHeld(new InstantCommand(m_climber::elevatorUp, m_climber), true).whenReleased(
             m_climber::elevatorStop, m_climber);
         m_A.whenHeld(new ShooterSetSpeedCommand(m_Shooter));
@@ -93,9 +94,6 @@ public class RobotContainer
         m_TriggerLeft.whenInactive(new InstantCommand(m_Intake::setIntakeOff, m_Intake).alongWith(
             new InstantCommand(() -> m_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE))));
         m_Y.whenHeld(new TurretAimCommand(m_Turret));
-
-        
-
 
     }
 
