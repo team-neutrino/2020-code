@@ -50,24 +50,13 @@ public class SixBallAuto extends SequentialCommandGroup
             DriveConstants.K_DRIVE_KINEMATICS, p_Drive::getWheelSpeeds, leftController, rightController,
             p_Drive::tankDriveVolts, p_Drive);
 
-        addCommands
-        (
+        addCommands(
             // TurretSetAngleCommand coexists with the default TurretAimCommand
             // as a ParallelCommandGroup
-            new InstantCommand(() -> p_Turret.ctmSetAngle(45))
-            .alongWith
-            (
-                new SequentialCommandGroup
-                (
-                    new InstantCommand(p_Intake::setArmDown),
-                    new WaitCommand(.75),
-                    new ShootAuton(p_Shooter, p_Hopper, 3, 80000),
-                    new InstantCommand(p_Intake::setIntakeOn, p_Intake),
-                    sixBallTraj0, 
-                    new InstantCommand(() -> p_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE)),
-                    new ShootAuton(p_Shooter, p_Hopper, 7, 85000)
-                )
-            )
-        );
+            new InstantCommand(() -> p_Turret.setAngle(45)).alongWith(
+                new SequentialCommandGroup(new InstantCommand(p_Intake::setArmDown), new WaitCommand(.75),
+                    new ShootAuton(p_Shooter, p_Hopper, 3, 80000), new InstantCommand(p_Intake::setIntakeOn, p_Intake),
+                    sixBallTraj0, new InstantCommand(() -> p_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE)),
+                    new ShootAuton(p_Shooter, p_Hopper, 7, 85000))));
     }
 }

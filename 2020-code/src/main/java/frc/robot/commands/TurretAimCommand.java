@@ -6,21 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.TurretSubsystem;
-
 public class TurretAimCommand extends CommandBase
 {
 
     private TurretSubsystem m_turret;
-    private boolean scanDirection;
-    private boolean canFlipScanDirection;
-    private double m_headingError;
-    private double currentPosition;
+  
 
     /**
      * Creates a new TurretAimCommand.
@@ -35,9 +27,6 @@ public class TurretAimCommand extends CommandBase
     @Override
     public void initialize()
     {
-        scanDirection = false;
-        canFlipScanDirection = false;
-        m_headingError = 0.0;
         m_turret.setLightOn();
     }
 
@@ -45,19 +34,7 @@ public class TurretAimCommand extends CommandBase
     @Override
     public void execute()
     {
-        // If there is no valid target, sets power to 0
-        if (m_turret.getValidTarget() == 0)
-        {
-            m_turret.setPower(0);
-        }
-        else
-        {
-            // Sets angle to desired turret angle plus error if there is a target
-            m_headingError = m_turret.getHeadingError();
-            currentPosition = m_turret.getTurretAngle();
-            SmartDashboard.putNumber("Turretangle", currentPosition);
-            m_turret.setpointSetAngle(turretLimit(currentPosition + m_headingError));
-        }
+        m_turret.autoSetAngle();
 
     }
 
@@ -79,20 +56,5 @@ public class TurretAimCommand extends CommandBase
     /**
      * @return Shortest distance setpoint to turn to that wont break wires
      **/
-    private double turretLimit(double p_angle)
-    {
-        double setpoint = p_angle;
-        double forwardRotationLimit = 135;
-        double backwardRotationLimit = -135;
-
-        if (setpoint > forwardRotationLimit)
-        {
-            setpoint = forwardRotationLimit;
-        }
-        if (setpoint < backwardRotationLimit)
-        {
-            setpoint = backwardRotationLimit;
-        }
-        return setpoint;
-    }
+    
 }

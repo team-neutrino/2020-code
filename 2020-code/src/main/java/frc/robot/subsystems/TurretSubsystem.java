@@ -51,7 +51,16 @@ public class TurretSubsystem extends SubsystemBase
         m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
         m_turretMotor.setNeutralMode(NeutralMode.Brake);
         m_dynamicOffset = m_turretMotor.getSelectedSensorPosition();
+       
+    }
+    public void startTimer()
+    {
         m_Timer1.start();
+    }
+
+    public double getTimer()
+    {
+        return m_Timer1.get();
     }
 
     @Override
@@ -63,7 +72,7 @@ public class TurretSubsystem extends SubsystemBase
         m_getValidTarget = tV.getDouble(0.0);
     }
 
-    public void ctmSetAngle(double angle)
+    public void setAngle(double angle)
     {
         if (m_Timer1.get() < 0.5)
         {
@@ -71,17 +80,30 @@ public class TurretSubsystem extends SubsystemBase
         }
         else
         {
-
-            m_headingError = getHeadingError();
-            currentPosition = getTurretAngle();
             if (currentPosition < 90)
             {
-                setpointSetAngle(turretLimit(currentPosition + m_headingError));
+                setpointSetAngle(turretLimit(getTurretAngle() + getHeadingError()));
             }
             else
             {
                 setPower(0);
             }
+        }
+    }
+
+    public void autoSetAngle()
+    {
+        if (getValidTarget() == 0)
+        {
+            setPower(0);
+        }
+        else
+        {
+            // Sets angle to desired turret angle plus error if there is a target
+            m_headingError = getHeadingError();
+            currentPosition = getTurretAngle();
+            SmartDashboard.putNumber("Turretangle", currentPosition);
+            setpointSetAngle(turretLimit(currentPosition + m_headingError));
         }
     }
 
@@ -174,4 +196,6 @@ public class TurretSubsystem extends SubsystemBase
         }
         return setpoint;
     }
+
+    
 }
