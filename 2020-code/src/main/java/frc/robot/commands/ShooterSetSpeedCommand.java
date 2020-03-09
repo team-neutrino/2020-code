@@ -7,18 +7,12 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterSetSpeedCommand extends CommandBase
 {
     private ShooterSubsystem m_shooter;
-    private ShuffleboardTab smartdashboard = Shuffleboard.getTab("SmartDashboard");
-    private NetworkTableEntry velocity = smartdashboard.add("Shooter Velocity", 80000).getEntry();
     private double m_speed;
     /**
      * Creates a new ShooterSetSpeedCommand.

@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -23,6 +24,7 @@ public class DriverViewSubsystem extends SubsystemBase
     private ShuffleboardTab tab;
     private TurretSubsystem m_Turret;
     private HopperSubsystem m_Hopper;
+    private VideoSource m_Limelight;
 
     public DriverViewSubsystem(ShooterSubsystem p_Shooter, TurretSubsystem p_Turret, HopperSubsystem p_Hopper)
     {
@@ -30,6 +32,7 @@ public class DriverViewSubsystem extends SubsystemBase
         m_Shooter = p_Shooter;
         m_Turret = p_Turret;
         m_Hopper = p_Hopper;
+        m_Limelight = CameraServer.getInstance().getVideo("limelight").getSource();
     }
 
     @Override
@@ -40,6 +43,6 @@ public class DriverViewSubsystem extends SubsystemBase
         tab.add("Turret Angle", m_Turret.getTurretAngle());
         tab.add("Bottom Beam Status", m_Hopper.bottomBeamStatus());
         tab.add("Top Beam Status", m_Hopper.topBeamStatus());
-        tab.add("Limelight", CameraServer.getInstance().getVideo("limelight"));
+        tab.add(m_Limelight);
     }
 }
