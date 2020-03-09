@@ -77,6 +77,11 @@ public class TurretSubsystem extends SubsystemBase
         m_Timer1.stop();
     }
 
+    /**
+     * Sets angle in autonomous mode, then begins tracking goal after 0.5 seconds.
+     *
+     * @param angle Angle set relative to robot
+     */
     public void setAngle(double angle)
     {
         if (m_Timer1.get() < 0.5)

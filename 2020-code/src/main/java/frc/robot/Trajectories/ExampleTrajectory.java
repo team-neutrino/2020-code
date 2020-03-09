@@ -60,7 +60,7 @@ public class ExampleTrajectory
 
     public static final Trajectory eightBall1 = TrajectoryGenerator.generateTrajectory(
         List.of(new Pose2d(2.9, -2.1, Rotation2d.fromDegrees(-60)), new Pose2d(1.6, 0, Rotation2d.fromDegrees(0))),
-        NeutrinoTrajectoryConfigs.m_DefaultConfig);
+        NeutrinoTrajectoryConfigs.m_ReverseConfig);
 
     public static final Trajectory eightBall2 = TrajectoryGenerator.generateTrajectory(
         List.of(new Pose2d(1.6, 0, Rotation2d.fromDegrees(0)), new Pose2d(4.6, 0, Rotation2d.fromDegrees(0))),
