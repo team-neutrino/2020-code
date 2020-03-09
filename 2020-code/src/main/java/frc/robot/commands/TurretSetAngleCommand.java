@@ -1,61 +1,66 @@
-/*----------------------------------------------------------------------------*/
+
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
-/*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class TurretAimCommand extends CommandBase
+public class TurretSetAngleCommand extends CommandBase
 {
-
-    private TurretSubsystem m_turret;
-
+    private double m_Angle;
+    private TurretSubsystem m_Turret;
     /**
-     * Creates a new TurretAimCommand.
+     * Creates a new Turret.
      */
-    public TurretAimCommand(TurretSubsystem p_turret)
+    public TurretSetAngleCommand(TurretSubsystem p_Turret, double p_Angle)
     {
-        addRequirements(p_turret);
-        m_turret = p_turret;
+        // Use addRequirements() here to declare subsystem dependencies.
+        m_Angle = p_Angle;
+        m_Turret = p_Turret;
+        addRequirements(p_Turret);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize()
     {
-        m_turret.setLightOn();
+        m_Turret.startTimer();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute()
     {
-        m_turret.autoSetAngle();
-
+        m_Turret.setAngle(m_Angle);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted)
     {
-        // Stops turret when command ends
-        m_turret.setPower(0);
+        m_Turret.setPower(0);
+        new TurretAimCommand(m_Turret).schedule();
+        System.out.println("***** end TurretSetAngleCommand");
+        m_Turret.stopTimer();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished()
     {
-        return false;
+        if (m_Turret.getTimer() > 15)
+        {
+            System.out.println("***** finished TurretSetAngleCommand");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
-
-    /**
-     * @return Shortest distance setpoint to turn to that wont break wires
-     **/
-
 }

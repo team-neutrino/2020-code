@@ -7,6 +7,7 @@
 
 package frc.robot.Trajectories;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -21,6 +22,13 @@ import frc.robot.NeutrinoTrajectoryConfigs;
  */
 public class ExampleTrajectory
 {
+    public static List<Pose2d> sixBall = new ArrayList<Pose2d>();
+
+    public ExampleTrajectory()
+    {
+        sixBall.add(new Pose2d(0, 0, new Rotation2d(0)));
+        sixBall.add(new Pose2d(4.6, 0, new Rotation2d(0)));
+    }
 
     public static final Trajectory exampleTraj = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction

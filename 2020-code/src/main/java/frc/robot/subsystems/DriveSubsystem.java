@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanId;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.JoystickConstants;
+
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -34,6 +36,7 @@ public class DriveSubsystem extends SubsystemBase
     private final DifferentialDriveOdometry m_odometry;
 
     private double velocity = 0;
+
     public DriveSubsystem()
     {
         m_leftMotor1.restoreFactoryDefaults();
@@ -78,17 +81,13 @@ public class DriveSubsystem extends SubsystemBase
         SmartDashboard.putNumber("GetHeading", getHeading());
         //SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
         SmartDashboard.putNumber("Acceleration", getMaxAcceleration());
-
-        var translation = m_odometry.getPoseMeters().getTranslation();
-
-        SmartDashboard.putNumber("odometry X", translation.getX());
-        SmartDashboard.putNumber("odometry Y", translation.getY());
     }
 
     public void tankDrive(double leftPower, double rightPower)
     {
-        m_leftMotors.set(-leftPower);
-        m_rightMotors.set(-rightPower);
+        System.out.println("Driving");
+        m_leftMotors.set(-deadzone(leftPower));
+        m_rightMotors.set(-deadzone(rightPower));
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts)
@@ -179,6 +178,18 @@ public class DriveSubsystem extends SubsystemBase
         else
         {
             return 0.0;
+        }
+    }
+
+    private double deadzone(double input)
+    {
+        if (Math.abs(input) < JoystickConstants.DEADZONE_SIZE)
+        {
+            return 0;
+        }
+        else
+        {
+            return input;
         }
     }
 }

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -27,12 +28,12 @@ import frc.robot.subsystems.TurretSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class SixBallAuto extends SequentialCommandGroup
+public class DumpAuton extends SequentialCommandGroup
 {
     /**
-     * Creates a new SixBallAuto.
+     * Creates a new DumpAuton.
      */
-    public SixBallAuto(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, IntakePIDSubsystem p_Intake,
+    public DumpAuton(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, IntakePIDSubsystem p_Intake,
             DriveSubsystem p_Drive, TurretSubsystem p_Turret)
     {
         Trajectory trajectory = ExampleTrajectory.sixBall0;
@@ -53,10 +54,8 @@ public class SixBallAuto extends SequentialCommandGroup
         addCommands(
             // TurretSetAngleCommand coexists with the default TurretAimCommand
             // as a ParallelCommandGroup
-            new InstantCommand(() -> p_Turret.setAngle(45)).alongWith(
-                new SequentialCommandGroup(new InstantCommand(p_Intake::setArmDown), new WaitCommand(.75),
-                    new ShootAuton(p_Shooter, p_Hopper, 3, 80000), new InstantCommand(p_Intake::setIntakeOn, p_Intake),
-                    sixBallTraj0, new InstantCommand(() -> p_Intake.setAngle(Constants.IntakeConstants.ARM_UP_ANGLE)),
-                    new ShootAuton(p_Shooter, p_Hopper, 7, 85000))));
+            new InstantCommand(() -> p_Turret.setAngle(-90)).alongWith(new SequentialCommandGroup(new WaitCommand(1),
+                new InstantCommand(p_Intake::setArmDown), new ShootAuton(p_Shooter, p_Hopper, 10, 80000),
+                new RunCommand(() -> p_Drive.tankDrive(0.25, 0.25), p_Drive))));
     }
 }

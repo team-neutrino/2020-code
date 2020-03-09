@@ -40,7 +40,7 @@ public class ShooterSubsystem extends SubsystemBase
 
     public ShooterSubsystem()
     {
-        SmartDashboard.putNumber("ShooterZoom", 0);
+        SmartDashboard.putNumber("ShooterGo", 0);
         conifgSRX();
         m_wheelMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL);
         m_wheelMotor2 = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_SHOOTERWHEEL2);
@@ -93,7 +93,7 @@ public class ShooterSubsystem extends SubsystemBase
         wheelMasterConfig.slot0.kI = ShooterConstants.WHEEL_I;
         wheelMasterConfig.slot0.kD = ShooterConstants.WHEEL_D;
         wheelMasterConfig.slot0.kF = ShooterConstants.WHEEL_F;
-        wheelMasterConfig.openloopRamp = 0.25;
+        wheelMasterConfig.openloopRamp = 1;
         wheelFollowerConfig.openloopRamp = wheelMasterConfig.openloopRamp;
     }
 
