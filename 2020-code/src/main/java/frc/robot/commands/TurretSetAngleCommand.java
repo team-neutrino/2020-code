@@ -44,7 +44,6 @@ public class TurretSetAngleCommand extends CommandBase
     {
         m_Turret.setPower(0);
         new TurretAimCommand(m_Turret).schedule();
-        System.out.println("***** end TurretSetAngleCommand");
         m_Turret.stopTimer();
     }
 
@@ -54,7 +53,6 @@ public class TurretSetAngleCommand extends CommandBase
     {
         if (m_Turret.getTimer() > 15)
         {
-            System.out.println("***** finished TurretSetAngleCommand");
             return true;
         }
         else

@@ -15,7 +15,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanId;
@@ -56,7 +55,6 @@ public class TurretSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        SmartDashboard.putNumber("Turret Angle", getTurretAngle());
         m_turretAngle = m_turretMotor.getSelectedSensorPosition() - m_dynamicOffset;
         m_headingError = tX.getDouble(0.0);
         m_getValidTarget = tV.getDouble(0.0);
@@ -105,7 +103,6 @@ public class TurretSubsystem extends SubsystemBase
         else
         {
             // Sets angle to desired turret angle plus error if there is a target
-            SmartDashboard.putNumber("Turretangle", currentPosition);
             setpointSetAngle(turretLimit(getTurretAngle() + getHeadingError()));
         }
     }
