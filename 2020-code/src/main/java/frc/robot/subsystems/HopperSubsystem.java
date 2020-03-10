@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -131,8 +130,6 @@ public class HopperSubsystem extends SubsystemBase
     @Override
     public void periodic()
     {
-        SmartDashboard.putBoolean("Beam Break 1", m_beamBreakBot.get());
-        SmartDashboard.putBoolean("Beam Break 2", m_beamBreakTop.get());
         rollerTowardsIntake();
         /*
          * if (m_rollerTimer.get() < 1) { rollerTowardsIntake(); } else { rollerTowardsTower(); } if

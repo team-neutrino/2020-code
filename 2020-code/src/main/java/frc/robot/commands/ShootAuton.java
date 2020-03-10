@@ -25,14 +25,12 @@ public class ShootAuton extends CommandBase
      */
     public ShootAuton(ShooterSubsystem p_Shooter, HopperSubsystem p_Hopper, double p_Duration, double p_Velocity)
     {
-        System.out.println("**** shootAuton");
         addRequirements(p_Shooter, p_Hopper);
         m_Shooter = p_Shooter;
         m_Hopper = p_Hopper;
         m_Duration = p_Duration;
         m_Velocity = p_Velocity;
         //TODO: add a velocity parameter
-
     }
 
     // Called when the command is initially scheduled.

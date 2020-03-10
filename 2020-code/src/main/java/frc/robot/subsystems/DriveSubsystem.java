@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanId;
@@ -71,21 +70,10 @@ public class DriveSubsystem extends SubsystemBase
     public void periodic()
     {
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_lEncoder.getPosition(), m_rEncoder.getPosition());
-
-        //SmartDashboard.putNumber("Left RPM", m_lrpm);
-        //SmartDashboard.putNumber("Right RPM", m_rrpm);
-        SmartDashboard.putNumber("Left meters per second", m_lEncoder.getVelocity());
-        SmartDashboard.putNumber("Right meters per second", m_rEncoder.getVelocity());
-        SmartDashboard.putNumber("Left m", m_lEncoder.getPosition());
-        SmartDashboard.putNumber("Right m", m_rEncoder.getPosition());
-        SmartDashboard.putNumber("GetHeading", getHeading());
-        //SmartDashboard.putNumber("NavX Angle", m_navX.getAngle());
-        SmartDashboard.putNumber("Acceleration", getMaxAcceleration());
     }
 
     public void tankDrive(double leftPower, double rightPower)
     {
-        System.out.println("Driving");
         m_leftMotors.set(-deadzone(leftPower));
         m_rightMotors.set(-deadzone(rightPower));
     }
@@ -94,8 +82,6 @@ public class DriveSubsystem extends SubsystemBase
     {
         m_leftMotors.setVoltage(leftVolts);
         m_rightMotors.setVoltage(rightVolts);
-        System.out.println("left volts " + leftVolts);
-        System.out.println("right volts " + rightVolts);
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
@@ -121,24 +107,6 @@ public class DriveSubsystem extends SubsystemBase
         m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
     }
 
-    public void getPDPCurrent()
-    {
-        //double currentLeftOne = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_LEFT1);
-        //double currentLeftTwo = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_LEFT2);
-        //double currentRightOne = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_RIGHT1);
-        //double currentRightTwo = PDP.getCurrent(CanId.MOTOR_CONTROLLER_DRIVER_RIGHT2);
-        // ArrayList<Double> currents = new ArrayList<Double>();
-        //currents.add(currentLeftOne);
-        //currents.add(currentLeftTwo);
-        //currents.add(currentRightOne);
-        //currents.add(currentRightTwo);
-        // System.out.println("MOTOR_CONTROLLER_DRIVER_LEFT1: " + currents.get(0));
-        // System.out.println("MOTOR_CONTROLLER_DRIVER_LEFT2: " + currents.get(1));
-        // System.out.println("MOTOR_CONTROLLER_DRIVER_RIGHT1: " + currents.get(2));
-        // System.out.println("MOTOR_CONTROLLER_DRIVER_RIGHT2: " + currents.get(3));
-
-    }
-
     public double getMaxAcceleration()
     {
         double oldVelocity = velocity;
@@ -158,27 +126,6 @@ public class DriveSubsystem extends SubsystemBase
     {
         m_navX.reset();
         resetOdometry(m_odometry.getPoseMeters());
-    }
-
-    /**
-     * Applies deadzoning and curve to the joystick input
-     *
-     * @return A processed joystick input
-     */
-    private double processJoystick(double input)
-    {
-        if (Math.abs(input) > Constants.JoystickConstants.DEADZONE_SIZE)
-        {
-            double absoluteValue = Math.abs(input);
-            double deadzoneCorrectedAbsoluteValue = (1 / (1 - Constants.JoystickConstants.DEADZONE_SIZE))
-                    * (absoluteValue - 1.0) + 1.0;
-            return Math.pow(deadzoneCorrectedAbsoluteValue, Constants.JoystickConstants.JOYSTICK_CURVE)
-                    * (absoluteValue / input);
-        }
-        else
-        {
-            return 0.0;
-        }
     }
 
     private double deadzone(double input)
