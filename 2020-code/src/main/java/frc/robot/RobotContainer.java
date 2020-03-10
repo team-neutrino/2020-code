@@ -70,9 +70,6 @@ public class RobotContainer
      */
     public RobotContainer()
     {
-        final Command tankDriveCommand = new RunCommand(
-            () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
-        m_Drive.setDefaultCommand(tankDriveCommand);
         m_Hopper.setDefaultCommand(new HopperDefaultCommand(m_Hopper));
         //m_Turret.setDefaultCommand(new TurretAimCommand(m_Turret));
         m_SixBallAuto = new SixBallAuto(m_Shooter, m_Hopper, m_Intake, m_Drive, m_Turret);
@@ -146,6 +143,9 @@ public class RobotContainer
     public void teleopInit()
     {
         configureButtonBindings();
+        final Command tankDriveCommand = new RunCommand(
+            () -> m_Drive.tankDrive(m_leftJoystick.getY(), m_rightJoystick.getY()), m_Drive);
+        m_Drive.setDefaultCommand(tankDriveCommand);
     }
 
 }
