@@ -51,10 +51,10 @@ public class EightBallAuto extends SequentialCommandGroup
         RamseteCommand eightBallTraj0 = new RamseteCommand(trajectory0, p_Drive::getPose, controller, feedforward,
             DriveConstants.K_DRIVE_KINEMATICS, p_Drive::getWheelSpeeds, leftController, rightController,
             p_Drive::tankDriveVolts, p_Drive);
-        RamseteCommand eightBallTraj1 = new RamseteCommand(trajectory0, p_Drive::getPose, controller, feedforward,
+        RamseteCommand eightBallTraj1 = new RamseteCommand(trajectory1, p_Drive::getPose, controller, feedforward,
             DriveConstants.K_DRIVE_KINEMATICS, p_Drive::getWheelSpeeds, leftController, rightController,
             p_Drive::tankDriveVolts, p_Drive);
-        RamseteCommand eightBallTraj2 = new RamseteCommand(trajectory0, p_Drive::getPose, controller, feedforward,
+        RamseteCommand eightBallTraj2 = new RamseteCommand(trajectory2, p_Drive::getPose, controller, feedforward,
             DriveConstants.K_DRIVE_KINEMATICS, p_Drive::getWheelSpeeds, leftController, rightController,
             p_Drive::tankDriveVolts, p_Drive);
 
@@ -64,7 +64,8 @@ public class EightBallAuto extends SequentialCommandGroup
             new InstantCommand(() -> p_Turret.setAngle(45)).alongWith(new SequentialCommandGroup(
                 new InstantCommand(p_Intake::setArmDown), new InstantCommand(p_Intake::setIntakeOn, p_Intake),
                 new WaitCommand(.25), eightBallTraj0, new InstantCommand(() -> p_Drive.tankDrive(0, 0), p_Drive),
-                new ShootAuton(p_Shooter, p_Hopper, 3, 80000), eightBallTraj1, eightBallTraj2,
+                new ShootAuton(p_Shooter, p_Hopper, 3, 80000), eightBallTraj1,
+                new InstantCommand(() -> p_Drive.tankDrive(0, 0), p_Drive), eightBallTraj2,
                 new InstantCommand(() -> p_Drive.tankDrive(0, 0), p_Drive),
                 new ShootAuton(p_Shooter, p_Hopper, 7, 85000))));
     }
