@@ -185,6 +185,9 @@ public class TurretSubsystem extends SubsystemBase
         m_turretMotor.set(ControlMode.PercentOutput, power);
     }
 
+    /**
+     * @return Shortest distance setpoint to turn to that wont break wires
+     **/
     public double turretLimit(double p_angle)
     {
         double setpoint = p_angle;

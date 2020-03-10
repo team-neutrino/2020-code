@@ -36,7 +36,6 @@ public class TurretAimCommand extends CommandBase
     public void execute()
     {
         m_turret.autoSetAngle();
-
     }
 
     // Called once the command ends or is interrupted.
@@ -54,8 +53,6 @@ public class TurretAimCommand extends CommandBase
         return false;
     }
 
-    /**
-     * @return Shortest distance setpoint to turn to that wont break wires
-     **/
+    
 
 }
