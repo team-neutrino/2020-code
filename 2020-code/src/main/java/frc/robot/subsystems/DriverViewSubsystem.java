@@ -7,15 +7,16 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import edu.wpi.cscore.HttpCamera;
-import edu.wpi.cscore.VideoSource;
 import edu.wpi.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.util.Limelight;
 
 public class DriverViewSubsystem extends SubsystemBase
 {
@@ -26,12 +27,12 @@ public class DriverViewSubsystem extends SubsystemBase
     private ShuffleboardTab tab = Shuffleboard.getTab("Driver View");
     private TurretSubsystem m_Turret;
     private HopperSubsystem m_Hopper;
-    private VideoSource m_Limelight;
 
-    private NetworkTableEntry m_shooter_velocity = tab.add("Shooter Velocity", 0).getEntry();
-    private NetworkTableEntry m_turret_angle = tab.add("Turret Angle", 0).getEntry();
-    private NetworkTableEntry m_beam_break_bot = tab.add("Bottom Beam Status", 0).getEntry();
-    private NetworkTableEntry m_beam_break_top = tab.add("Top Beam Status", 0).getEntry();
+    private NetworkTableEntry m_shooter_velocity = tab.add("Shooter Velocity", 0).withPosition(1, 0).withSize(2,2).withWidget(
+        BuiltInWidgets.kDial).withProperties(Map.of("min", 0, "max", 120000)).getEntry();
+    private NetworkTableEntry m_turret_angle = tab.add("Turret Angle", 0).withWidget(BuiltInWidgets.kDial).withPosition(0, 2).withSize(2,2).withProperties(Map.of("min", -180, "max", 180)).getEntry();
+    private NetworkTableEntry m_beam_break_bot = tab.add("Bottom Beam Status", false).withPosition(0, 1).getEntry();
+    private NetworkTableEntry m_beam_break_top = tab.add("Top Beam Status", false).withPosition(0, 0).getEntry();
 
     public DriverViewSubsystem(ShooterSubsystem p_Shooter, TurretSubsystem p_Turret, HopperSubsystem p_Hopper)
     {
@@ -41,19 +42,16 @@ public class DriverViewSubsystem extends SubsystemBase
 
         HttpCamera limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg",
             HttpCameraKind.kMJPGStreamer);
-        // HttpCamera limelightFeed = new HttpCamera("limelight", "http://10.3.22.11:5800/stream.mjpg", HttpCameraKind.kMJPGStreamer);
         CameraServer.getInstance().startAutomaticCapture(limelightFeed);
-        // m_Limelight = CameraServer.getInstance().getVideo("limelight").getSource();
+        tab.add(limelightFeed);
     }
 
     @Override
     public void periodic()
     {
-        // This method will be called once per scheduler run
         m_shooter_velocity.setDouble(m_Shooter.getVelocity());
         m_turret_angle.setDouble(m_Turret.getTurretAngle());
         m_beam_break_bot.setBoolean(m_Hopper.bottomBeamStatus());
         m_beam_break_top.setBoolean(m_Hopper.topBeamStatus());
-        // tab.add(m_Limelight);
     }
 }
