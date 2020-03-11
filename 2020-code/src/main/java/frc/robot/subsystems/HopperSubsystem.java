@@ -42,7 +42,7 @@ public class HopperSubsystem extends SubsystemBase
     //used when not shooting will run until ball is at top and ready
     public void towerIndexing()
     {
-        m_towerMotor.set(ControlMode.PercentOutput, 0.7);
+        m_towerMotor.set(ControlMode.PercentOutput, 0.5);
         m_intakeHopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
     }
 
