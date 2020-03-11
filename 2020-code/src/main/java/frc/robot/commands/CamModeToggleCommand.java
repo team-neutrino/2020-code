@@ -8,41 +8,39 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 
-public class ShooterSetSpeedCommand extends CommandBase
+public class CamModeToggleCommand extends CommandBase
 {
-    private ShooterSubsystem m_shooter;
-    private double m_speed;
     /**
-     * Creates a new ShooterSetSpeedCommand.
+     * Creates a new CamModeToggleCommand. When initalized, sets limelight to driver mode. When cancelled, sets limeight
+     * to vision processing mode.
      */
-    public ShooterSetSpeedCommand(ShooterSubsystem p_shooter, double p_speed)
+    private TurretSubsystem m_Turret;
+    public CamModeToggleCommand(TurretSubsystem p_Turret)
     {
-        // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(p_shooter);
-        m_shooter = p_shooter;
-        m_speed = p_speed;
+        m_Turret = p_Turret;
+        addRequirements(p_Turret);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize()
     {
+        m_Turret.setDriverCamMode();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute()
     {
-        m_shooter.setVelocity(m_speed);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted)
     {
-        m_shooter.setPower(0);
+        m_Turret.setVisionCamMode();
     }
 
     // Returns true when the command should end.

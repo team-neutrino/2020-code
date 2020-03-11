@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
@@ -38,8 +37,6 @@ public class IntakePIDSubsystem extends PIDSubsystem
     public void useOutput(double output, double setpoint)
     {
         m_IntakeArmMotor.set(ControlMode.PercentOutput, output);
-        SmartDashboard.putNumber("useOutput output", output);
-        SmartDashboard.putNumber("useOutput setpoint", setpoint);
     }
 
     @Override
@@ -51,11 +48,6 @@ public class IntakePIDSubsystem extends PIDSubsystem
     public void periodic()
     {
         super.periodic();
-        SmartDashboard.putNumber("Arm motor current: ", m_IntakeArmMotor.getSupplyCurrent());
-        SmartDashboard.putNumber("Arm motor power", m_IntakeArmMotor.getMotorOutputPercent());
-        SmartDashboard.putNumber("Encoder ang.: ", m_DutyCycleEncoder.getDistance());
-        SmartDashboard.putNumber("Encoder val.: ", m_DutyCycleEncoder.get());
-        SmartDashboard.putBoolean("isConnected: ", m_DutyCycleEncoder.isConnected());
 
         if (Math.abs(getMeasurement()) > 360)
         {
@@ -87,5 +79,11 @@ public class IntakePIDSubsystem extends PIDSubsystem
     public void setOuttakeOn()
     {
         m_IntakeFeedMotor.set(ControlMode.PercentOutput, Constants.IntakeConstants.OUTTAKE_MOTOR_POWER);
+    }
+
+    public void setArmDown()
+    {
+        disable();
+        m_IntakeArmMotor.set(ControlMode.PercentOutput, 0.3);
     }
 }

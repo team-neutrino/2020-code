@@ -6,11 +6,12 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanId;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.JoystickConstants;
+
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -77,26 +78,18 @@ public class DriveSubsystem extends SubsystemBase
         m_right_position = m_rEncoder.getPosition();
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_left_position, m_right_position);
 
-        SmartDashboard.putNumber("Left m/s", m_left_velocity);
-        SmartDashboard.putNumber("Right m/s", m_right_velocity);
-        SmartDashboard.putNumber("Left m", m_left_position);
-        SmartDashboard.putNumber("Right m", m_right_position);
-        SmartDashboard.putNumber("GetHeading", getHeading());
-        SmartDashboard.putNumber("Acceleration", getMaxAcceleration());
     }
 
     public void tankDrive(double leftPower, double rightPower)
     {
-        m_leftMotors.set(-leftPower);
-        m_rightMotors.set(-rightPower);
+        m_leftMotors.set(-deadzone(leftPower));
+        m_rightMotors.set(-deadzone(rightPower));
     }
 
     public void tankDriveVolts(double leftVolts, double rightVolts)
     {
         m_leftMotors.setVoltage(leftVolts);
         m_rightMotors.setVoltage(rightVolts);
-        System.out.println("left volts " + leftVolts);
-        System.out.println("right volts " + rightVolts);
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds()
@@ -139,24 +132,15 @@ public class DriveSubsystem extends SubsystemBase
         resetOdometry(m_odometry.getPoseMeters());
     }
 
-    /**
-     * Applies deadzoning and curve to the joystick input
-     *
-     * @return A processed joystick input
-     */
-    private double processJoystick(double input)
+    private double deadzone(double input)
     {
-        if (Math.abs(input) > Constants.JoystickConstants.DEADZONE_SIZE)
+        if (Math.abs(input) < JoystickConstants.DEADZONE_SIZE)
         {
-            double absoluteValue = Math.abs(input);
-            double deadzoneCorrectedAbsoluteValue = (1 / (1 - Constants.JoystickConstants.DEADZONE_SIZE))
-                    * (absoluteValue - 1.0) + 1.0;
-            return Math.pow(deadzoneCorrectedAbsoluteValue, Constants.JoystickConstants.JOYSTICK_CURVE)
-                    * (absoluteValue / input);
+            return 0;
         }
         else
         {
-            return 0.0;
+            return input;
         }
     }
 }
