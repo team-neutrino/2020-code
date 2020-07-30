@@ -205,4 +205,8 @@ public class TurretSubsystem extends SubsystemBase
         return setpoint;
     }
 
+    public void setTurretMotorOff() 
+    {
+        m_turretMotor.set(ControlMode.PercentOutput, 0);
+    }
 }

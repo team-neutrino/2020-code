@@ -99,12 +99,20 @@ public class RobotContainer
             m_climber);
 
         m_A.whenHeld(
-            new ShooterSetSpeedCommand(m_Shooter, 80000).alongWith(new TurretAimCommand(m_Turret))).whenReleased(
-                new InstantCommand(m_Turret::setLightOff, m_Turret));
+            new ParallelCommandGroup(
+                new InstantCommand(m_Turret::setTurretMotorOff, m_Turret),
+                new InstantCommand(m_Turret::setLightOff, m_Turret),
+                new ShooterSetSpeedCommand(m_Shooter, 80000)
+            )
+        );
         m_Y.whenHeld(
-            new ShooterSetSpeedCommand(m_Shooter, 95000).alongWith(new TurretAimCommand(m_Turret))).whenReleased(
-                new InstantCommand(m_Turret::setLightOff, m_Turret)); //TODO: set light on and off properly
-
+            new ParallelCommandGroup(
+                new InstantCommand(m_Turret::setTurretMotorOff, m_Turret),
+                new InstantCommand(m_Turret::setLightOff, m_Turret),
+                new ShooterSetSpeedCommand(m_Shooter, 95000)
+            )
+        );
+        
         m_BumperLeft.whileHeld(new InstantCommand(m_Hopper::towerShoot, m_Hopper), false).whenReleased(
             (new InstantCommand(m_Hopper::stop, m_Hopper)));
         m_BumperRight.whileHeld(new InstantCommand(m_Hopper::reverse, m_Hopper), false).whenReleased(
