@@ -20,7 +20,7 @@ import frc.robot.Constants.ClimberConstants;
 public class ClimberSubsystem extends SubsystemBase
 {
     private TalonSRX m_ClimbElevator = new TalonSRX(CanId.MOTOR_CONTROLLER_CLIMBER);
-    private CANSparkMax m_ClimbWinch = new CANSparkMax(CanId.MOTOR_CONTROLLER_CLIMBERWINCH, MotorType.kBrushless);
+    //private CANSparkMax m_ClimbWinch = new CANSparkMax(CanId.MOTOR_CONTROLLER_CLIMBERWINCH, MotorType.kBrushless);
 
     /**
      * Creates a new ClimberSubsystem.
@@ -48,7 +48,7 @@ public class ClimberSubsystem extends SubsystemBase
 
     public void winchClimb()
     {
-        m_ClimbWinch.set(ClimberConstants.CLIMBER_MOTOR_WINCHPOWER);
+        //m_ClimbWinch.set(ClimberConstants.CLIMBER_MOTOR_WINCHPOWER);
     }
 
     public void elevatorStop()
@@ -58,11 +58,11 @@ public class ClimberSubsystem extends SubsystemBase
 
     public void winchStop()
     {
-        m_ClimbWinch.set(0);
+        //m_ClimbWinch.set(0);
     }
 
     public void winchReverse()
     {
-        m_ClimbWinch.set(-ClimberConstants.CLIMBER_MOTOR_WINCHPOWER);
+        //m_ClimbWinch.set(-ClimberConstants.CLIMBER_MOTOR_WINCHPOWER);
     }
 }
