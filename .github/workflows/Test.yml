@@ -1,0 +1,24 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - *
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "11"
+      - name: Gradle Build
+        run: |
+          cd 2020-code
+          chmod +x ./gradlew
+          ./gradlew test
+          du -h build/libs/2020-code.jar
