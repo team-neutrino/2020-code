@@ -10,9 +10,8 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: "11"
-      - name: Gradle Build
+      - name: Gradle Test
         run: |
           cd 2020-code
           chmod +x ./gradlew
           ./gradlew test
-          du -h build/libs/2020-code.jar
