@@ -36,7 +36,7 @@ public class HopperDefaultCommand extends CommandBase
     @Override
     public void execute()
     {
-        bottomBeam = m_HopperSubsystem.bottomBeamStatus();
+        bottomBeam = 0;// m_HopperSubsystem.bottomBeamStatus();
         topBeam = m_HopperSubsystem.topBeamStatus();
         if (topBeam == false || m_HopperSubsystem.getTime() >= 0.01)
         {
