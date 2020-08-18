@@ -1,3 +1,4 @@
+
 package frc.robot.subsystems;
 
 import static org.mockito.Mockito.*;
@@ -53,12 +54,12 @@ public class HopperSubsystemTest
     @Test
     public void HopperSubsystemCallsPeriodic()
     {
-        reset( mockedHopperSubsystem );
-        CommandScheduler.getInstance().registerSubsystem( mockedHopperSubsystem );
+        reset(mockedHopperSubsystem);
+        CommandScheduler.getInstance().registerSubsystem(mockedHopperSubsystem);
         CommandScheduler.getInstance().run();
 
         // Verify that periodic was called once
-        verify( mockedHopperSubsystem, times(1) ).periodic();
+        verify(mockedHopperSubsystem, times(1)).periodic();
 
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().clearButtons();
@@ -69,10 +70,10 @@ public class HopperSubsystemTest
     @Test
     public void HopperDefaultCommandChecksSensorStates()
     {
-        reset( mockedHopperSubsystem );
+        reset(mockedHopperSubsystem);
         // set default command
-        HopperDefaultCommand dfltCommand = new HopperDefaultCommand( mockedHopperSubsystem );
-        CommandScheduler.getInstance().setDefaultCommand( mockedHopperSubsystem, dfltCommand );
+        HopperDefaultCommand dfltCommand = new HopperDefaultCommand(mockedHopperSubsystem);
+        CommandScheduler.getInstance().setDefaultCommand(mockedHopperSubsystem, dfltCommand);
 
         // runs command init
         CommandScheduler.getInstance().run();
@@ -80,8 +81,8 @@ public class HopperSubsystemTest
         CommandScheduler.getInstance().run();
 
         // Verify that methods in the subsysteem were called
-        verify( mockedHopperSubsystem, times(1) ).bottomBeamStatus();
-        verify( mockedHopperSubsystem, times(1) ).topBeamStatus();
+        verify(mockedHopperSubsystem, times(1)).bottomBeamStatus();
+        verify(mockedHopperSubsystem, times(1)).topBeamStatus();
 
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().clearButtons();
@@ -91,12 +92,13 @@ public class HopperSubsystemTest
     // This is called after tests, and makes sure that nothing is left open and
     // everything is ready for the next test class
     @After
-    public void after() {
+    public void after()
+    {
         CommandScheduler.getInstance().disable();
 
         // deinit hardware
         DriverStation.getInstance().release();
-		HAL.releaseDSMutex();
+        HAL.releaseDSMutex();
     }
 
 }
