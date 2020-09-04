@@ -27,8 +27,6 @@ public class HopperSubsystemTest
     HopperSubsystem mockedHopperSubsystem;
 
     //==========================================================================
-    // This method is run before the tests begin. initialize all mocks you wish to
-    // use in multiple functions here. Copy and paste this function in your own test
     @Before
     public void before()
     {
@@ -47,6 +45,8 @@ public class HopperSubsystemTest
 
         // mocked subsystem
         mockedHopperSubsystem = mock(HopperSubsystem.class);
+        reset(mockedHopperSubsystem);
+        CommandScheduler.getInstance().registerSubsystem(mockedHopperSubsystem);
     }
 
     //==========================================================================
@@ -54,15 +54,10 @@ public class HopperSubsystemTest
     @Test
     public void HopperSubsystemCallsPeriodic()
     {
-        reset(mockedHopperSubsystem);
-        CommandScheduler.getInstance().registerSubsystem(mockedHopperSubsystem);
         CommandScheduler.getInstance().run();
 
         // Verify that periodic was called once
         verify(mockedHopperSubsystem, times(1)).periodic();
-
-        CommandScheduler.getInstance().cancelAll();
-        CommandScheduler.getInstance().clearButtons();
     }
 
     //==========================================================================
@@ -70,7 +65,6 @@ public class HopperSubsystemTest
     @Test
     public void HopperDefaultCommandChecksSensorStates()
     {
-        reset(mockedHopperSubsystem);
         // set default command
         HopperDefaultCommand dfltCommand = new HopperDefaultCommand(mockedHopperSubsystem);
         CommandScheduler.getInstance().setDefaultCommand(mockedHopperSubsystem, dfltCommand);
@@ -83,9 +77,6 @@ public class HopperSubsystemTest
         // Verify that methods in the subsysteem were called
         verify(mockedHopperSubsystem, times(1)).bottomBeamStatus();
         verify(mockedHopperSubsystem, times(1)).topBeamStatus();
-
-        CommandScheduler.getInstance().cancelAll();
-        CommandScheduler.getInstance().clearButtons();
     }
 
     //==========================================================================
@@ -94,6 +85,9 @@ public class HopperSubsystemTest
     @After
     public void after()
     {
+        CommandScheduler.getInstance().cancelAll();
+        CommandScheduler.getInstance().clearButtons();
+
         CommandScheduler.getInstance().disable();
 
         // deinit hardware
