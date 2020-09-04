@@ -12,6 +12,9 @@ import edu.wpi.first.hal.HAL;
 import edu.wpi.first.hal.sim.DriverStationSim;
 import edu.wpi.first.wpilibj.DriverStation;
 
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 // junit
 import org.junit.After;
 import org.junit.Before;
@@ -20,6 +23,7 @@ import org.junit.Test;
 // robot code
 import frc.robot.commands.HopperDefaultCommand;
 import frc.robot.subsystems.HopperSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 //==============================================================================
 public class HopperSubsystemTest
@@ -54,10 +58,21 @@ public class HopperSubsystemTest
     @Test
     public void HopperSubsystemCallsPeriodic()
     {
+
+        ShooterSubsystem shooter_mock =  mock(ShooterSubsystem.class);
+        HopperSubsystem hopper = new HopperSubsystem( shooter_mock );
+        TalonSRX motor = mock(TalonSRX.class);
+        mockedHopperSubsystem.SetIntakeMotor( motor );
+
+        CommandScheduler.getInstance().registerSubsystem(hopper);
+
         CommandScheduler.getInstance().run();
 
         // Verify that periodic was called once
-        verify(mockedHopperSubsystem, times(1)).periodic();
+        // verify(hopper, times(1)).periodic();
+
+        System.out.println(hopper.getRollerMotorSetpoint() );
+        assert(hopper.getRollerMotorSetpoint()  != 0);
     }
 
     //==========================================================================
