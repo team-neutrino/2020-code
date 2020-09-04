@@ -24,7 +24,7 @@ public class HopperSubsystem extends SubsystemBase
     private DigitalInput m_beamBreakTop = new DigitalInput(HopperConstants.HOPPER_TOP_BEAMBREAK);
     private DigitalInput m_beamBreakBot = new DigitalInput(HopperConstants.HOPPER_BOT_BEAMBREAK);
     private TalonSRX m_towerMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_TOWER);
-    protected TalonSRX m_intakeHopperMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_HOPPER);
+    private TalonSRX m_intakeHopperMotor = new TalonSRX(Constants.CanId.MOTOR_CONTROLLER_HOPPER);
     private Timer m_timer = new Timer();
     private Timer m_rollerTimer = new Timer();
     private boolean m_prevBotBeam;
@@ -39,6 +39,7 @@ public class HopperSubsystem extends SubsystemBase
         m_Shooter = p_Shooter;
     }
 
+    // set the intake motor class
     public void SetIntakeMotor(TalonSRX motor)
     {
         m_intakeHopperMotor = motor;
@@ -134,8 +135,7 @@ public class HopperSubsystem extends SubsystemBase
 
     public double getRollerMotorSetpoint()
     {
-        System.out.println("getRollerMotorSetpoint");
-        return m_intakeHopperMotor.get();
+        return m_intakeHopperMotor.getMotorOutputPercent();
     }
 
     @Override
