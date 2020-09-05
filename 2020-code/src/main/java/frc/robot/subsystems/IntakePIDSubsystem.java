@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
+// import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import patch.DutyCycleEncoder;
 import frc.robot.Constants;
 import frc.robot.Constants.CanId;
 
@@ -20,7 +21,7 @@ public class IntakePIDSubsystem extends PIDSubsystem
 {
     private TalonSRX m_IntakeFeedMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_FEED);
     private TalonSRX m_IntakeArmMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_POSITION);
-    // private DutyCycleEncoder m_DutyCycleEncoder = new DutyCycleEncoder(Constants.IntakeConstants.ENCODER_PORT);
+    private DutyCycleEncoder m_DutyCycleEncoder = new DutyCycleEncoder(Constants.IntakeConstants.ENCODER_PORT);
     /**
      * Creates a new IntakePIDSubsystem.
      */
@@ -31,7 +32,7 @@ public class IntakePIDSubsystem extends PIDSubsystem
             new PIDController(Constants.IntakeConstants.KP, Constants.IntakeConstants.KI,
                 Constants.IntakeConstants.KD));
 
-        // m_DutyCycleEncoder.setDistancePerRotation(Constants.IntakeConstants.POSITION_MULTIPLIER); //degrees
+        m_DutyCycleEncoder.setDistancePerRotation(Constants.IntakeConstants.POSITION_MULTIPLIER); //degrees
     }
 
     @Override
@@ -43,8 +44,7 @@ public class IntakePIDSubsystem extends PIDSubsystem
     @Override
     public double getMeasurement()
     {
-        // return m_DutyCycleEncoder.getDistance();
-        return 0.0;
+        return m_DutyCycleEncoder.getDistance();
     }
 
     public void periodic()
