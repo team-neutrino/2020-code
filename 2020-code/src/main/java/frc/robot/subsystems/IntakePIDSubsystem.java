@@ -31,7 +31,6 @@ public class IntakePIDSubsystem extends PIDSubsystem
             // The PIDController used by the subsystem
             new PIDController(Constants.IntakeConstants.KP, Constants.IntakeConstants.KI,
                 Constants.IntakeConstants.KD));
-
         m_DutyCycleEncoder.setDistancePerRotation(Constants.IntakeConstants.POSITION_MULTIPLIER); //degrees
     }
 
@@ -53,7 +52,7 @@ public class IntakePIDSubsystem extends PIDSubsystem
 
         if (Math.abs(getMeasurement()) > 360)
         {
-            // m_DutyCycleEncoder.reset();
+            m_DutyCycleEncoder.reset();
         }
     }
 

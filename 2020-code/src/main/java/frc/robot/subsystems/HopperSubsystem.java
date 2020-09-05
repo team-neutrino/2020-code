@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -40,37 +42,37 @@ public class HopperSubsystem extends SubsystemBase
     //used when not shooting will run until ball is at top and ready
     public void towerIndexing()
     {
-        m_towerMotor.setPercentOutput(0.5);
-        m_intakeHopperMotor.setPercentOutput(HopperConstants.HOPPER_MOTOR_POWER);
+        m_towerMotor.set(ControlMode.PercentOutput, 0.5);
+        m_intakeHopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
     }
 
     //used when shooting
     public void towerShoot()
     {
-        m_towerMotor.setPercentOutput(1);
-        m_intakeHopperMotor.setPercentOutput(HopperConstants.HOPPER_MOTOR_POWER);
+        m_towerMotor.set(ControlMode.PercentOutput, 1);
+        m_intakeHopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
     }
 
     public void conditionalTowerShoot()
     {
         if (m_Shooter.getVelocity() > 60000)
         {
-            m_towerMotor.setPercentOutput(1);
+            m_towerMotor.set(ControlMode.PercentOutput, 1);
         }
         else
         {
-            m_towerMotor.setPercentOutput(0);
+            m_towerMotor.set(ControlMode.PercentOutput, 0);
         }
     }
 
     public void reverse()
     {
-        m_towerMotor.setPercentOutput(HopperConstants.HOPPER_MOTOR_POWER_REVERSE);
+        m_towerMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER_REVERSE);
     }
 
     public void stop()
     {
-        m_towerMotor.setPercentOutput(0);
+        m_towerMotor.set(ControlMode.PercentOutput, 0);
         m_timer.stop();
         m_timer.reset();
     }
@@ -117,12 +119,12 @@ public class HopperSubsystem extends SubsystemBase
 
     public void rollerTowardsIntake()
     {
-        m_intakeHopperMotor.setPercentOutput(0.3);
+        m_intakeHopperMotor.set(ControlMode.PercentOutput, 0.3);
     }
 
     public void rollerTowardsTower()
     {
-        m_intakeHopperMotor.setPercentOutput(-0.3);
+        m_intakeHopperMotor.set(ControlMode.PercentOutput, -0.3);
     }
 
     @Override

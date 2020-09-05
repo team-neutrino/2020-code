@@ -29,15 +29,15 @@ public class NeuTalonSRX
     }
 
     //==========================================================================
-    public void setPercentOutput(double percent)
+    public void set(ControlMode mode, double outputValue)
     {
         if (m_sim)
         {
-            m_simTalonSRX.set(percent);
+            m_simTalonSRX.set(outputValue);
         }
         else
         {
-            m_TalonSRX.set(ControlMode.PercentOutput, percent);
+            m_TalonSRX.set(mode, outputValue);
         }
     }
 
