@@ -46,11 +46,7 @@ public class NeuTalonSRX
     {
         if (m_sim)
         {
-            if (m_simTalonSRX.getInverted())
-            {
-                return -m_simTalonSRX.get();
-            }
-            return m_simTalonSRX.get();
+            return m_simTalonSRX.getInverted() ? -m_simTalonSRX.get() : m_simTalonSRX.get();
         }
         else
         {
