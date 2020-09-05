@@ -140,6 +140,8 @@ public class HopperSubsystem extends SubsystemBase
     {
         m_beamBreakTop.close();
         m_beamBreakBot.close();
+        m_towerMotor.close();
+        m_intakeHopperMotor.close();
     }
 
     public double GetTowerMotorPercentOutput()

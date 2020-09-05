@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 // robot code
+import frc.robot.commands.HopperDefaultCommand;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.util.NeuTalonSRX;
@@ -56,6 +57,7 @@ public class HopperSubsystemTest
     @After
     public void after()
     {
+        CommandScheduler.getInstance().unregisterSubsystem(ss_hopper);
         ss_hopper.close();
 
         CommandScheduler.getInstance().cancelAll();
@@ -76,7 +78,7 @@ public class HopperSubsystemTest
         ss_hopper = mock(HopperSubsystem.class);
         reset(ss_hopper);
         CommandScheduler.getInstance().registerSubsystem(ss_hopper);
-        
+
         when(ss_hopper.getTime()).thenReturn(0.0);
         when(ss_hopper.topBeamStatus()).thenReturn(true);
         when(ss_hopper.bottomBeamStatus()).thenReturn(true);
@@ -94,6 +96,22 @@ public class HopperSubsystemTest
     }
 
     //==========================================================================
+    private void SetHopperDefaultCommand()
+    {
+        HopperDefaultCommand dfltCommand = new HopperDefaultCommand(ss_hopper);
+        CommandScheduler.getInstance().setDefaultCommand(ss_hopper, dfltCommand);
+    }
+
+    //==========================================================================
+    private void Tick()
+    {
+        CommandScheduler.getInstance().run();
+
+        boolean status = ss_hopper.bottomBeamStatus();
+        when(ss_hopper.getPrevBotBeam()).thenReturn(status);
+    }
+
+    //==========================================================================
     // Subsystem Tests
     //==========================================================================
 
@@ -104,7 +122,7 @@ public class HopperSubsystemTest
         RealHopper();
 
         ss_hopper.rollerTowardsIntake();
-        assertEquals( ss_hopper.GetIntakeMotorPercentOutput(), 0.3, DELTA );
+        assertEquals(ss_hopper.GetIntakeMotorPercentOutput(), 0.3, DELTA);
     }
 
     //==========================================================================
@@ -118,7 +136,7 @@ public class HopperSubsystemTest
         CommandScheduler.getInstance().run();
 
         // Verify that the intake motor is set towards intake
-        assertEquals( ss_hopper.GetIntakeMotorPercentOutput(), 0.3, DELTA );
+        assertEquals(ss_hopper.GetIntakeMotorPercentOutput(), 0.3, DELTA);
     }
 
     //==========================================================================
@@ -128,16 +146,16 @@ public class HopperSubsystemTest
         RealHopper();
 
         ss_hopper.towerIndexing();
-        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 0.5, DELTA );
+        assertEquals(ss_hopper.GetTowerMotorPercentOutput(), 0.5, DELTA);
 
         ss_hopper.towerShoot();
-        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 1.0, DELTA );
+        assertEquals(ss_hopper.GetTowerMotorPercentOutput(), 1.0, DELTA);
 
         ss_hopper.stop();
-        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 0.0, DELTA );
+        assertEquals(ss_hopper.GetTowerMotorPercentOutput(), 0.0, DELTA);
 
         ss_hopper.reverse();
-        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), -0.5, DELTA );
+        assertEquals(ss_hopper.GetTowerMotorPercentOutput(), -0.5, DELTA);
     }
 
     //==========================================================================
@@ -149,17 +167,76 @@ public class HopperSubsystemTest
         // hopper is stopped
         ss_hopper.stop();
         CommandScheduler.getInstance().run();
-        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 0.0, DELTA );
+        assertEquals(ss_hopper.GetTowerMotorPercentOutput(), 0.0, DELTA);
 
         // slow shooter: don't shoot
         when(ss_shooter.getVelocity()).thenReturn(200.0);
         ss_hopper.conditionalTowerShoot();
-        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 0.0, DELTA );
+        assertEquals(ss_hopper.GetTowerMotorPercentOutput(), 0.0, DELTA);
 
         // fast shooter: do shoot
         when(ss_shooter.getVelocity()).thenReturn(70000.0);
         ss_hopper.conditionalTowerShoot();
-        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 1.0, DELTA );
+        assertEquals(ss_hopper.GetTowerMotorPercentOutput(), 1.0, DELTA);
 
+    }
+
+    //==========================================================================
+    // Command Tests
+    //==========================================================================
+
+    //==========================================================================
+    // the default command calls some methods in the subsystem
+    @Test
+    public void HopperStopsWhenTopBeamBreakSensesBall()
+    {
+        MockHopper();
+        SetHopperDefaultCommand();
+
+        // init
+        Tick();
+        Tick();
+
+        // covered top sensor stops feed
+        when(ss_hopper.topBeamStatus()).thenReturn(false);
+        Tick();
+        // Hopper stops
+        verify(ss_hopper, times(1)).stop();
+    }
+
+    //==========================================================================
+    // the default command calls some methods in the subsystem
+    @Test
+    public void HopperFeedsWhenBottomBeamBreakSensesBall()
+    {
+        final int COVERED_DURATION = 15;
+        MockHopper();
+        SetHopperDefaultCommand();
+
+        // init
+        Tick();
+        Tick();
+
+        // Hopper indexes balls when bottom sensor is covered
+        when(ss_hopper.bottomBeamStatus()).thenReturn(false);
+        for (int ii = 0; ii < COVERED_DURATION; ii++)
+        {
+            Tick();
+        }
+        verify(ss_hopper, times(COVERED_DURATION)).towerIndexing();
+
+        // transition to uncovered
+        when(ss_hopper.bottomBeamStatus()).thenReturn(true);
+        Tick();
+        verify(ss_hopper, times(1)).startTimer();
+
+        // runs for some duration and then stop tower motor
+        when(ss_hopper.getTime()).thenReturn(0.0001);
+        Tick();
+        verify(ss_hopper, times(0)).stop();
+
+        when(ss_hopper.getTime()).thenReturn(0.02);
+        Tick();
+        verify(ss_hopper, times(1)).stop();
     }
 }
