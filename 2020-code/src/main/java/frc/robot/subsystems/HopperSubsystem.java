@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.HopperConstants;
-import frc.robot.util.NeuTalonSRX;
+import frc.robot.util.NeuMotor.NeuMotor;
+import frc.robot.util.NeuMotor.NeuMotorType;
+import frc.robot.util.NeuMotor.NeuMotorMode;
 
 public class HopperSubsystem extends SubsystemBase
 {
@@ -23,8 +25,8 @@ public class HopperSubsystem extends SubsystemBase
      */
     private DigitalInput m_beamBreakTop = new DigitalInput(HopperConstants.HOPPER_TOP_BEAMBREAK);
     private DigitalInput m_beamBreakBot = new DigitalInput(HopperConstants.HOPPER_BOT_BEAMBREAK);
-    private NeuTalonSRX m_towerMotor = new NeuTalonSRX(Constants.CanId.MOTOR_CONTROLLER_TOWER);
-    private NeuTalonSRX m_intakeHopperMotor = new NeuTalonSRX(Constants.CanId.MOTOR_CONTROLLER_HOPPER);
+    private NeuMotor m_towerMotor = new NeuMotor(NeuMotorType.TalonSRX, Constants.CanId.MOTOR_CONTROLLER_TOWER);
+    private NeuMotor m_intakeHopperMotor = new NeuMotor(NeuMotorType.TalonSRX, Constants.CanId.MOTOR_CONTROLLER_HOPPER);
     private Timer m_timer = new Timer();
     private Timer m_rollerTimer = new Timer();
     private boolean m_prevBotBeam;
@@ -42,37 +44,37 @@ public class HopperSubsystem extends SubsystemBase
     //used when not shooting will run until ball is at top and ready
     public void towerIndexing()
     {
-        m_towerMotor.set(ControlMode.PercentOutput, 0.5);
-        m_intakeHopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
+        m_towerMotor.set(NeuMotorMode.Percent, 0.5);
+        m_intakeHopperMotor.set(NeuMotorMode.Percent, HopperConstants.HOPPER_MOTOR_POWER);
     }
 
     //used when shooting
     public void towerShoot()
     {
-        m_towerMotor.set(ControlMode.PercentOutput, 1);
-        m_intakeHopperMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER);
+        m_towerMotor.set(NeuMotorMode.Percent, 1);
+        m_intakeHopperMotor.set(NeuMotorMode.Percent, HopperConstants.HOPPER_MOTOR_POWER);
     }
 
     public void conditionalTowerShoot()
     {
         if (m_Shooter.getVelocity() > 60000)
         {
-            m_towerMotor.set(ControlMode.PercentOutput, 1);
+            m_towerMotor.set(NeuMotorMode.Percent, 1);
         }
         else
         {
-            m_towerMotor.set(ControlMode.PercentOutput, 0);
+            m_towerMotor.set(NeuMotorMode.Percent, 0);
         }
     }
 
     public void reverse()
     {
-        m_towerMotor.set(ControlMode.PercentOutput, HopperConstants.HOPPER_MOTOR_POWER_REVERSE);
+        m_towerMotor.set(NeuMotorMode.Percent, HopperConstants.HOPPER_MOTOR_POWER_REVERSE);
     }
 
     public void stop()
     {
-        m_towerMotor.set(ControlMode.PercentOutput, 0);
+        m_towerMotor.set(NeuMotorMode.Percent, 0);
         m_timer.stop();
         m_timer.reset();
     }
@@ -119,12 +121,12 @@ public class HopperSubsystem extends SubsystemBase
 
     public void rollerTowardsIntake()
     {
-        m_intakeHopperMotor.set(ControlMode.PercentOutput, 0.3);
+        m_intakeHopperMotor.set(NeuMotorMode.Percent, 0.3);
     }
 
     public void rollerTowardsTower()
     {
-        m_intakeHopperMotor.set(ControlMode.PercentOutput, -0.3);
+        m_intakeHopperMotor.set(NeuMotorMode.Percent, -0.3);
     }
 
     @Override
@@ -148,11 +150,11 @@ public class HopperSubsystem extends SubsystemBase
 
     public double GetTowerMotorPercentOutput()
     {
-        return m_towerMotor.getPercentOutput();
+        return m_towerMotor.get();
     }
 
     public double GetIntakeMotorPercentOutput()
     {
-        return m_intakeHopperMotor.getPercentOutput();
+        return m_intakeHopperMotor.get();
     }
 }

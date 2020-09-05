@@ -18,7 +18,7 @@ import org.junit.Test;
 import frc.robot.commands.HopperDefaultCommand;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.util.NeuTalonSRX;
+// import frc.robot.util.NeuMotor;
 
 //==============================================================================
 // Hopper Subsystem Tests
@@ -28,8 +28,8 @@ public class HopperSubsystemTest
     public HopperSubsystem ss_hopper;
     public ShooterSubsystem ss_shooter;
 
-    public NeuTalonSRX intake_motor;
-    public NeuTalonSRX tower_motor;
+    // public NeuMotor intake_motor;
+    // public NeuMotor tower_motor;
 
     final double DELTA = 0.000001;
 
