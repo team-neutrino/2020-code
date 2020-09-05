@@ -142,18 +142,6 @@ public class HopperSubsystem extends SubsystemBase
         m_beamBreakBot.close();
     }
 
-    // set the intake motor object
-    public void SetIntakeMotor(NeuTalonSRX motor)
-    {
-        m_intakeHopperMotor = motor;
-    }
-
-    // set the tower motor object
-    public void SetTowerMotor(NeuTalonSRX motor)
-    {
-        m_towerMotor = motor;
-    }
-
     public double GetTowerMotorPercentOutput()
     {
         return m_towerMotor.getPercentOutput();
