@@ -39,12 +39,6 @@ public class HopperSubsystem extends SubsystemBase
         m_Shooter = p_Shooter;
     }
 
-    // set the intake motor class
-    public void SetIntakeMotor(TalonSRX motor)
-    {
-        m_intakeHopperMotor = motor;
-    }
-
     //used when not shooting will run until ball is at top and ready
     public void towerIndexing()
     {
@@ -133,11 +127,6 @@ public class HopperSubsystem extends SubsystemBase
         m_intakeHopperMotor.set(ControlMode.PercentOutput, -0.3);
     }
 
-    public double getRollerMotorSetpoint()
-    {
-        return m_intakeHopperMotor.getMotorOutputPercent();
-    }
-
     @Override
     public void periodic()
     {
@@ -148,4 +137,22 @@ public class HopperSubsystem extends SubsystemBase
          */
     }
 
+    // release HAL resources
+    public void close()
+    {
+        m_beamBreakTop.close();
+        m_beamBreakBot.close();
+    }
+
+    // set the intake motor object
+    public void SetIntakeMotor(TalonSRX motor)
+    {
+        m_intakeHopperMotor = motor;
+    }
+
+    // set the tower motor object
+    public void SetTowerMotor(TalonSRX motor)
+    {
+        m_towerMotor = motor;
+    }
 }

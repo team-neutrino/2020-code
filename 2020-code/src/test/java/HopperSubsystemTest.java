@@ -1,18 +1,12 @@
-
-package frc.robot.subsystems;
-
 import static org.mockito.Mockito.*;
 
 // wpilib robot
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.button.Button;
-// import edu.wpi.first.wpilibj.PWMTalonSRX;
 
 // wpilib hal
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.hal.sim.DriverStationSim;
 import edu.wpi.first.wpilibj.DriverStation;
-
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -23,15 +17,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 // robot code
-import frc.robot.commands.HopperDefaultCommand;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 //==============================================================================
+// Hopper Subsystem Tests
+//==============================================================================
 public class HopperSubsystemTest
 {
-    HopperSubsystem ss_hopper;
-    TalonSRX intake_motor;
+    public HopperSubsystem ss_hopper;
+    public ShooterSubsystem ss_shooter;
+
+    public TalonSRX intake_motor;
+    public TalonSRX tower_motor;
 
     //==========================================================================
     @Before
@@ -42,7 +40,7 @@ public class HopperSubsystemTest
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().clearButtons();
 
-        // mocked hardware
+        // init hardware
         HAL.initialize(500, 0);
         DriverStationSim dsSim = new DriverStationSim();
         dsSim.setDsAttached(true);
@@ -57,6 +55,8 @@ public class HopperSubsystemTest
     @After
     public void after()
     {
+        ss_hopper.close();
+
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().clearButtons();
 
@@ -69,9 +69,9 @@ public class HopperSubsystemTest
 
     //==========================================================================
     // construct a mocked hopper subsystem
-    private void MockHopper()
+    protected void MockHopper()
     {
-        // mocked subsystem
+        // mocked hopper subsystem
         ss_hopper = mock(HopperSubsystem.class);
         reset(ss_hopper);
         CommandScheduler.getInstance().registerSubsystem(ss_hopper);
@@ -79,72 +79,60 @@ public class HopperSubsystemTest
 
     //==========================================================================
     // construct a real hopper subsystem
-    private void RealHopper()
+    protected void RealHopper()
     {
-        // real subsystem
-        ShooterSubsystem shooter_mock = mock(ShooterSubsystem.class);
-        ss_hopper = new HopperSubsystem( shooter_mock );
-        CommandScheduler.getInstance().registerSubsystem(ss_hopper);
+        // real hopper subsystem with mocked shooter
+        ss_shooter = mock( ShooterSubsystem.class );
+        ss_hopper = new HopperSubsystem( ss_shooter );
+        CommandScheduler.getInstance().registerSubsystem( ss_hopper );
     } 
 
     //==========================================================================
-    // construct a real hopper subsystem
-    private void MockIntakeMotor()
+    // construct a mock intake motor
+    protected void MockIntakeMotor()
     {
-        // mock motor controller with real subsystem
         intake_motor = mock(TalonSRX.class);
         ss_hopper.SetIntakeMotor( intake_motor );
     } 
 
     //==========================================================================
-    // TESTS
-    //==========================================================================
-
-    //==========================================================================
-    // periodic is called in command loop
-    @Test
-    public void HopperSubsystemCallsPeriodic()
+    // construct a mock tower motor
+    protected void MockTowerMotor()
     {
-        MockHopper();
-        CommandScheduler.getInstance().run();
+        tower_motor = mock(TalonSRX.class);
+        ss_hopper.SetTowerMotor( tower_motor );
+    } 
 
-         // Verify that periodic was called once
-        verify(ss_hopper, times(1)).periodic();
-    }
+    //==========================================================================
+    // Subsystem Tests
+    //==========================================================================
 
     //==========================================================================
     // periodic function sets the percent out on the hopper's intake motor
     @Test
-    public void RollerMotorAlwaysTurning()
+    public void IntakeMotorAlwaysTurning()
     {
         RealHopper();
         MockIntakeMotor();
 
         CommandScheduler.getInstance().run();
 
-        // Verify that motor is set towards intake
+        // Verify that the intake motor is set towards intake
         verify( intake_motor, times(1) ).set( ControlMode.PercentOutput, 0.3 );
     }
 
     //==========================================================================
-    // the default command calls some methods in the subsystem
+    // calling stop() stops the tower motor
     @Test
-    public void HopperDefaultCommandChecksSensorStates()
+    public void CallingStopWillStopTowerMotor()
     {
-        MockHopper();
-        // set default command
-        HopperDefaultCommand dfltCommand = new HopperDefaultCommand(ss_hopper);
-        CommandScheduler.getInstance().setDefaultCommand(ss_hopper, dfltCommand);
+        RealHopper();
+        MockTowerMotor();
 
-        // runs command init
-        CommandScheduler.getInstance().run();
-        // runs command execute
-        CommandScheduler.getInstance().run();
+        // CommandScheduler.getInstance().run();
+        ss_hopper.stop();
 
-        // Verify that methods in the subsysteem were called
-        verify(ss_hopper, times(1)).bottomBeamStatus();
-        verify(ss_hopper, times(1)).topBeamStatus();
+        // Verify that the tower motor stops
+        verify( tower_motor, times(1) ).set( ControlMode.PercentOutput, 0.0 );
     }
-
-
 }
