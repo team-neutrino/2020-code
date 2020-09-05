@@ -1,3 +1,4 @@
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 // wpilib robot
@@ -8,9 +9,6 @@ import edu.wpi.first.hal.HAL;
 import edu.wpi.first.hal.sim.DriverStationSim;
 import edu.wpi.first.wpilibj.DriverStation;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 // junit
 import org.junit.After;
 import org.junit.Before;
@@ -19,6 +17,7 @@ import org.junit.Test;
 // robot code
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.util.NeuTalonSRX;
 
 //==============================================================================
 // Hopper Subsystem Tests
@@ -28,8 +27,10 @@ public class HopperSubsystemTest
     public HopperSubsystem ss_hopper;
     public ShooterSubsystem ss_shooter;
 
-    public TalonSRX intake_motor;
-    public TalonSRX tower_motor;
+    public NeuTalonSRX intake_motor;
+    public NeuTalonSRX tower_motor;
+
+    final double DELTA = 0.000001;
 
     //==========================================================================
     @Before
@@ -75,6 +76,11 @@ public class HopperSubsystemTest
         ss_hopper = mock(HopperSubsystem.class);
         reset(ss_hopper);
         CommandScheduler.getInstance().registerSubsystem(ss_hopper);
+        
+        when(ss_hopper.getTime()).thenReturn(0.0);
+        when(ss_hopper.topBeamStatus()).thenReturn(true);
+        when(ss_hopper.bottomBeamStatus()).thenReturn(true);
+        when(ss_hopper.getPrevBotBeam()).thenReturn(true);
     }
 
     //==========================================================================
@@ -82,30 +88,24 @@ public class HopperSubsystemTest
     protected void RealHopper()
     {
         // real hopper subsystem with mocked shooter
-        ss_shooter = mock( ShooterSubsystem.class );
-        ss_hopper = new HopperSubsystem( ss_shooter );
-        CommandScheduler.getInstance().registerSubsystem( ss_hopper );
-    } 
-
-    //==========================================================================
-    // construct a mock intake motor
-    protected void MockIntakeMotor()
-    {
-        intake_motor = mock(TalonSRX.class);
-        ss_hopper.SetIntakeMotor( intake_motor );
-    } 
-
-    //==========================================================================
-    // construct a mock tower motor
-    protected void MockTowerMotor()
-    {
-        tower_motor = mock(TalonSRX.class);
-        ss_hopper.SetTowerMotor( tower_motor );
-    } 
+        ss_shooter = mock(ShooterSubsystem.class);
+        ss_hopper = new HopperSubsystem(ss_shooter);
+        CommandScheduler.getInstance().registerSubsystem(ss_hopper);
+    }
 
     //==========================================================================
     // Subsystem Tests
     //==========================================================================
+
+    //==========================================================================
+    @Test
+    public void RollerTowardsIntakeSetsPercentOut()
+    {
+        RealHopper();
+
+        ss_hopper.rollerTowardsIntake();
+        assertEquals( ss_hopper.GetIntakeMotorPercentOutput(), 0.3, DELTA );
+    }
 
     //==========================================================================
     // periodic function sets the percent out on the hopper's intake motor
@@ -113,26 +113,53 @@ public class HopperSubsystemTest
     public void IntakeMotorAlwaysTurning()
     {
         RealHopper();
-        MockIntakeMotor();
 
+        // tick
         CommandScheduler.getInstance().run();
 
         // Verify that the intake motor is set towards intake
-        verify( intake_motor, times(1) ).set( ControlMode.PercentOutput, 0.3 );
+        assertEquals( ss_hopper.GetIntakeMotorPercentOutput(), 0.3, DELTA );
     }
 
     //==========================================================================
-    // calling stop() stops the tower motor
     @Test
-    public void CallingStopWillStopTowerMotor()
+    public void TowerMotorRunsAtSetSpeeds()
     {
         RealHopper();
-        MockTowerMotor();
 
-        // CommandScheduler.getInstance().run();
+        ss_hopper.towerIndexing();
+        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 0.5, DELTA );
+
+        ss_hopper.towerShoot();
+        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 1.0, DELTA );
+
         ss_hopper.stop();
+        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 0.0, DELTA );
 
-        // Verify that the tower motor stops
-        verify( tower_motor, times(1) ).set( ControlMode.PercentOutput, 0.0 );
+        ss_hopper.reverse();
+        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), -0.5, DELTA );
+    }
+
+    //==========================================================================
+    @Test
+    public void TowerWontShootWhenShooterIsSlow()
+    {
+        RealHopper();
+
+        // hopper is stopped
+        ss_hopper.stop();
+        CommandScheduler.getInstance().run();
+        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 0.0, DELTA );
+
+        // slow shooter: don't shoot
+        when(ss_shooter.getVelocity()).thenReturn(200.0);
+        ss_hopper.conditionalTowerShoot();
+        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 0.0, DELTA );
+
+        // fast shooter: do shoot
+        when(ss_shooter.getVelocity()).thenReturn(70000.0);
+        ss_hopper.conditionalTowerShoot();
+        assertEquals( ss_hopper.GetTowerMotorPercentOutput(), 1.0, DELTA );
+
     }
 }
