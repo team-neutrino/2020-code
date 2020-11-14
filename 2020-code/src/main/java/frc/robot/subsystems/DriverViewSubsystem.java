@@ -25,18 +25,22 @@ public class DriverViewSubsystem extends SubsystemBase
     private ShooterSubsystem m_Shooter;
     private TurretSubsystem m_Turret;
     private HopperSubsystem m_Hopper;
+    private IntakePIDSubsystem m_Intake;
 
     private ShuffleboardTab m_driver_view_tab;
     private NetworkTableEntry m_shooter_velocity;
     private NetworkTableEntry m_turret_angle;
     private NetworkTableEntry m_beam_break_top;
     private NetworkTableEntry m_beam_break_bot;
+    private NetworkTableEntry m_arm_angle;
 
-    public DriverViewSubsystem(ShooterSubsystem p_Shooter, TurretSubsystem p_Turret, HopperSubsystem p_Hopper)
+    public DriverViewSubsystem(ShooterSubsystem p_Shooter, TurretSubsystem p_Turret, HopperSubsystem p_Hopper,
+            IntakePIDSubsystem p_Intake)
     {
         m_Shooter = p_Shooter;
         m_Turret = p_Turret;
         m_Hopper = p_Hopper;
+        m_Intake = p_Intake;
 
         // setup driver view tab
         m_driver_view_tab = Shuffleboard.getTab("Driver View");
@@ -46,6 +50,9 @@ public class DriverViewSubsystem extends SubsystemBase
             2).withSize(2, 2).withProperties(Map.of("min", -180, "max", 180)).getEntry();
         m_beam_break_top = m_driver_view_tab.add("Top Beam Status", false).withPosition(0, 0).getEntry();
         m_beam_break_bot = m_driver_view_tab.add("Bottom Beam Status", false).withPosition(0, 1).getEntry();
+
+        m_arm_angle = m_driver_view_tab.add("Arm Angle", 0).withWidget(BuiltInWidgets.kDial).withPosition(2,
+            2).withSize(2, 2).withProperties(Map.of("min", -361, "max", 361)).getEntry();
 
         HttpCamera limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg",
             HttpCameraKind.kMJPGStreamer);
@@ -60,5 +67,6 @@ public class DriverViewSubsystem extends SubsystemBase
         m_turret_angle.setDouble(m_Turret.getTurretAngle());
         m_beam_break_top.setBoolean(m_Hopper.topBeamStatus());
         m_beam_break_bot.setBoolean(m_Hopper.bottomBeamStatus());
+        m_arm_angle.setDouble(m_Intake.getMeasurement());
     }
 }

@@ -21,6 +21,8 @@ public class IntakePIDSubsystem extends PIDSubsystem
     private TalonSRX m_IntakeFeedMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_FEED);
     private TalonSRX m_IntakeArmMotor = new TalonSRX(CanId.MOTOR_CONTROLLER_INTAKE_POSITION);
     private DutyCycleEncoder m_DutyCycleEncoder = new DutyCycleEncoder(Constants.IntakeConstants.ENCODER_PORT);
+
+    private int m_startup = 0;
     /**
      * Creates a new IntakePIDSubsystem.
      */
@@ -48,10 +50,10 @@ public class IntakePIDSubsystem extends PIDSubsystem
     public void periodic()
     {
         super.periodic();
-
-        if (Math.abs(getMeasurement()) > 360)
+        if( m_startup < 50 )
         {
             m_DutyCycleEncoder.reset();
+            m_startup++;
         }
     }
 
